@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Header } from "@/components/Header";
 import { FeaturedConversation } from "@/components/FeaturedConversation";
@@ -10,7 +11,7 @@ const mockConversations = [
     title: "Exploring the Philosophy of Consciousness with GPT-4",
     excerpt: "A deep dive into what it means to be conscious, examining the hard problem of consciousness through the lens of artificial intelligence...",
     author: "Dr. Sarah Chen",
-    authorImage: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+    authorImage: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=150&h=150&fit=crop&crop=face",
     readTime: 8,
     publishDate: "2024-01-15",
     category: "Philosophy",
