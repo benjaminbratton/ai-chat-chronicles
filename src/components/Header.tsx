@@ -13,7 +13,7 @@ export const Header = () => {
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-purple-800 flex items-center justify-center">
-                <span className="text-white font-medium text-2xl tracking-wider leading-none flex items-center justify-center" style={{ marginTop: '-12%' }}>p</span>
+                <span className="text-white font-medium text-2xl tracking-wider leading-none flex items-center justify-center" style={{ marginTop: '-17%' }}>p</span>
               </div>
               <h1 className="text-2xl font-medium text-black tracking-wide">
                 polylogos
@@ -42,6 +42,16 @@ export const Header = () => {
               }`}
             >
               Explore
+            </Link>
+            <Link 
+              to="/visualize" 
+              className={`text-sm tracking-wide uppercase transition-colors ${
+                location.pathname === '/visualize' 
+                  ? 'text-black font-medium' 
+                  : 'text-gray-600 hover:text-black'
+              }`}
+            >
+              Visualize
             </Link>
             <Link 
               to="/posting" 

@@ -1,0 +1,70 @@
+
+import { useState, useEffect, useRef } from 'react';
+import { Header } from '@/components/Header';
+import { NetworkVisualization } from '@/components/NetworkVisualization';
+import { TopicFilter } from '@/components/TopicFilter';
+import { VisualizationControls } from '@/components/VisualizationControls';
+import { StatsPanel } from '@/components/StatsPanel';
+
+const Visualize = () => {
+  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [viewMode, setViewMode] = useState('network');
+  const [isAnimating, setIsAnimating] = useState(true);
+
+  return (
+    <div className="min-h-screen bg-gray-900">
+      <Header />
+      
+      {/* Dark overlay with gradient */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-cyan-900/20"></div>
+        
+        <div className="relative max-w-7xl mx-auto px-6 py-8">
+          {/* Header Section */}
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-white mb-4 tracking-tight">
+              Topic Network Visualization
+            </h1>
+            <p className="text-gray-300 text-lg max-w-3xl">
+              Explore the interconnected web of AI conversations, topics, and themes. 
+              Watch as ideas flow and connect across the polylogos universe.
+            </p>
+          </div>
+
+          {/* Controls Row */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <TopicFilter 
+              selectedFilter={selectedFilter}
+              onFilterChange={setSelectedFilter}
+            />
+            <VisualizationControls
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+              isAnimating={isAnimating}
+              onAnimationToggle={setIsAnimating}
+            />
+          </div>
+
+          {/* Main Visualization Area */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Stats Panel */}
+            <div className="lg:col-span-1">
+              <StatsPanel selectedFilter={selectedFilter} />
+            </div>
+
+            {/* Main Visualization */}
+            <div className="lg:col-span-3">
+              <NetworkVisualization
+                filter={selectedFilter}
+                viewMode={viewMode}
+                isAnimating={isAnimating}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Visualize;
