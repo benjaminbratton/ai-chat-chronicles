@@ -1,4 +1,6 @@
+
 import { Clock, Heart, MessageSquare, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Conversation {
   id: number;
@@ -40,13 +42,17 @@ export const FeaturedConversation = ({ conversation }: FeaturedConversationProps
 
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <img
-              src={conversation.authorImage}
-              alt={conversation.author}
-              className="w-12 h-12 rounded-full object-cover"
-            />
+            <Link to="/profile">
+              <img
+                src={conversation.authorImage}
+                alt={conversation.author}
+                className="w-12 h-12 rounded-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
+              />
+            </Link>
             <div>
-              <p className="font-medium text-gray-900">{conversation.author}</p>
+              <Link to="/profile">
+                <p className="font-medium text-gray-900 hover:text-blue-600 transition-colors cursor-pointer">{conversation.author}</p>
+              </Link>
               <div className="flex items-center space-x-4 text-sm text-gray-500">
                 <span>{new Date(conversation.publishDate).toLocaleDateString()}</span>
                 <div className="flex items-center space-x-1">
