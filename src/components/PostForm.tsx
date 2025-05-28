@@ -1,10 +1,10 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { AIModelSelect } from "@/components/AIModelSelect";
+import { CategoryFilter } from "@/components/CategoryFilter";
 
 interface PostFormProps {
   onSubmit: (data: any) => void;
@@ -17,7 +17,8 @@ export const PostForm = ({ onSubmit }: PostFormProps) => {
     date: new Date().toISOString().split('T')[0],
     aiModel: "",
     content: "",
-    excerpt: ""
+    excerpt: "",
+    category: "Philosophy"
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -77,6 +78,15 @@ export const PostForm = ({ onSubmit }: PostFormProps) => {
             onValueChange={(value) => handleChange("aiModel", value)}
           />
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label>Category</Label>
+        <CategoryFilter
+          selectedCategory={formData.category}
+          onCategoryChange={(category) => handleChange("category", category)}
+          excludeAll={true}
+        />
       </div>
 
       <div className="space-y-2">

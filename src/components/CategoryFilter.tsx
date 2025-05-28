@@ -2,6 +2,7 @@
 interface CategoryFilterProps {
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
+  excludeAll?: boolean;
 }
 
 const categories = [
@@ -15,11 +16,13 @@ const categories = [
   "Personal"
 ];
 
-export const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterProps) => {
+export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll = false }: CategoryFilterProps) => {
+  const filteredCategories = excludeAll ? categories.filter(cat => cat !== "All") : categories;
+
   return (
     <div className="mb-8">
       <div className="flex flex-wrap gap-3">
-        {categories.map((category) => (
+        {filteredCategories.map((category) => (
           <button
             key={category}
             onClick={() => onCategoryChange(category)}
