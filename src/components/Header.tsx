@@ -12,7 +12,7 @@ export const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-purple-400 flex items-center justify-center">
+              <div className="w-10 h-10 bg-gray-400 flex items-center justify-center">
                 <span className="text-white font-medium text-2xl tracking-wider leading-none flex items-center justify-center" style={{ marginTop: '-17%' }}>p</span>
               </div>
               <h1 className="text-2xl font-medium text-black tracking-wide">
@@ -54,14 +54,14 @@ export const Header = () => {
               Visualize
             </Link>
             <Link 
-              to="/bounties" 
+              to="/seminars" 
               className={`text-sm tracking-wide uppercase transition-colors ${
-                location.pathname === '/bounties' 
+                location.pathname === '/seminars' 
                   ? 'text-black font-medium' 
                   : 'text-gray-600 hover:text-black'
               }`}
             >
-              Bounties
+              Seminars
             </Link>
             <Link 
               to="/posting" 
