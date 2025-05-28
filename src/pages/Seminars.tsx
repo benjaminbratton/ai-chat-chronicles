@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { Header } from '@/components/Header';
+import { BrowserWindow } from '@/components/BrowserWindow';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -99,6 +100,7 @@ const Seminars = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <BrowserWindow />
       <Header />
       
       <div className="max-w-6xl mx-auto px-6 py-8">
