@@ -1,6 +1,7 @@
 
 import { ArrowUp, ArrowDown, MessageSquare, Clock, Share2, Bookmark } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Post {
   id: number;
@@ -99,9 +100,11 @@ export const PostCard = ({ post }: PostCardProps) => {
           </div>
 
           {/* Post Title */}
-          <h3 className="text-lg font-medium text-gray-900 mb-2 hover:text-blue-600 cursor-pointer line-clamp-2">
-            {post.title}
-          </h3>
+          <Link to={`/post/${post.id}`}>
+            <h3 className="text-lg font-medium text-gray-900 mb-2 hover:text-blue-600 cursor-pointer line-clamp-2">
+              {post.title}
+            </h3>
+          </Link>
 
           {/* Post Content Preview */}
           <p className="text-gray-600 text-sm mb-3 line-clamp-2">
@@ -110,10 +113,13 @@ export const PostCard = ({ post }: PostCardProps) => {
 
           {/* Post Actions */}
           <div className="flex items-center space-x-4 text-xs text-gray-500">
-            <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+            <Link 
+              to={`/post/${post.id}`}
+              className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors"
+            >
               <MessageSquare className="w-4 h-4" />
               <span>{post.comments} comments</span>
-            </button>
+            </Link>
             <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
               <Share2 className="w-4 h-4" />
               <span>Share</span>
