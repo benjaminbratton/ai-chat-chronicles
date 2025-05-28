@@ -1,4 +1,5 @@
 
+
 import { Button } from '@/components/ui/button';
 
 interface TopicFilterProps {
@@ -8,12 +9,12 @@ interface TopicFilterProps {
 
 export const TopicFilter = ({ selectedFilter, onFilterChange }: TopicFilterProps) => {
   const filters = [
-    { value: 'all', label: 'All Topics', color: 'bg-gray-500' },
-    { value: 'technology', label: 'Technology', color: 'bg-blue-500' },
-    { value: 'philosophy', label: 'Philosophy', color: 'bg-purple-500' },
-    { value: 'society', label: 'Society', color: 'bg-green-500' },
-    { value: 'economics', label: 'Economics', color: 'bg-yellow-500' },
-    { value: 'environment', label: 'Environment', color: 'bg-cyan-500' },
+    { value: 'all', label: 'All Topics', color: 'bg-gray-400' },
+    { value: 'technology', label: 'Technology', color: 'bg-blue-300' },
+    { value: 'philosophy', label: 'Philosophy', color: 'bg-purple-300' },
+    { value: 'society', label: 'Society', color: 'bg-green-300' },
+    { value: 'economics', label: 'Economics', color: 'bg-yellow-300' },
+    { value: 'environment', label: 'Environment', color: 'bg-cyan-300' },
   ];
 
   return (
@@ -25,7 +26,7 @@ export const TopicFilter = ({ selectedFilter, onFilterChange }: TopicFilterProps
           variant={selectedFilter === filter.value ? "default" : "outline"}
           className={`
             ${selectedFilter === filter.value 
-              ? `${filter.color} text-white border-transparent hover:opacity-90` 
+              ? `${filter.color} text-gray-700 border-transparent hover:opacity-90` 
               : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
             }
             transition-all duration-200
@@ -38,3 +39,4 @@ export const TopicFilter = ({ selectedFilter, onFilterChange }: TopicFilterProps
     </div>
   );
 };
+
