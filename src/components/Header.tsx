@@ -22,7 +22,7 @@ export const Header = () => {
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-12 ml-16">
             <Link 
               to="/" 
               className={`text-sm tracking-wide uppercase transition-colors ${
