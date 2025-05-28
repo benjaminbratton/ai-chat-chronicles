@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Header } from "@/components/Header";
-import { BrowserWindow } from "@/components/BrowserWindow";
 import { PostForm } from "@/components/PostForm";
 import { CommentSection } from "@/components/CommentSection";
 
@@ -15,14 +14,13 @@ const Posting = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200">
-      <BrowserWindow />
+    <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="max-w-4xl mx-auto px-6 py-12">
+      <main className="max-w-4xl mx-auto px-6 py-16">
         {!showComments ? (
           <div>
-            <h1 className="text-4xl font-thin text-black mb-8 tracking-tight">
+            <h1 className="text-5xl font-extralight text-foreground mb-12 tracking-tight">
               Share Your AI Conversation
             </h1>
             <PostForm onSubmit={handlePostSubmit} />
@@ -31,16 +29,16 @@ const Posting = () => {
           <div>
             <button 
               onClick={() => setShowComments(false)}
-              className="mb-6 text-sm text-gray-600 hover:text-black transition-colors"
+              className="mb-8 text-sm text-muted-foreground hover:text-foreground transition-colors tracking-wider mono"
             >
               ← Back to editing
             </button>
             
             {/* Post Preview */}
-            <div className="bg-white border border-gray-300 p-8 mb-8">
-              <div className="mb-4">
-                <h1 className="text-3xl font-thin text-black mb-2">{postData?.title}</h1>
-                <div className="flex items-center space-x-4 text-sm text-gray-600">
+            <div className="industrial-surface p-12 mb-12">
+              <div className="mb-8">
+                <h1 className="text-4xl font-light text-foreground mb-4 tracking-tight">{postData?.title}</h1>
+                <div className="flex items-center space-x-6 text-sm text-muted-foreground mono">
                   <span>By {postData?.author}</span>
                   <span>•</span>
                   <span>{new Date(postData?.date).toLocaleDateString()}</span>
@@ -48,8 +46,8 @@ const Posting = () => {
                   <span>AI Model: {postData?.aiModel}</span>
                 </div>
               </div>
-              <div className="prose max-w-none">
-                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{postData?.content}</p>
+              <div className="prose prose-invert max-w-none">
+                <p className="text-foreground/90 leading-relaxed whitespace-pre-wrap font-light text-lg">{postData?.content}</p>
               </div>
             </div>
 
