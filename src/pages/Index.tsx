@@ -83,16 +83,16 @@ const Index = () => {
     : regularConversations.filter(conv => conv.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Header />
       
-      <main className="max-w-6xl mx-auto px-4 py-8">
+      <main className="max-w-6xl mx-auto px-6 py-12">
         {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
+        <div className="mb-16">
+          <h1 className="text-4xl md:text-6xl font-light text-black mb-6 tracking-tight">
             Dialogues with AI
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed font-light">
             Discover and share fascinating conversations with artificial intelligence. 
             Join our community of AI enthusiasts exploring the future of human-machine dialogue.
           </p>
@@ -100,8 +100,8 @@ const Index = () => {
 
         {/* Featured Conversation */}
         {featuredConversation && (
-          <div className="mb-16">
-            <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">Featured</h2>
+          <div className="mb-20">
+            <h2 className="text-lg font-medium text-black mb-8 uppercase tracking-wider">Featured</h2>
             <FeaturedConversation conversation={featuredConversation} />
           </div>
         )}
@@ -113,16 +113,16 @@ const Index = () => {
         />
 
         {/* Conversations Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {filteredConversations.map((conversation) => (
             <ConversationCard key={conversation.id} conversation={conversation} />
           ))}
         </div>
 
         {/* Load More */}
-        <div className="text-center mt-12">
-          <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-            Load More Conversations
+        <div className="text-center">
+          <button className="bg-black text-white px-8 py-3 font-medium text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors">
+            Load More
           </button>
         </div>
       </main>
