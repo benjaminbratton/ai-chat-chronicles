@@ -15,7 +15,7 @@ export const BrowserWindow = () => {
         {/* URL Bar */}
         <div className="flex-1 max-w-2xl mx-4">
           <div className="bg-white border border-gray-300 rounded px-3 py-1 text-sm text-gray-700">
-            🔒 aidialogues.io
+            🔒 dialogueswithai.io
           </div>
         </div>
 
