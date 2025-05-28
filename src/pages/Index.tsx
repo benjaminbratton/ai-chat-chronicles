@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Header } from "@/components/Header";
+import { BrowserWindow } from "@/components/BrowserWindow";
 import { FeaturedConversation } from "@/components/FeaturedConversation";
 import { ConversationCard } from "@/components/ConversationCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
@@ -85,6 +86,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-200">
+      <BrowserWindow />
       <Header />
       
       <main className="max-w-6xl mx-auto px-6 py-12">
