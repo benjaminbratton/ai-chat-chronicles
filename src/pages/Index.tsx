@@ -1,171 +1,133 @@
 
+import { useState } from "react";
 import { Header } from "@/components/Header";
+import { BrowserWindow } from "@/components/BrowserWindow";
 import { FeaturedConversation } from "@/components/FeaturedConversation";
 import { ConversationCard } from "@/components/ConversationCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
-import { ArrowRight, TrendingUp, Users, MessageSquare } from "lucide-react";
-import { Link } from "react-router-dom";
+
+const mockConversations = [
+  {
+    id: 1,
+    title: "Exploring the Philosophy of Consciousness with GPT-4",
+    excerpt: "A deep dive into what it means to be conscious, examining the hard problem of consciousness through the lens of artificial intelligence...",
+    author: "Dr. Sarah Chen",
+    authorImage: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=150&h=150&fit=crop&crop=face",
+    readTime: 8,
+    publishDate: "2024-01-15",
+    category: "Philosophy",
+    likes: 142,
+    comments: 23,
+    featured: true
+  },
+  {
+    id: 2,
+    title: "Claude's Take on Creative Writing Techniques",
+    excerpt: "Discovering unexpected insights about narrative structure and character development through AI collaboration...",
+    author: "Marcus Rivera",
+    authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    readTime: 5,
+    publishDate: "2024-01-14",
+    category: "Creative Writing",
+    likes: 89,
+    comments: 12,
+    featured: false
+  },
+  {
+    id: 3,
+    title: "Debugging Complex Code with AI: A Developer's Journey",
+    excerpt: "How AI assistance transformed my approach to solving challenging programming problems and improved my coding workflow...",
+    author: "Alex Thompson",
+    authorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    readTime: 12,
+    publishDate: "2024-01-13",
+    category: "Programming",
+    likes: 234,
+    comments: 45,
+    featured: false
+  },
+  {
+    id: 4,
+    title: "AI and the Future of Scientific Discovery",
+    excerpt: "Exploring how conversations with AI models are accelerating hypothesis generation and research methodologies...",
+    author: "Dr. Emily Watson",
+    authorImage: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face",
+    readTime: 10,
+    publishDate: "2024-01-12",
+    category: "Science",
+    likes: 156,
+    comments: 31,
+    featured: false
+  },
+  {
+    id: 5,
+    title: "Teaching Kids Programming Through AI Conversations",
+    excerpt: "How AI tutoring is revolutionizing computer science education and making programming accessible to young learners...",
+    author: "Jennifer Liu",
+    authorImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+    readTime: 7,
+    publishDate: "2024-01-11",
+    category: "Education",
+    likes: 98,
+    comments: 18,
+    featured: false
+  }
+];
 
 const Index = () => {
-  const featuredConversations = [
-    {
-      id: 1,
-      title: "The Future of AI Consciousness",
-      excerpt: "A deep dive into whether artificial intelligence can truly achieve consciousness, exploring philosophical implications and technical possibilities.",
-      author: "Dr. Sarah Chen",
-      date: "2024-01-15",
-      readTime: "12 min",
-      category: "Philosophy",
-      upvotes: 234,
-      comments: 56,
-      aiModel: "GPT-4"
-    },
-    {
-      id: 2,
-      title: "Climate Solutions Through Technology",
-      excerpt: "Examining how emerging technologies can address climate change, from carbon capture to renewable energy innovations.",
-      author: "Marcus Rodriguez",
-      date: "2024-01-14",
-      readTime: "8 min",
-      category: "Environment",
-      upvotes: 189,
-      comments: 43,
-      aiModel: "Claude"
-    }
-  ];
-
-  const recentConversations = [
-    {
-      id: 3,
-      title: "Understanding Quantum Computing",
-      excerpt: "Breaking down complex quantum computing concepts...",
-      author: "Alex Kim",
-      date: "2024-01-13",
-      readTime: "6 min",
-      category: "Technology",
-      upvotes: 145,
-      comments: 32,
-      aiModel: "GPT-4"
-    },
-    {
-      id: 4,
-      title: "The Ethics of Gene Editing",
-      excerpt: "Exploring the moral implications of CRISPR...",
-      author: "Dr. Maria Santos",
-      date: "2024-01-12",
-      readTime: "10 min",
-      category: "Ethics",
-      upvotes: 167,
-      comments: 28,
-      aiModel: "Claude"
-    }
-  ];
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  
+  const featuredConversation = mockConversations.find(conv => conv.featured);
+  const regularConversations = mockConversations.filter(conv => !conv.featured);
+  
+  const filteredConversations = selectedCategory === "All" 
+    ? regularConversations 
+    : regularConversations.filter(conv => conv.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-200">
+      <BrowserWindow />
       <Header />
       
-      <main>
+      <main className="max-w-6xl mx-auto px-6 py-12">
         {/* Hero Section */}
-        <section className="relative py-24 px-6">
-          <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-card/20"></div>
-          <div className="relative max-w-4xl mx-auto text-center">
-            <h1 className="text-6xl font-extralight text-foreground mb-8 tracking-tight leading-tight">
-              Where AI Conversations
-              <br />
-              <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                Become Knowledge
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-2xl mx-auto font-light">
-              Discover, share, and explore meaningful conversations with AI. 
-              Join a community building the future of human-AI dialogue.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/explore">
-                <button className="group flex items-center space-x-3 bg-foreground text-background px-8 py-4 font-medium text-sm tracking-wider hover:bg-foreground/90 transition-all duration-300 industrial-border">
-                  <span className="mono uppercase">Explore Conversations</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </Link>
-              <Link to="/posting">
-                <button className="flex items-center space-x-3 bg-transparent text-foreground px-8 py-4 font-medium text-sm tracking-wider hover:bg-card/20 transition-all duration-300 industrial-border">
-                  <span className="mono uppercase">Share Your Story</span>
-                </button>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <div className="mb-16">
+          <h1 className="text-4xl md:text-6xl font-thin text-black mb-6 tracking-tight">
+            Dialogues with AI
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed font-thin">
+            Discover and share fascinating conversations with artificial intelligence. 
+            Join our community of AI enthusiasts exploring the future of human-machine dialogue.
+          </p>
+        </div>
 
-        {/* Stats Section */}
-        <section className="py-16 px-6 border-y border-border/30">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center p-8 industrial-surface">
-                <TrendingUp className="w-8 h-8 text-foreground mx-auto mb-4" />
-                <div className="text-3xl font-light text-foreground mb-2 mono">10.2k</div>
-                <div className="text-sm text-muted-foreground tracking-wider uppercase">Conversations Shared</div>
-              </div>
-              <div className="text-center p-8 industrial-surface">
-                <Users className="w-8 h-8 text-foreground mx-auto mb-4" />
-                <div className="text-3xl font-light text-foreground mb-2 mono">2.4k</div>
-                <div className="text-sm text-muted-foreground tracking-wider uppercase">Active Contributors</div>
-              </div>
-              <div className="text-center p-8 industrial-surface">
-                <MessageSquare className="w-8 h-8 text-foreground mx-auto mb-4" />
-                <div className="text-3xl font-light text-foreground mb-2 mono">45.7k</div>
-                <div className="text-sm text-muted-foreground tracking-wider uppercase">Total Interactions</div>
-              </div>
-            </div>
+        {/* Featured Conversation */}
+        {featuredConversation && (
+          <div className="mb-20">
+            <h2 className="text-lg font-thin text-black mb-8 uppercase tracking-wider">Featured</h2>
+            <FeaturedConversation conversation={featuredConversation} />
           </div>
-        </section>
+        )}
 
-        {/* Featured Conversations */}
-        <section className="py-20 px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-12">
-              <h2 className="text-3xl font-light text-foreground mb-4 tracking-tight">
-                Featured Conversations
-              </h2>
-              <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                Curated discussions that showcase the depth and breadth of human-AI collaboration.
-              </p>
-            </div>
-            
-            <div className="grid gap-8">
-              {featuredConversations.map((conversation) => (
-                <FeaturedConversation key={conversation.id} conversation={conversation} />
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Category Filter */}
+        <CategoryFilter 
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
 
-        {/* Category Filter & Recent */}
-        <section className="py-20 px-6 bg-card/10">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-12">
-              <h2 className="text-3xl font-light text-foreground mb-4 tracking-tight">
-                Recent Conversations
-              </h2>
-              <CategoryFilter />
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              {recentConversations.map((conversation) => (
-                <ConversationCard key={conversation.id} conversation={conversation} />
-              ))}
-            </div>
-            
-            <div className="text-center mt-12">
-              <Link to="/explore">
-                <button className="group flex items-center space-x-3 bg-transparent text-foreground px-8 py-4 font-medium text-sm tracking-wider hover:bg-card/20 transition-all duration-300 industrial-border mx-auto">
-                  <span className="mono uppercase">View All Conversations</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* Conversations Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {filteredConversations.map((conversation) => (
+            <ConversationCard key={conversation.id} conversation={conversation} />
+          ))}
+        </div>
+
+        {/* Load More */}
+        <div className="text-center">
+          <button className="bg-black text-white px-8 py-3 font-thin text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors">
+            Load More
+          </button>
+        </div>
       </main>
     </div>
   );
