@@ -1,20 +1,49 @@
 
 import { Search, PlusCircle, User } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 export const Header = () => {
+  const location = useLocation();
+  
   return (
     <header className="bg-white border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-purple-800 flex items-center justify-center">
-              <span className="text-white font-medium text-2xl tracking-wider">P</span>
-            </div>
-            <h1 className="text-2xl font-medium text-black tracking-wide">
-              polylogos
-            </h1>
+            <Link to="/" className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-purple-800 flex items-center justify-center">
+                <span className="text-white font-medium text-2xl tracking-wider">p</span>
+              </div>
+              <h1 className="text-2xl font-medium text-black tracking-wide">
+                polylogos
+              </h1>
+            </Link>
           </div>
+
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link 
+              to="/" 
+              className={`text-sm tracking-wide uppercase transition-colors ${
+                location.pathname === '/' 
+                  ? 'text-black font-medium' 
+                  : 'text-gray-600 hover:text-black'
+              }`}
+            >
+              Explore
+            </Link>
+            <Link 
+              to="/posting" 
+              className={`text-sm tracking-wide uppercase transition-colors ${
+                location.pathname === '/posting' 
+                  ? 'text-black font-medium' 
+                  : 'text-gray-600 hover:text-black'
+              }`}
+            >
+              Share
+            </Link>
+          </nav>
 
           {/* Search Bar */}
           <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
@@ -30,10 +59,12 @@ export const Header = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
-            <button className="flex items-center space-x-2 bg-black text-white px-4 py-2.5 font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors">
-              <PlusCircle className="w-4 h-4" />
-              <span className="hidden sm:block uppercase">Share</span>
-            </button>
+            <Link to="/posting">
+              <button className="flex items-center space-x-2 bg-black text-white px-4 py-2.5 font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors">
+                <PlusCircle className="w-4 h-4" />
+                <span className="hidden sm:block uppercase">Share</span>
+              </button>
+            </Link>
             <button className="p-2.5 text-gray-600 hover:text-black transition-colors">
               <User className="w-5 h-5" />
             </button>
