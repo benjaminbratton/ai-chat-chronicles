@@ -1,4 +1,3 @@
-
 import { Clock, Heart, MessageSquare, ArrowRight } from "lucide-react";
 
 interface Conversation {
@@ -31,7 +30,7 @@ export const FeaturedConversation = ({ conversation }: FeaturedConversationProps
           </span>
         </div>
         
-        <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 leading-tight">
+        <h2 className="text-3xl md:text-4xl font-serif font-thin text-gray-900 mb-4 leading-tight">
           {conversation.title}
         </h2>
         
