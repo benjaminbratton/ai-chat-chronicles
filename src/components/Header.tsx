@@ -13,7 +13,7 @@ export const Header = () => {
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-purple-200 flex items-center justify-center">
-                <span className="text-purple-400 font-medium text-2xl tracking-wider leading-none flex items-center justify-center" style={{ marginTop: '-17%' }}>p</span>
+                <span className="text-transparent font-medium text-2xl tracking-wider leading-none flex items-center justify-center" style={{ marginTop: '-17%' }}>p</span>
               </div>
               <h1 className="text-2xl font-medium text-black tracking-wide">
                 polylogos
