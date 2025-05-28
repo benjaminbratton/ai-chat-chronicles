@@ -1,4 +1,3 @@
-
 import { Search, PlusCircle, User } from "lucide-react";
 
 export const Header = () => {
@@ -9,7 +8,7 @@ export const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-black flex items-center justify-center">
-              <span className="text-white font-medium text-lg tracking-wider">P</span>
+              <span className="text-white font-medium text-xl tracking-wider">P</span>
             </div>
             <h1 className="text-2xl font-medium text-black tracking-wide uppercase">
               Prompts
