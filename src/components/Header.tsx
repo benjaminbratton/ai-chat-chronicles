@@ -54,6 +54,16 @@ export const Header = () => {
               Visualize
             </Link>
             <Link 
+              to="/bounties" 
+              className={`text-sm tracking-wide uppercase transition-colors ${
+                location.pathname === '/bounties' 
+                  ? 'text-black font-medium' 
+                  : 'text-gray-600 hover:text-black'
+              }`}
+            >
+              Bounties
+            </Link>
+            <Link 
               to="/posting" 
               className={`text-sm tracking-wide uppercase transition-colors ${
                 location.pathname === '/posting' 

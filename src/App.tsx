@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Explore from "./pages/Explore";
 import Posting from "./pages/Posting";
 import Visualize from "./pages/Visualize";
+import Bounties from "./pages/Bounties";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/explore" element={<Explore />} />
           <Route path="/posting" element={<Posting />} />
           <Route path="/visualize" element={<Visualize />} />
+          <Route path="/bounties" element={<Bounties />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
