@@ -11,8 +11,8 @@ export const Header = () => {
             <div className="w-10 h-10 bg-black flex items-center justify-center">
               <span className="text-white font-medium text-2xl tracking-wider">P</span>
             </div>
-            <h1 className="text-2xl font-medium text-black tracking-wide uppercase">
-              Prompts
+            <h1 className="text-2xl font-medium text-black tracking-wide">
+              polylogos
             </h1>
           </div>
 
