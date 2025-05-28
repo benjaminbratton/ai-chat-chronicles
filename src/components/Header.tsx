@@ -12,7 +12,7 @@ export const Header = () => {
               <span className="text-white font-bold text-sm">AI</span>
             </div>
             <h1 className="text-xl font-serif font-bold text-gray-900">
-              ConversationBoard
+              Prompts
             </h1>
           </div>
 
