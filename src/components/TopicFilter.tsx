@@ -8,12 +8,12 @@ interface TopicFilterProps {
 
 export const TopicFilter = ({ selectedFilter, onFilterChange }: TopicFilterProps) => {
   const filters = [
-    { value: 'all', label: 'All Topics', color: 'bg-gray-600' },
-    { value: 'technology', label: 'Technology', color: 'bg-blue-600' },
-    { value: 'philosophy', label: 'Philosophy', color: 'bg-purple-600' },
-    { value: 'society', label: 'Society', color: 'bg-green-600' },
-    { value: 'economics', label: 'Economics', color: 'bg-yellow-600' },
-    { value: 'environment', label: 'Environment', color: 'bg-cyan-600' },
+    { value: 'all', label: 'All Topics', color: 'bg-gray-500' },
+    { value: 'technology', label: 'Technology', color: 'bg-blue-500' },
+    { value: 'philosophy', label: 'Philosophy', color: 'bg-purple-500' },
+    { value: 'society', label: 'Society', color: 'bg-green-500' },
+    { value: 'economics', label: 'Economics', color: 'bg-yellow-500' },
+    { value: 'environment', label: 'Environment', color: 'bg-cyan-500' },
   ];
 
   return (
