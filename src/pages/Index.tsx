@@ -11,7 +11,7 @@ const mockConversations = [
     title: "Exploring the Philosophy of Consciousness with GPT-4",
     excerpt: "A deep dive into what it means to be conscious, examining the hard problem of consciousness through the lens of artificial intelligence...",
     author: "Dr. Sarah Chen",
-    authorImage: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=150&h=150&fit=crop&crop=face",
+    authorImage: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
     readTime: 8,
     publishDate: "2024-01-15",
     category: "Philosophy",
@@ -90,10 +90,10 @@ const Index = () => {
       <main className="max-w-6xl mx-auto px-6 py-12">
         {/* Hero Section */}
         <div className="mb-16">
-          <h1 className="text-4xl md:text-6xl font-light text-black mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-extralight text-black mb-6 tracking-tight">
             Dialogues with AI
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed font-light">
+          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed font-extralight">
             Discover and share fascinating conversations with artificial intelligence. 
             Join our community of AI enthusiasts exploring the future of human-machine dialogue.
           </p>
@@ -102,7 +102,7 @@ const Index = () => {
         {/* Featured Conversation */}
         {featuredConversation && (
           <div className="mb-20">
-            <h2 className="text-lg font-medium text-black mb-8 uppercase tracking-wider">Featured</h2>
+            <h2 className="text-lg font-light text-black mb-8 uppercase tracking-wider">Featured</h2>
             <FeaturedConversation conversation={featuredConversation} />
           </div>
         )}
@@ -122,7 +122,7 @@ const Index = () => {
 
         {/* Load More */}
         <div className="text-center">
-          <button className="bg-black text-white px-8 py-3 font-medium text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors">
+          <button className="bg-black text-white px-8 py-3 font-light text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors">
             Load More
           </button>
         </div>
