@@ -97,11 +97,11 @@ export const StatsPanel = ({ selectedFilter }: StatsPanelProps) => {
         <CardContent>
           <div className="space-y-2">
             {[
-              { name: 'Technology', color: 'bg-blue-600' },
-              { name: 'Philosophy', color: 'bg-purple-600' },
-              { name: 'Society', color: 'bg-green-600' },
-              { name: 'Economics', color: 'bg-yellow-600' },
-              { name: 'Environment', color: 'bg-cyan-600' },
+              { name: 'Technology', color: 'bg-gray-400' },
+              { name: 'Philosophy', color: 'bg-purple-400' },
+              { name: 'Society', color: 'bg-green-400' },
+              { name: 'Economics', color: 'bg-yellow-400' },
+              { name: 'Environment', color: 'bg-cyan-400' },
             ].map((category, index) => (
               <div key={index} className="flex items-center space-x-2">
                 <div className={`w-3 h-3 rounded-full ${category.color}`}></div>

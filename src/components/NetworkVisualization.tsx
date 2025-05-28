@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { Card } from '@/components/ui/card';
 
@@ -60,13 +61,13 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      'Technology': '#3B82F6',
-      'Philosophy': '#8B5CF6',
-      'Society': '#10B981',
-      'Economics': '#F59E0B',
-      'Environment': '#06B6D4',
+      'Technology': '#9CA3AF',
+      'Philosophy': '#A78BFA',
+      'Society': '#86EFAC',
+      'Economics': '#FDE047',
+      'Environment': '#67E8F9',
     };
-    return colors[category as keyof typeof colors] || '#6B7280';
+    return colors[category as keyof typeof colors] || '#9CA3AF';
   };
 
   useEffect(() => {
@@ -95,7 +96,7 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
       ctx.fillRect(0, 0, rect.width, rect.height);
 
       // Draw links
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.lineWidth = 1;
       links.forEach(link => {
         const sourceNode = nodes.find(n => n.id === link.source);
@@ -104,7 +105,7 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
           ctx.beginPath();
           ctx.moveTo(sourceNode.x, sourceNode.y);
           ctx.lineTo(targetNode.x, targetNode.y);
-          ctx.globalAlpha = link.strength * 0.6;
+          ctx.globalAlpha = link.strength * 0.3;
           ctx.stroke();
           ctx.globalAlpha = 1;
         }
@@ -122,18 +123,18 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
         
         // Node fill
         ctx.fillStyle = getCategoryColor(node.category);
-        ctx.globalAlpha = isSelected ? 1 : 0.8;
+        ctx.globalAlpha = isSelected ? 0.7 : 0.5;
         ctx.fill();
         
         // Node border
-        ctx.strokeStyle = isHovered ? '#000000' : 'rgba(0, 0, 0, 0.2)';
-        ctx.lineWidth = isHovered ? 3 : 1;
+        ctx.strokeStyle = isHovered ? '#6B7280' : 'rgba(0, 0, 0, 0.1)';
+        ctx.lineWidth = isHovered ? 2 : 1;
         ctx.stroke();
         ctx.globalAlpha = 1;
 
         // Node label
         if (isHovered || isSelected) {
-          ctx.fillStyle = '#000000';
+          ctx.fillStyle = '#4B5563';
           ctx.font = '12px Inter, sans-serif';
           ctx.textAlign = 'center';
           ctx.fillText(node.label, node.x, node.y - node.size - 10);
