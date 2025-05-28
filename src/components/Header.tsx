@@ -8,10 +8,10 @@ export const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-black flex items-center justify-center">
-              <span className="text-white font-medium text-sm tracking-wider">P</span>
+            <div className="w-10 h-10 bg-black flex items-center justify-center">
+              <span className="text-white font-medium text-base tracking-wider">P</span>
             </div>
-            <h1 className="text-xl font-medium text-black tracking-wide uppercase">
+            <h1 className="text-2xl font-medium text-black tracking-wide uppercase">
               Prompts
             </h1>
           </div>
