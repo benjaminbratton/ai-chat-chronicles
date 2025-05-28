@@ -5,18 +5,22 @@ import { ConversationCard } from "@/components/ConversationCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { ArrowRight, TrendingUp, Users, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Index = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   const featuredConversations = [
     {
       id: 1,
       title: "The Future of AI Consciousness",
       excerpt: "A deep dive into whether artificial intelligence can truly achieve consciousness, exploring philosophical implications and technical possibilities.",
       author: "Dr. Sarah Chen",
-      date: "2024-01-15",
-      readTime: "12 min",
+      authorImage: "/placeholder.svg",
+      readTime: 12,
+      publishDate: "2024-01-15",
       category: "Philosophy",
-      upvotes: 234,
+      likes: 234,
       comments: 56,
       aiModel: "GPT-4"
     },
@@ -25,10 +29,11 @@ const Index = () => {
       title: "Climate Solutions Through Technology",
       excerpt: "Examining how emerging technologies can address climate change, from carbon capture to renewable energy innovations.",
       author: "Marcus Rodriguez",
-      date: "2024-01-14",
-      readTime: "8 min",
+      authorImage: "/placeholder.svg",
+      readTime: 8,
+      publishDate: "2024-01-14",
       category: "Environment",
-      upvotes: 189,
+      likes: 189,
       comments: 43,
       aiModel: "Claude"
     }
@@ -40,10 +45,11 @@ const Index = () => {
       title: "Understanding Quantum Computing",
       excerpt: "Breaking down complex quantum computing concepts...",
       author: "Alex Kim",
-      date: "2024-01-13",
-      readTime: "6 min",
+      authorImage: "/placeholder.svg",
+      readTime: 6,
+      publishDate: "2024-01-13",
       category: "Technology",
-      upvotes: 145,
+      likes: 145,
       comments: 32,
       aiModel: "GPT-4"
     },
@@ -52,10 +58,11 @@ const Index = () => {
       title: "The Ethics of Gene Editing",
       excerpt: "Exploring the moral implications of CRISPR...",
       author: "Dr. Maria Santos",
-      date: "2024-01-12",
-      readTime: "10 min",
+      authorImage: "/placeholder.svg",
+      readTime: 10,
+      publishDate: "2024-01-12",
       category: "Ethics",
-      upvotes: 167,
+      likes: 167,
       comments: 28,
       aiModel: "Claude"
     }
@@ -147,7 +154,10 @@ const Index = () => {
               <h2 className="text-3xl font-light text-foreground mb-4 tracking-tight">
                 Recent Conversations
               </h2>
-              <CategoryFilter />
+              <CategoryFilter 
+                selectedCategory={selectedCategory}
+                onCategoryChange={setSelectedCategory}
+              />
             </div>
             
             <div className="grid md:grid-cols-2 gap-6">
