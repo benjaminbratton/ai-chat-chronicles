@@ -90,10 +90,12 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
     });
 
     const draw = () => {
-      ctx.clearRect(0, 0, rect.width, rect.height);
+      // Clear with light background
+      ctx.fillStyle = '#f9fafb';
+      ctx.fillRect(0, 0, rect.width, rect.height);
 
       // Draw links
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
       ctx.lineWidth = 1;
       links.forEach(link => {
         const sourceNode = nodes.find(n => n.id === link.source);
@@ -124,14 +126,14 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
         ctx.fill();
         
         // Node border
-        ctx.strokeStyle = isHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.3)';
+        ctx.strokeStyle = isHovered ? '#000000' : 'rgba(0, 0, 0, 0.2)';
         ctx.lineWidth = isHovered ? 3 : 1;
         ctx.stroke();
         ctx.globalAlpha = 1;
 
         // Node label
         if (isHovered || isSelected) {
-          ctx.fillStyle = '#ffffff';
+          ctx.fillStyle = '#000000';
           ctx.font = '12px Inter, sans-serif';
           ctx.textAlign = 'center';
           ctx.fillText(node.label, node.x, node.y - node.size - 10);
@@ -228,21 +230,21 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
   };
 
   return (
-    <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
+    <Card className="bg-white border-gray-200">
       <div className="p-6">
         <div className="relative">
           <canvas
             ref={canvasRef}
-            className="w-full h-[600px] bg-transparent rounded-lg"
+            className="w-full h-[600px] bg-gray-50 rounded-lg border border-gray-200"
             onClick={handleCanvasClick}
             onMouseMove={handleCanvasMouseMove}
           />
           
           {selectedNode && (
-            <div className="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg p-4 max-w-xs">
-              <h3 className="text-white font-semibold mb-2">{selectedNode.label}</h3>
-              <p className="text-gray-300 text-sm mb-2">Category: {selectedNode.category}</p>
-              <p className="text-gray-300 text-sm">Connections: {selectedNode.connections}</p>
+            <div className="absolute top-4 right-4 bg-white border border-gray-200 rounded-lg p-4 max-w-xs shadow-lg">
+              <h3 className="text-black font-semibold mb-2">{selectedNode.label}</h3>
+              <p className="text-gray-600 text-sm mb-2">Category: {selectedNode.category}</p>
+              <p className="text-gray-600 text-sm">Connections: {selectedNode.connections}</p>
             </div>
           )}
         </div>

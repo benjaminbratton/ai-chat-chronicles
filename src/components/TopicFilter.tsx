@@ -25,10 +25,10 @@ export const TopicFilter = ({ selectedFilter, onFilterChange }: TopicFilterProps
           variant={selectedFilter === filter.value ? "default" : "outline"}
           className={`
             ${selectedFilter === filter.value 
-              ? `${filter.color} text-white border-transparent` 
-              : 'bg-gray-800/50 text-gray-300 border-gray-600 hover:bg-gray-700/50'
+              ? `${filter.color} text-white border-transparent hover:opacity-90` 
+              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
             }
-            transition-all duration-200 backdrop-blur-sm
+            transition-all duration-200
           `}
         >
           <div className={`w-2 h-2 rounded-full ${filter.color} mr-2`}></div>
