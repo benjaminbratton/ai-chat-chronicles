@@ -1,9 +1,8 @@
-
-import { ConversationCard } from "@/components/ConversationCard";
+import { useState } from "react";
 import { Header } from "@/components/Header";
 import { FeaturedConversation } from "@/components/FeaturedConversation";
+import { ConversationCard } from "@/components/ConversationCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
-import { useState } from "react";
 
 const mockConversations = [
   {
@@ -90,12 +89,12 @@ const Index = () => {
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-serif font-bold text-gray-900 mb-4">
-            AI Conversations
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
+            Dialogues with AI
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Discover, share, and explore meaningful conversations with artificial intelligence. 
-            A curated collection of insights, discoveries, and breakthroughs.
+            Discover and share fascinating conversations with artificial intelligence. 
+            Join our community of AI enthusiasts exploring the future of human-machine dialogue.
           </p>
         </div>
 
