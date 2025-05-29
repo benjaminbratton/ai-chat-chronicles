@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,6 +11,7 @@ import Seminars from "./pages/Seminars";
 import Profile from "./pages/Profile";
 import Post from "./pages/Post";
 import NotFound from "./pages/NotFound";
+import MaxTegmark from "./pages/MaxTegmark";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +28,7 @@ const App = () => (
           <Route path="/visualize" element={<Visualize />} />
           <Route path="/seminars" element={<Seminars />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/max-tegmark" element={<MaxTegmark />} />
           <Route path="/post/:id" element={<Post />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
