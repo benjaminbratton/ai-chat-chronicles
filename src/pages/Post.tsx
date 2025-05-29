@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Header } from "@/components/Header";
@@ -106,6 +105,45 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
     }
   ];
 
+  const similarChats = [
+    {
+      id: 1,
+      title: "Claude helped me prove the Poincaré conjecture application",
+      author: "TopologyExplorer",
+      authorAvatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face",
+      category: "Mathematics",
+      aiModel: "Claude",
+      upvotes: 287,
+      comments: 45,
+      timestamp: "3 days ago",
+      excerpt: "Working on manifold classification when Claude guided me through a complex proof involving fundamental groups..."
+    },
+    {
+      id: 2,
+      title: "GPT-4 solved my differential geometry problem in minutes",
+      author: "GeometryStudent",
+      authorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face",
+      category: "Mathematics", 
+      aiModel: "GPT-4",
+      upvotes: 156,
+      comments: 23,
+      timestamp: "1 week ago",
+      excerpt: "Been stuck on Riemannian curvature calculations for my thesis. The AI's step-by-step approach was brilliant..."
+    },
+    {
+      id: 3,
+      title: "How ChatGPT taught me algebraic number theory",
+      author: "NumberTheoryFan",
+      authorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face",
+      category: "Mathematics",
+      aiModel: "ChatGPT",
+      upvotes: 203,
+      comments: 31,
+      timestamp: "5 days ago",
+      excerpt: "Galois theory was completely abstract until ChatGPT helped me understand field extensions through concrete examples..."
+    }
+  ];
+
   const handleVote = (type: 'up' | 'down') => {
     if (type === 'up') {
       if (upvoted) {
@@ -139,370 +177,432 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
       <BrowserWindow />
       <Header />
       
-      <main className="max-w-4xl mx-auto px-4 py-6">
-        {/* Back Button */}
-        <Link 
-          to="/explore" 
-          className="inline-flex items-center text-sm text-gray-600 hover:text-black mb-6 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          Back to Explore
-        </Link>
+      <main className="max-w-7xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Main Content Column */}
+          <div className="lg:col-span-3">
+            {/* Back Button */}
+            <Link 
+              to="/explore" 
+              className="inline-flex items-center text-sm text-gray-600 hover:text-black mb-6 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-1" />
+              Back to Explore
+            </Link>
 
-        {/* Post Header */}
-        <div className="bg-white rounded-lg border border-gray-200 mb-6">
-          <div className="flex">
-            {/* Vote Section */}
-            <div className="flex flex-col items-center p-4 bg-gray-50 rounded-l-lg">
-              <button
-                onClick={() => handleVote('up')}
-                className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-                  upvoted ? 'text-orange-500' : 'text-gray-400'
-                }`}
-              >
-                <ArrowUp className="w-6 h-6" />
-              </button>
-              <span className={`text-lg font-bold ${upvoted ? 'text-orange-500' : downvoted ? 'text-blue-500' : 'text-gray-600'}`}>
-                {currentUpvotes}
-              </span>
-              <button
-                onClick={() => handleVote('down')}
-                className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-                  downvoted ? 'text-blue-500' : 'text-gray-400'
-                }`}
-              >
-                <ArrowDown className="w-6 h-6" />
-              </button>
+            {/* Post Header */}
+            <div className="bg-white rounded-lg border border-gray-200 mb-6">
+              <div className="flex">
+                {/* Vote Section */}
+                <div className="flex flex-col items-center p-4 bg-gray-50 rounded-l-lg">
+                  <button
+                    onClick={() => handleVote('up')}
+                    className={`p-2 rounded hover:bg-gray-200 transition-colors ${
+                      upvoted ? 'text-orange-500' : 'text-gray-400'
+                    }`}
+                  >
+                    <ArrowUp className="w-6 h-6" />
+                  </button>
+                  <span className={`text-lg font-bold ${upvoted ? 'text-orange-500' : downvoted ? 'text-blue-500' : 'text-gray-600'}`}>
+                    {currentUpvotes}
+                  </span>
+                  <button
+                    onClick={() => handleVote('down')}
+                    className={`p-2 rounded hover:bg-gray-200 transition-colors ${
+                      downvoted ? 'text-blue-500' : 'text-gray-400'
+                    }`}
+                  >
+                    <ArrowDown className="w-6 h-6" />
+                  </button>
+                </div>
+
+                {/* Content Section */}
+                <div className="flex-1 p-6">
+                  {/* Post Meta */}
+                  <div className="flex items-center space-x-2 mb-4 text-sm text-gray-500">
+                    <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">
+                      r/{post.category}
+                    </span>
+                    <span>•</span>
+                    <div className="flex items-center space-x-2">
+                      <img
+                        src={post.authorAvatar}
+                        alt={post.author}
+                        className="w-6 h-6 rounded-full"
+                      />
+                      <span>u/{post.author}</span>
+                    </div>
+                    <span>•</span>
+                    <span>{post.timestamp}</span>
+                    <span>•</span>
+                    <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">
+                      {post.aiModel}
+                    </span>
+                  </div>
+
+                  {/* Post Title */}
+                  <h1 className="text-2xl font-bold text-gray-900 mb-4">{post.title}</h1>
+
+                  {/* Post Content */}
+                  <div className="prose max-w-none mb-6">
+                    <p className="text-gray-700 leading-relaxed mb-4">{post.fullContent}</p>
+                  </div>
+
+                  {/* Post Actions */}
+                  <div className="flex items-center space-x-4 text-sm text-gray-500 border-t pt-4">
+                    <div className="flex items-center space-x-1">
+                      <MessageSquare className="w-4 h-4" />
+                      <span>{post.comments} comments</span>
+                    </div>
+                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                      <Share2 className="w-4 h-4" />
+                      <span>Share</span>
+                    </button>
+                    <button
+                      onClick={() => setBookmarked(!bookmarked)}
+                      className={`flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors ${
+                        bookmarked ? 'text-blue-600' : ''
+                      }`}
+                    >
+                      <Bookmark className="w-4 h-4" />
+                      <span>Save</span>
+                    </button>
+                    <div className="flex items-center space-x-1">
+                      <Clock className="w-3 h-3" />
+                      <span>{post.readTime} min read</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Content Section */}
-            <div className="flex-1 p-6">
-              {/* Post Meta */}
-              <div className="flex items-center space-x-2 mb-4 text-sm text-gray-500">
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">
-                  r/{post.category}
-                </span>
-                <span>•</span>
-                <div className="flex items-center space-x-2">
-                  <img
-                    src={post.authorAvatar}
-                    alt={post.author}
-                    className="w-6 h-6 rounded-full"
-                  />
-                  <span>u/{post.author}</span>
-                </div>
-                <span>•</span>
-                <span>{post.timestamp}</span>
-                <span>•</span>
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">
-                  {post.aiModel}
-                </span>
+            {/* AI Dialogue Section */}
+            <div className="bg-white rounded-lg border border-gray-200 mb-6">
+              <div className="p-6 border-b border-gray-200">
+                <h2 className="text-xl font-semibold text-gray-900">AI Conversation</h2>
+                <p className="text-sm text-gray-600 mt-1">Full dialogue with {post.aiModel}</p>
               </div>
-
-              {/* Post Title */}
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">{post.title}</h1>
-
-              {/* Post Content */}
-              <div className="prose max-w-none mb-6">
-                <p className="text-gray-700 leading-relaxed mb-4">{post.fullContent}</p>
-              </div>
-
-              {/* Post Actions */}
-              <div className="flex items-center space-x-4 text-sm text-gray-500 border-t pt-4">
-                <div className="flex items-center space-x-1">
-                  <MessageSquare className="w-4 h-4" />
-                  <span>{post.comments} comments</span>
-                </div>
-                <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                  <Share2 className="w-4 h-4" />
-                  <span>Share</span>
-                </button>
-                <button
-                  onClick={() => setBookmarked(!bookmarked)}
-                  className={`flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors ${
-                    bookmarked ? 'text-blue-600' : ''
-                  }`}
-                >
-                  <Bookmark className="w-4 h-4" />
-                  <span>Save</span>
-                </button>
-                <div className="flex items-center space-x-1">
-                  <Clock className="w-3 h-3" />
-                  <span>{post.readTime} min read</span>
+              <div className="p-6">
+                <div className="space-y-6">
+                  {post.dialogue.map((message, index) => (
+                    <div key={index} className={`flex space-x-4 ${message.role === 'assistant' ? 'bg-gray-50 -mx-6 px-6 py-4' : ''}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        message.role === 'user' ? 'bg-blue-500' : 'bg-green-500'
+                      }`}>
+                        {message.role === 'user' ? (
+                          <User className="w-4 h-4 text-white" />
+                        ) : (
+                          <span className="text-white text-xs font-bold">AI</span>
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <span className="font-medium text-sm">
+                            {message.role === 'user' ? post.author : post.aiModel}
+                          </span>
+                        </div>
+                        <div className="prose prose-sm max-w-none">
+                          <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                            {message.content}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* AI Dialogue Section */}
-        <div className="bg-white rounded-lg border border-gray-200 mb-6">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900">AI Conversation</h2>
-            <p className="text-sm text-gray-600 mt-1">Full dialogue with {post.aiModel}</p>
-          </div>
-          <div className="p-6">
-            <div className="space-y-6">
-              {post.dialogue.map((message, index) => (
-                <div key={index} className={`flex space-x-4 ${message.role === 'assistant' ? 'bg-gray-50 -mx-6 px-6 py-4' : ''}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    message.role === 'user' ? 'bg-blue-500' : 'bg-green-500'
-                  }`}>
-                    {message.role === 'user' ? (
-                      <User className="w-4 h-4 text-white" />
-                    ) : (
-                      <span className="text-white text-xs font-bold">AI</span>
-                    )}
+            {/* Analysis Section */}
+            <div className="bg-white rounded-lg border border-gray-200 mb-6">
+              <div className="p-6 border-b border-gray-200">
+                <h2 className="text-xl font-semibold text-gray-900">Author's Analysis</h2>
+                <p className="text-sm text-gray-600 mt-1">Reflection on the AI interaction by {post.author}</p>
+              </div>
+              <div className="p-6">
+                <div className="flex space-x-4">
+                  <div className="w-8 h-8 rounded-full">
+                    <img
+                      src={post.authorAvatar}
+                      alt={post.author}
+                      className="w-8 h-8 rounded-full"
+                    />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <span className="font-medium text-sm">
-                        {message.role === 'user' ? post.author : post.aiModel}
-                      </span>
+                    <div className="flex items-center space-x-2 mb-4">
+                      <span className="font-medium text-sm">{post.author}</span>
+                      <span className="text-xs text-gray-500">Posted 1 day ago</span>
                     </div>
-                    <div className="prose prose-sm max-w-none">
-                      <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                        {message.content}
+                    <div className="prose max-w-none">
+                      <p className="text-gray-700 leading-relaxed mb-4">
+                        Looking back at this conversation, I'm struck by how effectively GPT-4 guided me through what felt like an insurmountable mathematical obstacle. The key breakthrough came when it helped me visualize <span className="text-blue-600 underline cursor-pointer">the long exact sequence of homotopy groups</span> as more than just abstract symbols on a page.
+                      </p>
+                      <p className="text-gray-700 leading-relaxed mb-4">
+                        What impressed me most was the AI's pedagogical approach. Rather than simply providing the answer, it walked me through each conceptual step, ensuring I understood the underlying topology before moving forward. The explanation of <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> was particularly illuminating – I'd read about it countless times in textbooks, but the way GPT-4 connected it to the injectivity proof finally made everything click.
+                      </p>
+                      <p className="text-gray-700 leading-relaxed mb-4">
+                        This experience has fundamentally changed how I approach mathematical problem-solving. While I was initially skeptical about using AI for rigorous mathematical work, this conversation demonstrated that these tools can serve as sophisticated thinking partners. The AI didn't just solve the problem; it helped me develop a deeper intuition for <span className="text-blue-600 underline cursor-pointer">fiber bundles and their relationship to fundamental groups</span>.
+                      </p>
+                      <p className="text-gray-700 leading-relaxed">
+                        For fellow graduate students struggling with similar proofs, I'd recommend starting with the exact sequence approach. The beauty of this method is that once you understand how the exactness conditions work, the proof almost writes itself. My advisor was impressed not just with the solution, but with my newfound confidence in tackling topological arguments. Sometimes the best teacher is one who can break down complex ideas into digestible steps – whether that teacher is human or artificial.
                       </p>
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
+            </div>
+
+            {/* Comments Section */}
+            <div className="bg-white rounded-lg border border-gray-200">
+              <div className="p-6 border-b border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900">
+                  Comments ({comments.length})
+                </h3>
+              </div>
+              
+              {/* New Comment Form */}
+              <form onSubmit={handleSubmitComment} className="p-6 border-b border-gray-200 bg-gray-50">
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="commentAuthor">Name</Label>
+                    <Input
+                      id="commentAuthor"
+                      value={newComment.author}
+                      onChange={(e) => setNewComment(prev => ({ ...prev, author: e.target.value }))}
+                      placeholder="Enter your name..."
+                      className="border-gray-300 focus:border-black focus:ring-black"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="commentContent">Comment</Label>
+                    <Textarea
+                      id="commentContent"
+                      value={newComment.content}
+                      onChange={(e) => setNewComment(prev => ({ ...prev, content: e.target.value }))}
+                      placeholder="Share your thoughts..."
+                      rows={3}
+                      className="border-gray-300 focus:border-black focus:ring-black resize-none"
+                      required
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="bg-black text-white hover:bg-gray-800"
+                  >
+                    Post Comment
+                  </Button>
+                </div>
+              </form>
+              
+              {/* Comments List */}
+              <div className="divide-y divide-gray-200">
+                <div className="p-6">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-medium text-gray-600">T</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="font-medium text-sm text-black">TopologyProf</span>
+                        <span className="text-xs text-gray-500">1 day ago</span>
+                      </div>
+                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
+                        This is a classic result that I've been teaching in my graduate topology course for over fifteen years, and your experience perfectly captures why this particular theorem is so challenging for students. The key insight about using <span className="text-blue-600 underline cursor-pointer">the long exact sequence</span> is absolutely spot on, and I'm impressed by how clearly GPT-4 explained the connection between the exactness conditions and the isomorphism. What's particularly noteworthy is how the AI guided you through <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> - this is typically where students get lost because the visualization can be quite abstract. In my experience, once students grasp how the exactness at π₁(E) works, everything else falls into place naturally. Your conversation demonstrates something I've been observing more frequently: <span className="text-blue-600 underline cursor-pointer">AI tools are becoming remarkably effective pedagogical partners</span>, especially for advanced mathematics where intuition building is crucial. The step-by-step breakdown your AI provided mirrors the best practices I use in my own teaching methodology.
+                      </p>
+                      <div className="flex items-center space-x-4 text-xs text-gray-500">
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowUp className="w-3 h-3" />
+                          <span>45</span>
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowDown className="w-3 h-3" />
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <MessageSquare className="w-3 h-3" />
+                          <span>Reply (3)</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-medium text-gray-600">P</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="font-medium text-sm text-black">PhDStudent2024</span>
+                        <span className="text-xs text-gray-500">1 day ago</span>
+                      </div>
+                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
+                        Reading through your conversation gives me genuine hope for my own dissertation struggles. I'm currently working on a related problem in <span className="text-blue-600 underline cursor-pointer">differential topology</span>, dealing with vector bundles over manifolds, and I've been hesitant to use AI tools for fear of somehow 'cheating' or not developing proper mathematical intuition. Your experience shows that these tools can actually enhance understanding rather than replace it. The way GPT-4 broke down <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> was incredibly illuminating - I've read Hatcher's explanation multiple times but never quite grasped the connection to injectivity until seeing it presented this way. What strikes me most is how the AI didn't just provide a solution but helped you develop <span className="text-blue-600 underline cursor-pointer">mathematical maturity and confidence</span>. This is exactly what I need for my work on characteristic classes. Did you end up incorporating this exact approach in your final dissertation chapter? I'm curious about how your advisor reacted to the AI-assisted proof development.
+                      </p>
+                      <div className="flex items-center space-x-4 text-xs text-gray-500">
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowUp className="w-3 h-3" />
+                          <span>28</span>
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowDown className="w-3 h-3" />
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <MessageSquare className="w-3 h-3" />
+                          <span>Reply (1)</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-medium text-gray-600">A</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="font-medium text-sm text-black">AlgebraicTopology_Fan</span>
+                        <span className="text-xs text-gray-500">18 hours ago</span>
+                      </div>
+                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
+                        The step-by-step breakdown of <span className="text-blue-600 underline cursor-pointer">the exact sequence</span> is absolutely beautiful and represents everything I love about algebraic topology - the way seemingly abstract concepts suddenly crystallize into elegant solutions. I've been working through Hatcher's book as an independent study project, and this conversation really helps clarify the relationship between <span className="text-blue-600 underline cursor-pointer">fiber bundles and fundamental groups</span> that I've been struggling with. What's particularly valuable is seeing how the exactness conditions aren't just formal requirements but have deep geometric meaning. The way your AI explained how loops in the base space relate to the fiber structure through <span className="text-blue-600 underline cursor-pointer">the homotopy lifting property</span> is the kind of insight that usually takes months to develop. I'm planning to use this conversation as a reference when I tackle the exercises in Chapter 4. The pedagogical approach here - building up from the long exact sequence to the specific conditions for isomorphism - is masterful. It's making me reconsider how I approach learning advanced mathematics in general.
+                      </p>
+                      <div className="flex items-center space-x-4 text-xs text-gray-500">
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowUp className="w-3 h-3" />
+                          <span>19</span>
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowDown className="w-3 h-3" />
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <MessageSquare className="w-3 h-3" />
+                          <span>Reply (0)</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-medium text-gray-600">M</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="font-medium text-sm text-black">MathResearcher</span>
+                        <span className="text-xs text-gray-500">12 hours ago</span>
+                      </div>
+                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
+                        Your conversation raises a fascinating question about <span className="text-blue-600 underline cursor-pointer">the generalization to higher homotopy groups</span> that I've been investigating in my own research. Specifically, I'm wondering whether the isomorphism π₁(F) ≅ π₁(E) extends to πₙ(F) ≅ πₙ(E) for n > 1 under similar conditions. <span className="text-blue-600 underline cursor-pointer">The covering homotopy property</span> that GPT-4 explained so clearly is actually the key to understanding this generalization, though the higher-dimensional case requires more sophisticated tools from obstruction theory. What's particularly interesting is how your AI managed to convey the intuitive content behind what could have been a purely formal argument. In my experience reviewing papers in this area, many authors get so caught up in the technical machinery that they lose sight of the geometric picture. Your conversation demonstrates that even advanced AI can maintain both rigor and intuition simultaneously. I'm curious whether you explored any of the computational aspects - there are some beautiful connections to <span className="text-blue-600 underline cursor-pointer">spectral sequences</span> that might be relevant to your broader dissertation work.
+                      </p>
+                      <div className="flex items-center space-x-4 text-xs text-gray-500">
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowUp className="w-3 h-3" />
+                          <span>15</span>
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowDown className="w-3 h-3" />
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <MessageSquare className="w-3 h-3" />
+                          <span>Reply (2)</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-medium text-gray-600">G</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="font-medium text-sm text-black">GradStudent_Struggling</span>
+                        <span className="text-xs text-gray-500">8 hours ago</span>
+                      </div>
+                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
+                        This conversation is exactly what I needed to see right now. I'm working on a similar problem involving <span className="text-blue-600 underline cursor-pointer">principal bundles and their associated fiber bundles</span>, and I've been stuck for weeks on understanding how the group action affects the fundamental group calculations. <span className="text-blue-600 underline cursor-pointer">The covering homotopy property</span> explanation finally made everything click for me - I've been reading about it in multiple textbooks but never quite understood its geometric significance until seeing it presented in this conversational format. What's particularly helpful is seeing how the AI guided you through the logical progression without just dumping formulas. I've been hesitant to use AI tools for my research, worried that my advisor might view it negatively, but your experience shows that these tools can actually deepen mathematical understanding rather than replace it. The way GPT-4 connected <span className="text-blue-600 underline cursor-pointer">the abstract homotopy theory to concrete geometric intuition</span> is exactly the kind of bridge I need. I'm planning to try a similar approach with my own stuck problems, starting with the principal bundle version of your fiber bundle theorem.
+                      </p>
+                      <div className="flex items-center space-x-4 text-xs text-gray-500">
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowUp className="w-3 h-3" />
+                          <span>12</span>
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <ArrowDown className="w-3 h-3" />
+                        </button>
+                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                          <MessageSquare className="w-3 h-3" />
+                          <span>Reply (0)</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Analysis Section */}
-        <div className="bg-white rounded-lg border border-gray-200 mb-6">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900">Author's Analysis</h2>
-            <p className="text-sm text-gray-600 mt-1">Reflection on the AI interaction by {post.author}</p>
-          </div>
-          <div className="p-6">
-            <div className="flex space-x-4">
-              <div className="w-8 h-8 rounded-full">
-                <img
-                  src={post.authorAvatar}
-                  alt={post.author}
-                  className="w-8 h-8 rounded-full"
-                />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center space-x-2 mb-4">
-                  <span className="font-medium text-sm">{post.author}</span>
-                  <span className="text-xs text-gray-500">Posted 1 day ago</span>
+          {/* Similar Chats Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-6">
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Similar Conversations</h3>
+                <div className="space-y-4">
+                  {similarChats.map((chat) => (
+                    <div key={chat.id} className="group cursor-pointer">
+                      <div className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 hover:shadow-sm transition-all">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-medium">
+                            {chat.aiModel}
+                          </span>
+                          <span className="text-xs text-gray-500">{chat.timestamp}</span>
+                        </div>
+                        
+                        <h4 className="font-medium text-sm text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                          {chat.title}
+                        </h4>
+                        
+                        <p className="text-xs text-gray-600 mb-3 line-clamp-2">
+                          {chat.excerpt}
+                        </p>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <img
+                              src={chat.authorAvatar}
+                              alt={chat.author}
+                              className="w-5 h-5 rounded-full"
+                            />
+                            <span className="text-xs text-gray-500">{chat.author}</span>
+                          </div>
+                          
+                          <div className="flex items-center space-x-3 text-xs text-gray-500">
+                            <div className="flex items-center space-x-1">
+                              <ArrowUp className="w-3 h-3" />
+                              <span>{chat.upvotes}</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <MessageSquare className="w-3 h-3" />
+                              <span>{chat.comments}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="prose max-w-none">
-                  <p className="text-gray-700 leading-relaxed mb-4">
-                    Looking back at this conversation, I'm struck by how effectively GPT-4 guided me through what felt like an insurmountable mathematical obstacle. The key breakthrough came when it helped me visualize <span className="text-blue-600 underline cursor-pointer">the long exact sequence of homotopy groups</span> as more than just abstract symbols on a page.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed mb-4">
-                    What impressed me most was the AI's pedagogical approach. Rather than simply providing the answer, it walked me through each conceptual step, ensuring I understood the underlying topology before moving forward. The explanation of <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> was particularly illuminating – I'd read about it countless times in textbooks, but the way GPT-4 connected it to the injectivity proof finally made everything click.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed mb-4">
-                    This experience has fundamentally changed how I approach mathematical problem-solving. While I was initially skeptical about using AI for rigorous mathematical work, this conversation demonstrated that these tools can serve as sophisticated thinking partners. The AI didn't just solve the problem; it helped me develop a deeper intuition for <span className="text-blue-600 underline cursor-pointer">fiber bundles and their relationship to fundamental groups</span>.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed">
-                    For fellow graduate students struggling with similar proofs, I'd recommend starting with the exact sequence approach. The beauty of this method is that once you understand how the exactness conditions work, the proof almost writes itself. My advisor was impressed not just with the solution, but with my newfound confidence in tackling topological arguments. Sometimes the best teacher is one who can break down complex ideas into digestible steps – whether that teacher is human or artificial.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Comments Section */}
-        <div className="bg-white rounded-lg border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-xl font-semibold text-gray-900">
-              Comments ({comments.length})
-            </h3>
-          </div>
-          
-          {/* New Comment Form */}
-          <form onSubmit={handleSubmitComment} className="p-6 border-b border-gray-200 bg-gray-50">
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="commentAuthor">Name</Label>
-                <Input
-                  id="commentAuthor"
-                  value={newComment.author}
-                  onChange={(e) => setNewComment(prev => ({ ...prev, author: e.target.value }))}
-                  placeholder="Enter your name..."
-                  className="border-gray-300 focus:border-black focus:ring-black"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="commentContent">Comment</Label>
-                <Textarea
-                  id="commentContent"
-                  value={newComment.content}
-                  onChange={(e) => setNewComment(prev => ({ ...prev, content: e.target.value }))}
-                  placeholder="Share your thoughts..."
-                  rows={3}
-                  className="border-gray-300 focus:border-black focus:ring-black resize-none"
-                  required
-                />
-              </div>
-              <Button
-                type="submit"
-                className="bg-black text-white hover:bg-gray-800"
-              >
-                Post Comment
-              </Button>
-            </div>
-          </form>
-          
-          {/* Comments List */}
-          <div className="divide-y divide-gray-200">
-            <div className="p-6">
-              <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-medium text-gray-600">T</span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="font-medium text-sm text-black">TopologyProf</span>
-                    <span className="text-xs text-gray-500">1 day ago</span>
-                  </div>
-                  <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                    This is a classic result that I've been teaching in my graduate topology course for over fifteen years, and your experience perfectly captures why this particular theorem is so challenging for students. The key insight about using <span className="text-blue-600 underline cursor-pointer">the long exact sequence</span> is absolutely spot on, and I'm impressed by how clearly GPT-4 explained the connection between the exactness conditions and the isomorphism. What's particularly noteworthy is how the AI guided you through <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> - this is typically where students get lost because the visualization can be quite abstract. In my experience, once students grasp how the exactness at π₁(E) works, everything else falls into place naturally. Your conversation demonstrates something I've been observing more frequently: <span className="text-blue-600 underline cursor-pointer">AI tools are becoming remarkably effective pedagogical partners</span>, especially for advanced mathematics where intuition building is crucial. The step-by-step breakdown your AI provided mirrors the best practices I use in my own teaching methodology.
-                  </p>
-                  <div className="flex items-center space-x-4 text-xs text-gray-500">
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowUp className="w-3 h-3" />
-                      <span>45</span>
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowDown className="w-3 h-3" />
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <MessageSquare className="w-3 h-3" />
-                      <span>Reply (3)</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6">
-              <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-medium text-gray-600">P</span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="font-medium text-sm text-black">PhDStudent2024</span>
-                    <span className="text-xs text-gray-500">1 day ago</span>
-                  </div>
-                  <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                    Reading through your conversation gives me genuine hope for my own dissertation struggles. I'm currently working on a related problem in <span className="text-blue-600 underline cursor-pointer">differential topology</span>, dealing with vector bundles over manifolds, and I've been hesitant to use AI tools for fear of somehow 'cheating' or not developing proper mathematical intuition. Your experience shows that these tools can actually enhance understanding rather than replace it. The way GPT-4 broke down <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> was incredibly illuminating - I've read Hatcher's explanation multiple times but never quite grasped the connection to injectivity until seeing it presented this way. What strikes me most is how the AI didn't just provide a solution but helped you develop <span className="text-blue-600 underline cursor-pointer">mathematical maturity and confidence</span>. This is exactly what I need for my work on characteristic classes. Did you end up incorporating this exact approach in your final dissertation chapter? I'm curious about how your advisor reacted to the AI-assisted proof development.
-                  </p>
-                  <div className="flex items-center space-x-4 text-xs text-gray-500">
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowUp className="w-3 h-3" />
-                      <span>28</span>
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowDown className="w-3 h-3" />
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <MessageSquare className="w-3 h-3" />
-                      <span>Reply (1)</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6">
-              <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-medium text-gray-600">A</span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="font-medium text-sm text-black">AlgebraicTopology_Fan</span>
-                    <span className="text-xs text-gray-500">18 hours ago</span>
-                  </div>
-                  <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                    The step-by-step breakdown of <span className="text-blue-600 underline cursor-pointer">the exact sequence</span> is absolutely beautiful and represents everything I love about algebraic topology - the way seemingly abstract concepts suddenly crystallize into elegant solutions. I've been working through Hatcher's book as an independent study project, and this conversation really helps clarify the relationship between <span className="text-blue-600 underline cursor-pointer">fiber bundles and fundamental groups</span> that I've been struggling with. What's particularly valuable is seeing how the exactness conditions aren't just formal requirements but have deep geometric meaning. The way your AI explained how loops in the base space relate to the fiber structure through <span className="text-blue-600 underline cursor-pointer">the homotopy lifting property</span> is the kind of insight that usually takes months to develop. I'm planning to use this conversation as a reference when I tackle the exercises in Chapter 4. The pedagogical approach here - building up from the long exact sequence to the specific conditions for isomorphism - is masterful. It's making me reconsider how I approach learning advanced mathematics in general.
-                  </p>
-                  <div className="flex items-center space-x-4 text-xs text-gray-500">
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowUp className="w-3 h-3" />
-                      <span>19</span>
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowDown className="w-3 h-3" />
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <MessageSquare className="w-3 h-3" />
-                      <span>Reply (0)</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6">
-              <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-medium text-gray-600">M</span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="font-medium text-sm text-black">MathResearcher</span>
-                    <span className="text-xs text-gray-500">12 hours ago</span>
-                  </div>
-                  <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                    Your conversation raises a fascinating question about <span className="text-blue-600 underline cursor-pointer">the generalization to higher homotopy groups</span> that I've been investigating in my own research. Specifically, I'm wondering whether the isomorphism π₁(F) ≅ π₁(E) extends to πₙ(F) ≅ πₙ(E) for n > 1 under similar conditions. <span className="text-blue-600 underline cursor-pointer">The covering homotopy property</span> that GPT-4 explained so clearly is actually the key to understanding this generalization, though the higher-dimensional case requires more sophisticated tools from obstruction theory. What's particularly interesting is how your AI managed to convey the intuitive content behind what could have been a purely formal argument. In my experience reviewing papers in this area, many authors get so caught up in the technical machinery that they lose sight of the geometric picture. Your conversation demonstrates that even advanced AI can maintain both rigor and intuition simultaneously. I'm curious whether you explored any of the computational aspects - there are some beautiful connections to <span className="text-blue-600 underline cursor-pointer">spectral sequences</span> that might be relevant to your broader dissertation work.
-                  </p>
-                  <div className="flex items-center space-x-4 text-xs text-gray-500">
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowUp className="w-3 h-3" />
-                      <span>15</span>
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowDown className="w-3 h-3" />
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <MessageSquare className="w-3 h-3" />
-                      <span>Reply (2)</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6">
-              <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-medium text-gray-600">G</span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="font-medium text-sm text-black">GradStudent_Struggling</span>
-                    <span className="text-xs text-gray-500">8 hours ago</span>
-                  </div>
-                  <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                    This conversation is exactly what I needed to see right now. I'm working on a similar problem involving <span className="text-blue-600 underline cursor-pointer">principal bundles and their associated fiber bundles</span>, and I've been stuck for weeks on understanding how the group action affects the fundamental group calculations. <span className="text-blue-600 underline cursor-pointer">The covering homotopy property</span> explanation finally made everything click for me - I've been reading about it in multiple textbooks but never quite understood its geometric significance until seeing it presented in this conversational format. What's particularly helpful is seeing how the AI guided you through the logical progression without just dumping formulas. I've been hesitant to use AI tools for my research, worried that my advisor might view it negatively, but your experience shows that these tools can actually deepen mathematical understanding rather than replace it. The way GPT-4 connected <span className="text-blue-600 underline cursor-pointer">the abstract homotopy theory to concrete geometric intuition</span> is exactly the kind of bridge I need. I'm planning to try a similar approach with my own stuck problems, starting with the principal bundle version of your fiber bundle theorem.
-                  </p>
-                  <div className="flex items-center space-x-4 text-xs text-gray-500">
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowUp className="w-3 h-3" />
-                      <span>12</span>
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <ArrowDown className="w-3 h-3" />
-                    </button>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                      <MessageSquare className="w-3 h-3" />
-                      <span>Reply (0)</span>
-                    </button>
-                  </div>
-                </div>
+                
+                <button className="w-full mt-4 text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">
+                  View More Similar Chats
+                </button>
               </div>
             </div>
           </div>
