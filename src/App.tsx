@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,6 +11,7 @@ import Visualize from "./pages/Visualize";
 import Seminars from "./pages/Seminars";
 import Profile from "./pages/Profile";
 import Post from "./pages/Post";
+import AIConsciousnessPost from "./pages/AIConsciousnessPost";
 import NotFound from "./pages/NotFound";
 import MaxTegmark from "./pages/MaxTegmark";
 
@@ -30,6 +32,7 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/max-tegmark" element={<MaxTegmark />} />
           <Route path="/post/:id" element={<Post />} />
+          <Route path="/ai-consciousness" element={<AIConsciousnessPost />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

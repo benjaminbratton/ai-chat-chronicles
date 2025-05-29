@@ -72,10 +72,13 @@ export const FeaturedConversation = ({ conversation }: FeaturedConversationProps
               <MessageSquare className="w-4 h-4" />
               <span className="text-sm">{conversation.comments}</span>
             </div>
-            <button className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium">
+            <Link 
+              to="/ai-consciousness"
+              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium"
+            >
               <span>Read more</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
