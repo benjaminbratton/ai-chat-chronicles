@@ -34,9 +34,6 @@ const Post = () => {
 The specific problem involved proving that for a fiber bundle F → E → B where F is connected and B is simply connected, the inclusion map F → E induces an isomorphism π₁(F) ≅ π₁(E) under certain conditions.
 
 I decided to try GPT-4 as a last resort before reaching out to my advisor. What happened next completely blew my mind.`,
-    images: [
-      "https://images.unsplash.com/photo-1581092335878-0631b301b4ea?w=800&h=600&fit=crop&crop=center"
-    ],
     dialogue: [
       {
         role: "user",
@@ -69,7 +66,7 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
     {
       id: 1,
       author: "TopologyProf",
-      content: "This is a classic result that I've been teaching for over fifteen years, and your experience perfectly captures why this particular theorem is so challenging for students. The key insight about using <span class=\"text-blue-600 underline cursor-pointer\">the long exact sequence</span> is absolutely spot on, and I'm impressed by how clearly GPT-4 explained the connection between the exactness conditions and the isomorphism. What's particularly noteworthy is how the AI guided you through <span class=\"text-blue-600 underline cursor-pointer\">fiber bundle theory</span> - this is typically where students get lost because the visualization can be quite abstract. Your conversation demonstrates that AI tools are becoming remarkably effective pedagogical partners, especially for advanced mathematics where intuition building is crucial.",
+      content: "This is a classic result that I've been teaching for over fifteen years, and your experience perfectly captures why this particular theorem is so challenging for students. The key insight about using <span className=\"text-blue-600 underline cursor-pointer\">the long exact sequence</span> is absolutely spot on, and I'm impressed by how clearly GPT-4 explained the connection between the exactness conditions and the isomorphism. What's particularly noteworthy is how the AI guided you through <span className=\"text-blue-600 underline cursor-pointer\">mathematical intuition building</span> - this is typically where students get lost because the visualization can be quite abstract. Your conversation demonstrates that <span className=\"text-blue-600 underline cursor-pointer\">AI tools are becoming remarkably effective pedagogical partners</span>, especially for advanced mathematics where intuition building is crucial.",
       timestamp: "1 day ago",
       upvotes: 45,
       replies: 3
@@ -77,7 +74,7 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
     {
       id: 2, 
       author: "PhDStudent2024",
-      content: "Reading through your conversation gives me genuine hope for my own dissertation struggles. I'm currently working on a related problem in differential topology, dealing with vector bundles over manifolds, and I've been hesitant to use AI tools for fear of somehow 'cheating' or not developing proper mathematical intuition. Your experience shows that these tools can actually enhance understanding rather than replace it. The way GPT-4 broke down <span class=\"text-blue-600 underline cursor-pointer\">the exactness conditions</span> was incredibly illuminating - I've read Hatcher's explanation multiple times but never quite grasped the connection to injectivity until seeing it presented this way. What strikes me most is how the AI didn't just provide a solution but helped you develop <span class=\"text-blue-600 underline cursor-pointer\">mathematical reasoning skills</span>.",
+      content: "Reading through your conversation gives me genuine hope for my own dissertation struggles. I'm currently working on a related problem in <span className=\"text-blue-600 underline cursor-pointer\">differential topology</span>, dealing with vector bundles over manifolds, and I've been hesitant to use AI tools for fear of somehow 'cheating' or not developing proper mathematical intuition. Your experience shows that <span className=\"text-blue-600 underline cursor-pointer\">these tools can actually enhance understanding</span> rather than replace it. The way GPT-4 broke down <span className=\"text-blue-600 underline cursor-pointer\">the covering homotopy property</span> was incredibly illuminating - I've read Hatcher's explanation multiple times but never quite grasped the connection to injectivity until seeing it presented this way. What strikes me most is how the AI didn't just provide a solution but helped you develop <span className=\"text-blue-600 underline cursor-pointer\">mathematical maturity and confidence</span>.",
       timestamp: "1 day ago",
       upvotes: 28,
       replies: 1
@@ -85,7 +82,7 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
     {
       id: 3,
       author: "AlgebraicTopology_Fan",
-      content: "The step-by-step breakdown of the exact sequence is absolutely beautiful and represents everything I love about algebraic topology - the way seemingly abstract concepts suddenly crystallize into elegant solutions. I've been working through Hatcher's book as an independent study project, and this conversation really helps clarify the relationship between fiber bundles and fundamental groups that I've been struggling with. What's particularly valuable is seeing how <span class=\"text-blue-600 underline cursor-pointer\">the projection map properties</span> aren't just formal requirements but have deep geometric meaning. The way your AI explained how loops in the base space relate to the fiber structure through <span class=\"text-blue-600 underline cursor-pointer\">topological fibrations</span> is the kind of insight that usually takes months to develop.",
+      content: "The step-by-step breakdown of <span className=\"text-blue-600 underline cursor-pointer\">the exact sequence</span> is absolutely beautiful and represents everything I love about algebraic topology - the way seemingly abstract concepts suddenly crystallize into elegant solutions. I've been working through <span className=\"text-blue-600 underline cursor-pointer\">Hatcher's book</span> as an independent study project, and this conversation really helps clarify the relationship between <span className=\"text-blue-600 underline cursor-pointer\">fiber bundles and fundamental groups</span> that I've been struggling with. What's particularly valuable is seeing how the exactness conditions aren't just formal requirements but have deep geometric meaning. The way your AI explained how <span className=\"text-blue-600 underline cursor-pointer\">loops in the base space relate to the fiber structure</span> through <span className=\"text-blue-600 underline cursor-pointer\">the homotopy lifting property</span> is the kind of insight that usually takes months to develop.",
       timestamp: "18 hours ago", 
       upvotes: 19,
       replies: 0
@@ -233,26 +230,6 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
                   {/* Post Content */}
                   <div className="prose max-w-none mb-6">
                     <p className="text-gray-700 leading-relaxed mb-4">{post.fullContent}</p>
-
-                    {/* Display uploaded images */}
-                    {post.images && post.images.length > 0 && (
-                      <div className="mb-6">
-                        <div className="grid grid-cols-1 gap-4">
-                          {post.images.map((imageUrl: string, index: number) => (
-                            <div key={index} className="relative">
-                              <img
-                                src={imageUrl}
-                                alt={`Mathematical whiteboard with equations from the conversation`}
-                                className="w-full h-96 object-cover rounded-lg border border-gray-300"
-                              />
-                              <div className="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-sm">
-                                Whiteboard from my office showing the key equations
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   {/* Post Actions */}
