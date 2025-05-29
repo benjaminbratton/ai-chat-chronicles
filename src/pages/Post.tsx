@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Header } from "@/components/Header";
@@ -231,15 +232,15 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
                   <div className="prose max-w-none mb-6">
                     <p className="text-gray-700 leading-relaxed mb-4">{post.fullContent}</p>
                     
-                    {/* Mathematical Diagram Image */}
+                    {/* Whiteboard Image */}
                     <div className="my-6">
                       <img
-                        src="/lovable-uploads/6b26ee4c-6065-4cd7-9b5c-2a4f8d7c28d9.png"
-                        alt="Mathematical diagram showing complex mathematical equations and formulas"
+                        src="/lovable-uploads/19072d55-9403-4faa-a62a-31d65d88d230.png"
+                        alt="Mathematical equations on classroom whiteboard"
                         className="w-full rounded-lg border border-gray-200"
                       />
                       <p className="text-sm text-gray-600 mt-2 italic text-center">
-                        The mathematical breakthrough - complex equations that GPT-4 helped me understand
+                        The whiteboard after my breakthrough session with GPT-4
                       </p>
                     </div>
                   </div>
