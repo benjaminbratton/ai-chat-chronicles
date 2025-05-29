@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { AIModelSelect } from "@/components/AIModelSelect";
 import { CategoryFilter } from "@/components/CategoryFilter";
+import { Upload, X } from "lucide-react";
 
 interface PostFormProps {
   onSubmit: (data: any) => void;
@@ -21,13 +22,24 @@ export const PostForm = ({ onSubmit }: PostFormProps) => {
     category: "Philosophy"
   });
 
+  const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit({ ...formData, images: uploadedImages });
   };
 
   const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setUploadedImages(prev => [...prev, ...files]);
+  };
+
+  const removeImage = (index: number) => {
+    setUploadedImages(prev => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -99,6 +111,56 @@ export const PostForm = ({ onSubmit }: PostFormProps) => {
           rows={3}
           className="border-gray-300 focus:border-black focus:ring-black resize-none"
         />
+      </div>
+
+      {/* Image Upload Section */}
+      <div className="space-y-2">
+        <Label htmlFor="images">Upload Images</Label>
+        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+          <div className="text-center">
+            <Upload className="mx-auto h-12 w-12 text-gray-400" />
+            <div className="mt-4">
+              <label htmlFor="image-upload" className="cursor-pointer">
+                <span className="mt-2 block text-sm font-medium text-gray-900">
+                  Click to upload images
+                </span>
+                <span className="mt-1 block text-sm text-gray-500">
+                  PNG, JPG, GIF up to 10MB each
+                </span>
+              </label>
+              <input
+                id="image-upload"
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="sr-only"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Image Previews */}
+        {uploadedImages.length > 0 && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+            {uploadedImages.map((image, index) => (
+              <div key={index} className="relative group">
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt={`Upload ${index + 1}`}
+                  className="w-full h-24 object-cover rounded-lg border border-gray-300"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeImage(index)}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="space-y-2">

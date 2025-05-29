@@ -48,6 +48,23 @@ const Posting = () => {
                   <span>AI Model: {postData?.aiModel}</span>
                 </div>
               </div>
+
+              {/* Display uploaded images */}
+              {postData?.images && postData.images.length > 0 && (
+                <div className="mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {postData.images.map((image: File, index: number) => (
+                      <img
+                        key={index}
+                        src={URL.createObjectURL(image)}
+                        alt={`Uploaded image ${index + 1}`}
+                        className="w-full h-64 object-cover rounded-lg border border-gray-300"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="prose max-w-none">
                 <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{postData?.content}</p>
               </div>
