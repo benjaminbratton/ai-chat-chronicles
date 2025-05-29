@@ -66,7 +66,7 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
     {
       id: 1,
       author: "TopologyProf",
-      content: "This is a classic result that I've been teaching in my graduate topology course for over fifteen years, and your experience perfectly captures why this particular theorem is so challenging for students. The key insight about using the long exact sequence is absolutely spot on, and I'm impressed by how clearly GPT-4 explained the connection between the exactness conditions and the isomorphism. What's particularly noteworthy is how the AI guided you through the covering homotopy property - this is typically where students get lost because the visualization can be quite abstract. In my experience, once students grasp how the exactness at π₁(E) works, everything else falls into place naturally. Your conversation demonstrates something I've been observing more frequently: AI tools are becoming remarkably effective pedagogical partners, especially for advanced mathematics where intuition building is crucial. The step-by-step breakdown your AI provided mirrors the best practices I use in my own teaching methodology.",
+      content: "This is a classic result that I've been teaching for over fifteen years, and your experience perfectly captures why this particular theorem is so challenging for students. The key insight about using <span className=\"text-blue-600 underline cursor-pointer\">the long exact sequence</span> is absolutely spot on, and I'm impressed by how clearly GPT-4 explained the connection between the exactness conditions and the isomorphism. What's particularly noteworthy is how the AI guided you through <span className=\"text-blue-600 underline cursor-pointer\">the covering homotopy property</span> - this is typically where students get lost because the visualization can be quite abstract. Your conversation demonstrates that <span className=\"text-blue-600 underline cursor-pointer\">AI tools are becoming remarkably effective pedagogical partners</span>, especially for advanced mathematics where intuition building is crucial.",
       timestamp: "1 day ago",
       upvotes: 45,
       replies: 3
@@ -74,7 +74,7 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
     {
       id: 2, 
       author: "PhDStudent2024",
-      content: "Reading through your conversation gives me genuine hope for my own dissertation struggles. I'm currently working on a related problem in differential topology, dealing with vector bundles over manifolds, and I've been hesitant to use AI tools for fear of somehow 'cheating' or not developing proper mathematical intuition. Your experience shows that these tools can actually enhance understanding rather than replace it. The way GPT-4 broke down the covering homotopy property was incredibly illuminating - I've read Hatcher's explanation multiple times but never quite grasped the connection to injectivity until seeing it presented this way. What strikes me most is how the AI didn't just provide a solution but helped you develop mathematical maturity and confidence. This is exactly what I need for my work on characteristic classes. Did you end up incorporating this exact approach in your final dissertation chapter? I'm curious about how your advisor reacted to the AI-assisted proof development.",
+      content: "Reading through your conversation gives me genuine hope for my own dissertation struggles. I'm currently working on a related problem in <span className=\"text-blue-600 underline cursor-pointer\">differential topology</span>, dealing with vector bundles over manifolds, and I've been hesitant to use AI tools for fear of somehow 'cheating' or not developing proper mathematical intuition. Your experience shows that these tools can actually enhance understanding rather than replace it. The way GPT-4 broke down <span className=\"text-blue-600 underline cursor-pointer\">the covering homotopy property</span> was incredibly illuminating - I've read Hatcher's explanation multiple times but never quite grasped the connection to injectivity until seeing it presented this way. What strikes me most is how the AI didn't just provide a solution but helped you develop <span className=\"text-blue-600 underline cursor-pointer\">mathematical maturity and confidence</span>.",
       timestamp: "1 day ago",
       upvotes: 28,
       replies: 1
@@ -82,25 +82,9 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
     {
       id: 3,
       author: "AlgebraicTopology_Fan",
-      content: "The step-by-step breakdown of the exact sequence is absolutely beautiful and represents everything I love about algebraic topology - the way seemingly abstract concepts suddenly crystallize into elegant solutions. I've been working through Hatcher's book as an independent study project, and this conversation really helps clarify the relationship between fiber bundles and fundamental groups that I've been struggling with. What's particularly valuable is seeing how the exactness conditions aren't just formal requirements but have deep geometric meaning. The way your AI explained how loops in the base space relate to the fiber structure through the homotopy lifting property is the kind of insight that usually takes months to develop. I'm planning to use this conversation as a reference when I tackle the exercises in Chapter 4. The pedagogical approach here - building up from the long exact sequence to the specific conditions for isomorphism - is masterful. It's making me reconsider how I approach learning advanced mathematics in general.",
+      content: "The step-by-step breakdown of <span className=\"text-blue-600 underline cursor-pointer\">the exact sequence</span> is absolutely beautiful and represents everything I love about algebraic topology - the way seemingly abstract concepts suddenly crystallize into elegant solutions. I've been working through Hatcher's book as an independent study project, and this conversation really helps clarify the relationship between <span className=\"text-blue-600 underline cursor-pointer\">fiber bundles and fundamental groups</span> that I've been struggling with. What's particularly valuable is seeing how the exactness conditions aren't just formal requirements but have deep geometric meaning. The way your AI explained how loops in the base space relate to the fiber structure through <span className=\"text-blue-600 underline cursor-pointer\">the homotopy lifting property</span> is the kind of insight that usually takes months to develop.",
       timestamp: "18 hours ago", 
       upvotes: 19,
-      replies: 0
-    },
-    {
-      id: 4,
-      author: "MathResearcher",
-      content: "Your conversation raises a fascinating question about the generalization to higher homotopy groups that I've been investigating in my own research. Specifically, I'm wondering whether the isomorphism π₁(F) ≅ π₁(E) extends to πₙ(F) ≅ πₙ(E) for n > 1 under similar conditions. The covering homotopy property that GPT-4 explained so clearly is actually the key to understanding this generalization, though the higher-dimensional case requires more sophisticated tools from obstruction theory. What's particularly interesting is how your AI managed to convey the intuitive content behind what could have been a purely formal argument. In my experience reviewing papers in this area, many authors get so caught up in the technical machinery that they lose sight of the geometric picture. Your conversation demonstrates that even advanced AI can maintain both rigor and intuition simultaneously. I'm curious whether you explored any of the computational aspects - there are some beautiful connections to spectral sequences that might be relevant to your broader dissertation work.",
-      timestamp: "12 hours ago",
-      upvotes: 15,
-      replies: 2
-    },
-    {
-      id: 5,
-      author: "GradStudent_Struggling",
-      content: "This conversation is exactly what I needed to see right now. I'm working on a similar problem involving principal bundles and their associated fiber bundles, and I've been stuck for weeks on understanding how the group action affects the fundamental group calculations. The covering homotopy property explanation finally made everything click for me - I've been reading about it in multiple textbooks but never quite understood its geometric significance until seeing it presented in this conversational format. What's particularly helpful is seeing how the AI guided you through the logical progression without just dumping formulas. I've been hesitant to use AI tools for my research, worried that my advisor might view it negatively, but your experience shows that these tools can actually deepen mathematical understanding rather than replace it. The way GPT-4 connected the abstract homotopy theory to concrete geometric intuition is exactly the kind of bridge I need. I'm planning to try a similar approach with my own stuck problems, starting with the principal bundle version of your fiber bundle theorem.",
-      timestamp: "8 hours ago",
-      upvotes: 12,
       replies: 0
     }
   ];
@@ -340,11 +324,8 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
                       <p className="text-gray-700 leading-relaxed mb-4">
                         What impressed me most was the AI's pedagogical approach. Rather than simply providing the answer, it walked me through each conceptual step, ensuring I understood the underlying topology before moving forward. The explanation of <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> was particularly illuminating – I'd read about it countless times in textbooks, but the way GPT-4 connected it to the injectivity proof finally made everything click.
                       </p>
-                      <p className="text-gray-700 leading-relaxed mb-4">
-                        This experience has fundamentally changed how I approach mathematical problem-solving. While I was initially skeptical about using AI for rigorous mathematical work, this conversation demonstrated that these tools can serve as sophisticated thinking partners. The AI didn't just solve the problem; it helped me develop a deeper intuition for <span className="text-blue-600 underline cursor-pointer">fiber bundles and their relationship to fundamental groups</span>.
-                      </p>
                       <p className="text-gray-700 leading-relaxed">
-                        For fellow graduate students struggling with similar proofs, I'd recommend starting with the exact sequence approach. The beauty of this method is that once you understand how the exactness conditions work, the proof almost writes itself. My advisor was impressed not just with the solution, but with my newfound confidence in tackling topological arguments. Sometimes the best teacher is one who can break down complex ideas into digestible steps – whether that teacher is human or artificial.
+                        This experience has fundamentally changed how I approach mathematical problem-solving. While I was initially skeptical about using AI for rigorous mathematical work, this conversation demonstrated that these tools can serve as sophisticated thinking partners. The AI didn't just solve the problem; it helped me develop a deeper intuition for <span className="text-blue-600 underline cursor-pointer">fiber bundles and their relationship to fundamental groups</span>.
                       </p>
                     </div>
                   </div>
@@ -397,155 +378,35 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
               
               {/* Comments List */}
               <div className="divide-y divide-gray-200">
-                <div className="p-6">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                      <span className="text-xs font-medium text-gray-600">T</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="font-medium text-sm text-black">TopologyProf</span>
-                        <span className="text-xs text-gray-500">1 day ago</span>
+                {comments.map((comment) => (
+                  <div key={comment.id} className="p-6">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                        <span className="text-xs font-medium text-gray-600">{comment.author[0]}</span>
                       </div>
-                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                        This is a classic result that I've been teaching in my graduate topology course for over fifteen years, and your experience perfectly captures why this particular theorem is so challenging for students. The key insight about using <span className="text-blue-600 underline cursor-pointer">the long exact sequence</span> is absolutely spot on, and I'm impressed by how clearly GPT-4 explained the connection between the exactness conditions and the isomorphism. What's particularly noteworthy is how the AI guided you through <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> - this is typically where students get lost because the visualization can be quite abstract. In my experience, once students grasp how the exactness at π₁(E) works, everything else falls into place naturally. Your conversation demonstrates something I've been observing more frequently: <span className="text-blue-600 underline cursor-pointer">AI tools are becoming remarkably effective pedagogical partners</span>, especially for advanced mathematics where intuition building is crucial. The step-by-step breakdown your AI provided mirrors the best practices I use in my own teaching methodology.
-                      </p>
-                      <div className="flex items-center space-x-4 text-xs text-gray-500">
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowUp className="w-3 h-3" />
-                          <span>45</span>
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowDown className="w-3 h-3" />
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <MessageSquare className="w-3 h-3" />
-                          <span>Reply (3)</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                      <span className="text-xs font-medium text-gray-600">P</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="font-medium text-sm text-black">PhDStudent2024</span>
-                        <span className="text-xs text-gray-500">1 day ago</span>
-                      </div>
-                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                        Reading through your conversation gives me genuine hope for my own dissertation struggles. I'm currently working on a related problem in <span className="text-blue-600 underline cursor-pointer">differential topology</span>, dealing with vector bundles over manifolds, and I've been hesitant to use AI tools for fear of somehow 'cheating' or not developing proper mathematical intuition. Your experience shows that these tools can actually enhance understanding rather than replace it. The way GPT-4 broke down <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> was incredibly illuminating - I've read Hatcher's explanation multiple times but never quite grasped the connection to injectivity until seeing it presented this way. What strikes me most is how the AI didn't just provide a solution but helped you develop <span className="text-blue-600 underline cursor-pointer">mathematical maturity and confidence</span>. This is exactly what I need for my work on characteristic classes. Did you end up incorporating this exact approach in your final dissertation chapter? I'm curious about how your advisor reacted to the AI-assisted proof development.
-                      </p>
-                      <div className="flex items-center space-x-4 text-xs text-gray-500">
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowUp className="w-3 h-3" />
-                          <span>28</span>
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowDown className="w-3 h-3" />
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <MessageSquare className="w-3 h-3" />
-                          <span>Reply (1)</span>
-                        </button>
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <span className="font-medium text-sm text-black">{comment.author}</span>
+                          <span className="text-xs text-gray-500">{comment.timestamp}</span>
+                        </div>
+                        <p className="text-gray-700 text-sm mb-3 leading-relaxed" dangerouslySetInnerHTML={{ __html: comment.content }} />
+                        <div className="flex items-center space-x-4 text-xs text-gray-500">
+                          <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                            <ArrowUp className="w-3 h-3" />
+                            <span>{comment.upvotes}</span>
+                          </button>
+                          <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                            <ArrowDown className="w-3 h-3" />
+                          </button>
+                          <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                            <MessageSquare className="w-3 h-3" />
+                            <span>Reply ({comment.replies})</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="p-6">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                      <span className="text-xs font-medium text-gray-600">A</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="font-medium text-sm text-black">AlgebraicTopology_Fan</span>
-                        <span className="text-xs text-gray-500">18 hours ago</span>
-                      </div>
-                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                        The step-by-step breakdown of <span className="text-blue-600 underline cursor-pointer">the exact sequence</span> is absolutely beautiful and represents everything I love about algebraic topology - the way seemingly abstract concepts suddenly crystallize into elegant solutions. I've been working through Hatcher's book as an independent study project, and this conversation really helps clarify the relationship between <span className="text-blue-600 underline cursor-pointer">fiber bundles and fundamental groups</span> that I've been struggling with. What's particularly valuable is seeing how the exactness conditions aren't just formal requirements but have deep geometric meaning. The way your AI explained how loops in the base space relate to the fiber structure through <span className="text-blue-600 underline cursor-pointer">the homotopy lifting property</span> is the kind of insight that usually takes months to develop. I'm planning to use this conversation as a reference when I tackle the exercises in Chapter 4. The pedagogical approach here - building up from the long exact sequence to the specific conditions for isomorphism - is masterful. It's making me reconsider how I approach learning advanced mathematics in general.
-                      </p>
-                      <div className="flex items-center space-x-4 text-xs text-gray-500">
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowUp className="w-3 h-3" />
-                          <span>19</span>
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowDown className="w-3 h-3" />
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <MessageSquare className="w-3 h-3" />
-                          <span>Reply (0)</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                      <span className="text-xs font-medium text-gray-600">M</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="font-medium text-sm text-black">MathResearcher</span>
-                        <span className="text-xs text-gray-500">12 hours ago</span>
-                      </div>
-                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                        Your conversation raises a fascinating question about <span className="text-blue-600 underline cursor-pointer">the generalization to higher homotopy groups</span> that I've been investigating in my own research. Specifically, I'm wondering whether the isomorphism π₁(F) ≅ π₁(E) extends to πₙ(F) ≅ πₙ(E) for n > 1 under similar conditions. <span className="text-blue-600 underline cursor-pointer">The covering homotopy property</span> that GPT-4 explained so clearly is actually the key to understanding this generalization, though the higher-dimensional case requires more sophisticated tools from obstruction theory. What's particularly interesting is how your AI managed to convey the intuitive content behind what could have been a purely formal argument. In my experience reviewing papers in this area, many authors get so caught up in the technical machinery that they lose sight of the geometric picture. Your conversation demonstrates that even advanced AI can maintain both rigor and intuition simultaneously. I'm curious whether you explored any of the computational aspects - there are some beautiful connections to <span className="text-blue-600 underline cursor-pointer">spectral sequences</span> that might be relevant to your broader dissertation work.
-                      </p>
-                      <div className="flex items-center space-x-4 text-xs text-gray-500">
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowUp className="w-3 h-3" />
-                          <span>15</span>
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowDown className="w-3 h-3" />
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <MessageSquare className="w-3 h-3" />
-                          <span>Reply (2)</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                      <span className="text-xs font-medium text-gray-600">G</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="font-medium text-sm text-black">GradStudent_Struggling</span>
-                        <span className="text-xs text-gray-500">8 hours ago</span>
-                      </div>
-                      <p className="text-gray-700 text-sm mb-3 leading-relaxed">
-                        This conversation is exactly what I needed to see right now. I'm working on a similar problem involving <span className="text-blue-600 underline cursor-pointer">principal bundles and their associated fiber bundles</span>, and I've been stuck for weeks on understanding how the group action affects the fundamental group calculations. <span className="text-blue-600 underline cursor-pointer">The covering homotopy property</span> explanation finally made everything click for me - I've been reading about it in multiple textbooks but never quite understood its geometric significance until seeing it presented in this conversational format. What's particularly helpful is seeing how the AI guided you through the logical progression without just dumping formulas. I've been hesitant to use AI tools for my research, worried that my advisor might view it negatively, but your experience shows that these tools can actually deepen mathematical understanding rather than replace it. The way GPT-4 connected <span className="text-blue-600 underline cursor-pointer">the abstract homotopy theory to concrete geometric intuition</span> is exactly the kind of bridge I need. I'm planning to try a similar approach with my own stuck problems, starting with the principal bundle version of your fiber bundle theorem.
-                      </p>
-                      <div className="flex items-center space-x-4 text-xs text-gray-500">
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowUp className="w-3 h-3" />
-                          <span>12</span>
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <ArrowDown className="w-3 h-3" />
-                        </button>
-                        <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                          <MessageSquare className="w-3 h-3" />
-                          <span>Reply (0)</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
