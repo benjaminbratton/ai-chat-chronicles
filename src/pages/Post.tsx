@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Header } from "@/components/Header";
@@ -32,7 +31,7 @@ const Post = () => {
     readTime: 11,
     fullContent: `I've been working on my mathematics PhD dissertation focusing on algebraic topology, and I encountered a particularly challenging proof regarding the fundamental group of certain fiber bundles. After weeks of trying different approaches and consulting various textbooks and papers, I was completely stuck.
 
-The specific problem involved proving that for a fiber bundle F → E → B where F is a connected space and B is simply connected, the inclusion map F → E induces an isomorphism on fundamental groups under certain conditions.
+The specific problem involved proving that for a fiber bundle F → E → B where F is connected and B is simply connected, the inclusion map F → E induces an isomorphism π₁(F) ≅ π₁(E) under certain conditions.
 
 I decided to try GPT-4 as a last resort before reaching out to my advisor. What happened next completely blew my mind.`,
     dialogue: [
@@ -268,6 +267,45 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Analysis Section */}
+        <div className="bg-white rounded-lg border border-gray-200 mb-6">
+          <div className="p-6 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900">Author's Analysis</h2>
+            <p className="text-sm text-gray-600 mt-1">Reflection on the AI interaction by {post.author}</p>
+          </div>
+          <div className="p-6">
+            <div className="flex space-x-4">
+              <div className="w-8 h-8 rounded-full">
+                <img
+                  src={post.authorAvatar}
+                  alt={post.author}
+                  className="w-8 h-8 rounded-full"
+                />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center space-x-2 mb-4">
+                  <span className="font-medium text-sm">{post.author}</span>
+                  <span className="text-xs text-gray-500">Posted 1 day ago</span>
+                </div>
+                <div className="prose max-w-none">
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    Looking back at this conversation, I'm struck by how effectively GPT-4 guided me through what felt like an insurmountable mathematical obstacle. The key breakthrough came when it helped me visualize the long exact sequence of homotopy groups as more than just abstract symbols on a page.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    What impressed me most was the AI's pedagogical approach. Rather than simply providing the answer, it walked me through each conceptual step, ensuring I understood the underlying topology before moving forward. The explanation of the covering homotopy property was particularly illuminating – I'd read about it countless times in textbooks, but the way GPT-4 connected it to the injectivity proof finally made everything click.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    This experience has fundamentally changed how I approach mathematical problem-solving. While I was initially skeptical about using AI for rigorous mathematical work, this conversation demonstrated that these tools can serve as sophisticated thinking partners. The AI didn't just solve the problem; it helped me develop a deeper intuition for fiber bundles and their relationship to fundamental groups.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    For fellow graduate students struggling with similar proofs, I'd recommend starting with the exact sequence approach. The beauty of this method is that once you understand how the exactness conditions work, the proof almost writes itself. My advisor was impressed not just with the solution, but with my newfound confidence in tackling topological arguments. Sometimes the best teacher is one who can break down complex ideas into digestible steps – whether that teacher is human or artificial.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
