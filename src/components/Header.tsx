@@ -9,14 +9,14 @@ export const Header = () => {
     <header className="bg-white border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo - Top Left */}
-          <div className="flex items-center">
-            <Link to="/" className="mr-8">
+          {/* Logo */}
+          <div className="flex items-center space-x-3">
+            <Link to="/" className="flex items-center space-x-3">
               <div className="w-30 h-30 flex items-center justify-center">
                 <img 
                   src="/lovable-uploads/eb8b367e-f658-4eb1-8d60-947f96b41ed4.png" 
                   alt="Antikythera Logo" 
-                  className="w-24 h-24 object-contain filter contrast-200 brightness-0"
+                  className="w-24 h-24 object-contain"
                   onError={(e) => {
                     // Fallback to a simple geometric logo if the image fails to load
                     const target = e.currentTarget as HTMLImageElement;
@@ -25,14 +25,10 @@ export const Header = () => {
                     if (fallback) fallback.style.display = 'flex';
                   }}
                 />
-                <div className="w-24 h-24 bg-black rounded-full flex items-center justify-center text-white font-bold text-xl hidden">
+                <div className="w-24 h-24 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl hidden">
                   A
                 </div>
               </div>
-            </Link>
-
-            {/* Polylogos Title */}
-            <Link to="/">
               <h1 className="text-2xl font-medium text-black tracking-wide">
                 polylogos
               </h1>
@@ -40,7 +36,7 @@ export const Header = () => {
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-12">
+          <nav className="hidden md:flex items-center space-x-12 ml-16">
             <Link 
               to="/" 
               className={`text-sm tracking-wide uppercase transition-colors ${
