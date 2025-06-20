@@ -14,14 +14,18 @@ export const Header = () => {
             <Link to="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 flex items-center justify-center">
                 <img 
-                  src="https://antikythera.org/favicon.ico" 
+                  src="https://antikythera.org/static/images/antikythera-logo.png" 
                   alt="Antikythera Logo" 
-                  className="w-8 h-8"
+                  className="w-8 h-8 object-contain"
                   onError={(e) => {
-                    // Fallback to a direct logo URL if favicon doesn't work
-                    e.currentTarget.src = "https://antikythera.org/static/images/antikythera-logo.png";
+                    // Fallback to a simple geometric logo if the image fails to load
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling!.style.display = 'flex';
                   }}
                 />
+                <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm hidden">
+                  A
+                </div>
               </div>
               <h1 className="text-2xl font-medium text-black tracking-wide">
                 polylogos
