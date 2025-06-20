@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -100,32 +101,34 @@ const Index = () => {
     : regularConversations.filter(conv => conv.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-zinc-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white">
       <BrowserWindow />
       <Header />
       
       <main className="max-w-7xl mx-auto px-6 py-16 relative overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-40 left-10 w-96 h-96 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-20"></div>
+        {/* Enhanced Decorative Elements for Dark Mode */}
+        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-40 left-10 w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-full blur-3xl"></div>
         
-        {/* Hero Section - Symmetric Layout */}
+        {/* Hero Section - Experimental Dark Layout */}
         <div className="mb-24 relative">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             {/* Left Column - Dialogues with AI */}
             <div className="relative z-10">
-              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-green-700 mb-8 tracking-tighter leading-tight">
+              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-green-400 mb-8 tracking-tighter leading-tight">
                 Dialogues<br />
                 <span className="text-3xl md:text-4xl font-light italic">with AI</span>
               </h1>
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl h-48">
-                <p className="text-lg text-gray-700 leading-relaxed font-light mb-6">
+              <div className="bg-gray-800/70 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 shadow-2xl h-48 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-teal-500/5"></div>
+                <p className="text-lg text-gray-300 leading-relaxed font-light mb-6 relative z-10">
                   Discover fascinating conversations with artificial intelligence. 
                   Join our community exploring the future of human-machine dialogue.
                 </p>
                 <Link 
                   to="/explore" 
-                  className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 relative z-10"
                 >
                   Explore Now <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -134,18 +137,19 @@ const Index = () => {
 
             {/* Right Column - Deep Research */}
             <div className="relative z-10">
-              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 mb-8 tracking-tighter leading-tight">
+              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 mb-8 tracking-tighter leading-tight">
                 Deep<br />
                 <span className="text-3xl md:text-4xl font-light italic">Research</span>
               </h1>
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl h-48">
-                <p className="text-lg text-gray-700 leading-relaxed font-light mb-6">
+              <div className="bg-gray-800/70 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 shadow-2xl h-48 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5"></div>
+                <p className="text-lg text-gray-300 leading-relaxed font-light mb-6 relative z-10">
                   Comprehensive research reports and scholarly analyses. 
                   Engage with academic work through collaborative commentary.
                 </p>
                 <Link 
                   to="/explore" 
-                  className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 relative z-10"
                 >
                   Dive Deep <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -154,11 +158,11 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Featured Section - Creative Layout */}
+        {/* Featured Section - Dark Creative Layout */}
         <div className="mb-24">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Featured</span> Content
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400">Featured</span> Content
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-blue-500 mx-auto rounded-full"></div>
           </div>
@@ -166,14 +170,14 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-12 items-stretch">
             {/* Left - Featured Dialogue */}
             <div className="transform hover:rotate-1 transition-transform duration-500">
-              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-2 rounded-3xl">
-                <div className="bg-white rounded-2xl p-1">
-                  <h3 className="text-sm font-bold text-emerald-700 mb-4 uppercase tracking-wider text-center py-3">
+              <div className="bg-gradient-to-br from-emerald-900/20 to-teal-900/20 p-2 rounded-3xl border border-emerald-500/20">
+                <div className="bg-gray-800/90 rounded-2xl p-1 backdrop-blur-sm">
+                  <h3 className="text-sm font-bold text-emerald-400 mb-4 uppercase tracking-wider text-center py-3">
                     ✨ Featured Dialogue
                   </h3>
                   <div className="flex-1">
                     {featuredConversation && (
-                      <FeaturedConversation conversation={featuredConversation} bgColor="bg-gradient-to-br from-emerald-50 via-white to-teal-50" />
+                      <FeaturedConversation conversation={featuredConversation} bgColor="bg-gradient-to-br from-gray-800/80 via-gray-700/80 to-gray-800/80" />
                     )}
                   </div>
                 </div>
@@ -182,13 +186,13 @@ const Index = () => {
             
             {/* Right - Featured Deep Research */}
             <div className="transform hover:-rotate-1 transition-transform duration-500">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-2 rounded-3xl">
-                <div className="bg-white rounded-2xl p-1">
-                  <h3 className="text-sm font-bold text-blue-700 mb-4 uppercase tracking-wider text-center py-3">
+              <div className="bg-gradient-to-br from-blue-900/20 to-indigo-900/20 p-2 rounded-3xl border border-blue-500/20">
+                <div className="bg-gray-800/90 rounded-2xl p-1 backdrop-blur-sm">
+                  <h3 className="text-sm font-bold text-blue-400 mb-4 uppercase tracking-wider text-center py-3">
                     🔬 Featured Research
                   </h3>
                   <div className="flex-1">
-                    <FeaturedConversation conversation={featuredResearch} bgColor="bg-gradient-to-br from-blue-50 via-white to-indigo-50" />
+                    <FeaturedConversation conversation={featuredResearch} bgColor="bg-gradient-to-br from-gray-800/80 via-gray-700/80 to-gray-800/80" />
                   </div>
                 </div>
               </div>
@@ -196,9 +200,9 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Category Filter - Modern Design */}
+        {/* Category Filter - Dark Modern Design */}
         <div className="mb-16">
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl">
+          <div className="bg-gray-800/60 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 shadow-2xl">
             <CategoryFilter 
               selectedCategory={selectedCategory}
               onCategoryChange={setSelectedCategory}
@@ -206,7 +210,7 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Conversations Grid - Masonry-like Layout */}
+        {/* Conversations Grid - Dark Masonry Layout */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {filteredConversations.map((conversation, index) => (
             <div 
@@ -221,9 +225,9 @@ const Index = () => {
           ))}
         </div>
 
-        {/* Load More - Artistic Button */}
+        {/* Load More - Dark Artistic Button */}
         <div className="text-center">
-          <button className="group relative bg-gradient-to-r from-gray-900 via-black to-gray-900 text-white px-12 py-4 rounded-full font-bold text-lg tracking-wide uppercase overflow-hidden hover:shadow-2xl transition-all duration-300">
+          <button className="group relative bg-gradient-to-r from-gray-800 via-black to-gray-800 text-white px-12 py-4 rounded-full font-bold text-lg tracking-wide uppercase overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-600">
             <span className="relative z-10">Load More Magic</span>
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>

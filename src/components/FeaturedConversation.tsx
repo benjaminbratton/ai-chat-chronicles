@@ -20,12 +20,12 @@ interface FeaturedConversationProps {
   bgColor?: string;
 }
 
-export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: FeaturedConversationProps) => {
+export const FeaturedConversation = ({ conversation, bgColor = "bg-gray-800" }: FeaturedConversationProps) => {
   return (
-    <div className={`${bgColor} rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 h-full flex flex-col group hover:scale-[1.02]`}>
+    <div className={`${bgColor} rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-500 h-full flex flex-col group hover:scale-[1.02] border border-gray-600/30`}>
       <div className="p-8 md:p-12 flex-1 flex flex-col relative overflow-hidden">
-        {/* Decorative gradient overlay */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-white/20 to-transparent rounded-full blur-2xl"></div>
+        {/* Decorative gradient overlay for dark mode */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-full blur-2xl"></div>
         
         <div className="flex items-center space-x-2 mb-6 relative z-10">
           <span className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
@@ -36,11 +36,11 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
           </span>
         </div>
         
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
+        <h2 className="text-3xl md:text-4xl font-black text-white mb-6 leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400 transition-all duration-300">
           {conversation.title}
         </h2>
         
-        <p className="text-lg text-gray-600 mb-8 leading-relaxed flex-1 font-light">
+        <p className="text-lg text-gray-300 mb-8 leading-relaxed flex-1 font-light">
           {conversation.excerpt}
         </p>
 
@@ -51,20 +51,20 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
                 <img
                   src={conversation.authorImage}
                   alt={conversation.author}
-                  className="w-14 h-14 rounded-full object-cover cursor-pointer transition-all duration-300 group-hover/avatar:scale-110 group-hover/avatar:shadow-lg ring-2 ring-white group-hover/avatar:ring-blue-300"
+                  className="w-14 h-14 rounded-full object-cover cursor-pointer transition-all duration-300 group-hover/avatar:scale-110 group-hover/avatar:shadow-lg ring-2 ring-gray-600 group-hover/avatar:ring-blue-400"
                 />
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover/avatar:opacity-20 transition-opacity duration-300"></div>
               </div>
             </Link>
             <div>
               <Link to="/profile">
-                <p className="font-bold text-gray-900 hover:text-blue-600 transition-colors cursor-pointer text-lg">
+                <p className="font-bold text-white hover:text-blue-400 transition-colors cursor-pointer text-lg">
                   {conversation.author}
                 </p>
               </Link>
-              <div className="flex items-center space-x-4 text-sm text-gray-500">
+              <div className="flex items-center space-x-4 text-sm text-gray-400">
                 <span className="font-medium">{new Date(conversation.publishDate).toLocaleDateString()}</span>
-                <div className="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full">
+                <div className="flex items-center space-x-2 bg-gray-700/50 px-3 py-1 rounded-full">
                   <Clock className="w-3 h-3" />
                   <span className="font-medium">{conversation.readTime} min read</span>
                 </div>
@@ -73,11 +73,11 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
           </div>
 
           <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition-colors cursor-pointer">
+            <div className="flex items-center space-x-2 text-gray-400 hover:text-red-400 transition-colors cursor-pointer">
               <Heart className="w-5 h-5" />
               <span className="font-bold">{conversation.likes}</span>
             </div>
-            <div className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors cursor-pointer">
+            <div className="flex items-center space-x-2 text-gray-400 hover:text-blue-400 transition-colors cursor-pointer">
               <MessageSquare className="w-5 h-5" />
               <span className="font-bold">{conversation.comments}</span>
             </div>
