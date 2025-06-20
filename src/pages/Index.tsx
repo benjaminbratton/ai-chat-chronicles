@@ -100,7 +100,8 @@ const Index = () => {
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed font-thin">
               Discover and share fascinating conversations with artificial intelligence. 
-              Join our community of AI enthusiasts exploring the future of human-machine dialogue.
+              Join our community of AI enthusiasts exploring the future of human-machine{" "}
+              <Link to="/explore" className="text-black hover:underline">dialogue</Link>.
             </p>
           </div>
 
@@ -111,7 +112,8 @@ const Index = () => {
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed font-thin">
               Share comprehensive research reports and in-depth analyses. 
-              Engage with scholarly work and contribute to meaningful academic discussions through collaborative commentary.
+              Engage with scholarly work and contribute to meaningful academic discussions through collaborative{" "}
+              <Link to="/explore" className="text-black hover:underline">commentary</Link>.
             </p>
           </div>
         </div>
