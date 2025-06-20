@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -110,21 +109,21 @@ const Index = () => {
         <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>
         <div className="absolute bottom-40 left-10 w-96 h-96 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-20"></div>
         
-        {/* Hero Section - Asymmetric Layout */}
+        {/* Hero Section - Symmetric Layout */}
         <div className="mb-24 relative">
-          <div className="grid grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             {/* Left Column - Dialogues with AI */}
-            <div className="col-span-12 md:col-span-7 relative z-10">
+            <div className="relative z-10">
               <div className="mb-4 flex items-center gap-3">
                 <Sparkles className="w-6 h-6 text-emerald-500" />
                 <span className="text-sm font-medium text-emerald-600 uppercase tracking-widest">Live Conversations</span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-green-700 mb-8 tracking-tighter leading-tight">
+              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-green-700 mb-8 tracking-tighter leading-tight">
                 Dialogues<br />
-                <span className="text-4xl md:text-6xl font-light italic">with AI</span>
+                <span className="text-3xl md:text-4xl font-light italic">with AI</span>
               </h1>
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl">
-                <p className="text-xl text-gray-700 leading-relaxed font-light mb-6">
+              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl h-48">
+                <p className="text-lg text-gray-700 leading-relaxed font-light mb-6">
                   Discover fascinating conversations with artificial intelligence. 
                   Join our community exploring the future of human-machine dialogue.
                 </p>
@@ -138,28 +137,26 @@ const Index = () => {
             </div>
 
             {/* Right Column - Deep Research */}
-            <div className="col-span-12 md:col-span-5 mt-16 md:mt-0">
-              <div className="text-right mb-4 flex items-center justify-end gap-3">
-                <span className="text-sm font-medium text-blue-600 uppercase tracking-widest">Academic Focus</span>
+            <div className="relative z-10">
+              <div className="mb-4 flex items-center gap-3">
                 <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
+                <span className="text-sm font-medium text-blue-600 uppercase tracking-widest">Academic Focus</span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 mb-8 tracking-tighter text-right">
+              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 mb-8 tracking-tighter leading-tight">
                 Deep<br />
                 <span className="text-3xl md:text-4xl font-light italic">Research</span>
               </h1>
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl">
-                <p className="text-lg text-gray-700 leading-relaxed font-light mb-6 text-right">
+              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl h-48">
+                <p className="text-lg text-gray-700 leading-relaxed font-light mb-6">
                   Comprehensive research reports and scholarly analyses. 
                   Engage with academic work through collaborative commentary.
                 </p>
-                <div className="text-right">
-                  <Link 
-                    to="/explore" 
-                    className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
-                  >
-                    Dive Deep <ArrowRight className="w-5 h-5" />
-                  </Link>
-                </div>
+                <Link 
+                  to="/explore" 
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
+                >
+                  Dive Deep <ArrowRight className="w-5 h-5" />
+                </Link>
               </div>
             </div>
           </div>
