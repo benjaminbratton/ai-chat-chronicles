@@ -11,6 +11,7 @@ import Visualize from "./pages/Visualize";
 import Seminars from "./pages/Seminars";
 import Profile from "./pages/Profile";
 import Post from "./pages/Post";
+import About from "./pages/About";
 import AIConsciousnessPost from "./pages/AIConsciousnessPost";
 import NotFound from "./pages/NotFound";
 import MaxTegmark from "./pages/MaxTegmark";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/posting" element={<Posting />} />
           <Route path="/visualize" element={<Visualize />} />
           <Route path="/seminars" element={<Seminars />} />
+          <Route path="/about" element={<About />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/max-tegmark" element={<MaxTegmark />} />
           <Route path="/post/:id" element={<Post />} />

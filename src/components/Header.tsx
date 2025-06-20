@@ -73,6 +73,16 @@ export const Header = () => {
               Seminars
             </Link>
             <Link 
+              to="/about" 
+              className={`text-sm tracking-wide uppercase transition-colors ${
+                location.pathname === '/about' 
+                  ? 'text-black font-medium' 
+                  : 'text-gray-600 hover:text-black'
+              }`}
+            >
+              About
+            </Link>
+            <Link 
               to="/posting" 
               className={`text-sm tracking-wide uppercase transition-colors ${
                 location.pathname === '/posting' 
