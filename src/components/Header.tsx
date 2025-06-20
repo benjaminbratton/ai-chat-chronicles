@@ -29,7 +29,7 @@ export const Header = () => {
                   A
                 </div>
               </div>
-              <h1 className="text-2xl font-medium text-black tracking-wide">
+              <h1 className="text-2xl font-medium text-purple-800 tracking-wide">
                 polylogos
               </h1>
             </Link>
