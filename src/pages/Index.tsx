@@ -214,10 +214,20 @@ const Index = () => {
   const featuredConversation = mockConversations.find(conv => conv.featured);
   const regularConversations = mockConversations.filter(conv => !conv.featured);
   
-  const filteredConversations = selectedCategory === "All" 
-    ? regularConversations 
-    : regularConversations.filter(conv => conv.category === selectedCategory);
+  // Updated filtering logic
+  const getFilteredConversations = () => {
+    if (selectedCategory === "All") {
+      // Return a random mix of 10 entries from all categories
+      const shuffled = [...regularConversations].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, 10);
+    } else {
+      // Return up to 10 entries from the selected category
+      const categoryConversations = regularConversations.filter(conv => conv.category === selectedCategory);
+      return categoryConversations.slice(0, 10);
+    }
+  };
 
+  const filteredConversations = getFilteredConversations();
   const displayedConversations = filteredConversations.slice(0, displayCount);
   const hasMore = filteredConversations.length > displayCount;
 
