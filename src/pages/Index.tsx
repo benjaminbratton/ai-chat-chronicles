@@ -76,6 +76,20 @@ const mockConversations = [
   }
 ];
 
+const featuredResearch = {
+  id: 6,
+  title: "Artificial Evolution in Context",
+  excerpt: "Comprehensive analysis of evolutionary algorithms and their applications in modern AI systems, exploring how computational evolution mirrors biological processes and drives innovation in machine learning architectures...",
+  author: "Dr. Michael Harrison",
+  authorImage: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop&crop=face",
+  readTime: 15,
+  publishDate: "2024-01-16",
+  category: "Research",
+  likes: 87,
+  comments: 19,
+  featured: true
+};
+
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   
@@ -123,13 +137,25 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Featured Conversation */}
-        {featuredConversation && (
-          <div className="mb-20">
-            <h2 className="text-lg font-thin text-black mb-8 uppercase tracking-wider">Featured</h2>
-            <FeaturedConversation conversation={featuredConversation} />
+        {/* Featured Section - Two Column Layout */}
+        <div className="mb-20">
+          <h2 className="text-lg font-thin text-black mb-8 uppercase tracking-wider">Featured</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Left - Featured Dialogue */}
+            <div>
+              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
+              {featuredConversation && (
+                <FeaturedConversation conversation={featuredConversation} />
+              )}
+            </div>
+            
+            {/* Right - Featured Deep Research */}
+            <div>
+              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Deep Research</h3>
+              <FeaturedConversation conversation={featuredResearch} />
+            </div>
           </div>
-        )}
+        </div>
 
         {/* Category Filter */}
         <CategoryFilter 
