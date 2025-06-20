@@ -7,14 +7,22 @@ const About = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      {/* Add the URL section matching home page style */}
+      {/* URL Display Section matching home page */}
       <div className="max-w-6xl mx-auto px-6 pt-4">
-        <div className="flex justify-start mb-4">
-          <img 
-            src="/lovable-uploads/6d0b0b90-2ccb-48c9-a546-f7589d6fa23d.png" 
-            alt="Antikythera Logo" 
-            className="h-12 object-contain"
-          />
+        <div className="flex justify-start mb-8">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 max-w-md">
+            <div className="flex items-center space-x-2 mb-2">
+              <div className="flex space-x-1">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              </div>
+            </div>
+            <div className="bg-gray-50 rounded px-3 py-2 flex items-center">
+              <div className="w-4 h-4 mr-2">🔒</div>
+              <span className="text-sm text-gray-700 font-medium">polylogos.ai</span>
+            </div>
+          </div>
         </div>
       </div>
       
