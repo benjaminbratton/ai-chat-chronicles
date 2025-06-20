@@ -1,4 +1,6 @@
+
 import { Clock, Heart, MessageSquare } from "lucide-react";
+import { categories } from "./CategoryFilter";
 
 interface Conversation {
   id: number;
@@ -18,11 +20,15 @@ interface ConversationCardProps {
 }
 
 export const ConversationCard = ({ conversation }: ConversationCardProps) => {
+  const categoryData = categories.find(cat => cat.name === conversation.category);
+  const categoryColor = categoryData?.color || "bg-gray-500";
+  const categoryTextColor = categoryData?.textColor || "text-white";
+
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
       <div className="p-6">
         <div className="flex items-center justify-between mb-3">
-          <span className="bg-gray-100 text-gray-700 text-xs font-medium px-3 py-1 rounded-full">
+          <span className={`${categoryColor} ${categoryTextColor} text-xs font-medium px-3 py-1 rounded-full`}>
             {conversation.category}
           </span>
           <div className="flex items-center space-x-1 text-gray-500 text-sm">

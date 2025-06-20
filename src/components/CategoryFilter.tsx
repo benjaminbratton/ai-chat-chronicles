@@ -1,5 +1,4 @@
 
-
 interface CategoryFilterProps {
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
@@ -7,15 +6,19 @@ interface CategoryFilterProps {
 }
 
 const categories = [
-  { name: "All", color: "bg-gray-400" },
-  { name: "Philosophy", color: "bg-purple-300" }, 
-  { name: "Creative Writing", color: "bg-pink-300" },
-  { name: "Programming", color: "bg-blue-300" },
-  { name: "Science", color: "bg-green-300" },
-  { name: "Education", color: "bg-yellow-300" },
-  { name: "Business", color: "bg-orange-300" },
-  { name: "Personal", color: "bg-indigo-300" }
+  { name: "All", color: "bg-gray-500", textColor: "text-white" },
+  { name: "Philosophy", color: "bg-purple-500", textColor: "text-white" }, 
+  { name: "Creative Writing", color: "bg-pink-500", textColor: "text-white" },
+  { name: "Programming", color: "bg-blue-500", textColor: "text-white" },
+  { name: "Science", color: "bg-green-500", textColor: "text-white" },
+  { name: "Education", color: "bg-yellow-500", textColor: "text-black" },
+  { name: "Business", color: "bg-orange-500", textColor: "text-white" },
+  { name: "Personal", color: "bg-indigo-500", textColor: "text-white" },
+  { name: "Research", color: "bg-teal-500", textColor: "text-white" }
 ];
+
+// Export categories for use in other components
+export { categories };
 
 export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll = false }: CategoryFilterProps) => {
   const filteredCategories = excludeAll ? categories.filter(cat => cat.name !== "All") : categories;
@@ -29,7 +32,7 @@ export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll 
             onClick={() => onCategoryChange(category.name)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               selectedCategory === category.name
-                ? `${category.color} text-gray-700`
+                ? `${category.color} ${category.textColor}`
                 : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
             }`}
           >
@@ -40,4 +43,3 @@ export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll 
     </div>
   );
 };
-

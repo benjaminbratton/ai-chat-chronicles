@@ -1,6 +1,7 @@
 
 import { Clock, Heart, MessageSquare, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { categories } from "./CategoryFilter";
 
 interface Conversation {
   id: number;
@@ -21,11 +22,15 @@ interface FeaturedConversationProps {
 }
 
 export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: FeaturedConversationProps) => {
+  const categoryData = categories.find(cat => cat.name === conversation.category);
+  const categoryColor = categoryData?.color || "bg-gray-500";
+  const categoryTextColor = categoryData?.textColor || "text-white";
+
   return (
     <div className={`${bgColor} rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col`}>
       <div className="p-8 md:p-12 flex-1 flex flex-col">
         <div className="flex items-center space-x-2 mb-4">
-          <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
+          <span className={`${categoryColor} ${categoryTextColor} text-xs font-medium px-3 py-1 rounded-full`}>
             {conversation.category}
           </span>
           <span className="bg-orange-100 text-orange-800 text-xs font-medium px-3 py-1 rounded-full">
