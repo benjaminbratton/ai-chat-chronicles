@@ -9,7 +9,7 @@ const About = () => {
       
       <main className="max-w-4xl mx-auto px-6 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-purple-800 tracking-tight mb-4">About Polylogos</h1>
+          <h1 className="text-4xl font-bold text-purple-800 tracking-tight mb-4">about polylogos</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             A platform for meaningful conversations, deep research, and collaborative knowledge sharing
           </p>
