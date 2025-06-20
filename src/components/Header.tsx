@@ -7,28 +7,23 @@ export const Header = () => {
   
   return (
     <header className="bg-white border-b border-gray-200">
-      <div className="max-w-6xl mx-auto px-6 py-4">
+      {/* Top logo section */}
+      <div className="max-w-6xl mx-auto px-6 pt-4">
+        <div className="flex justify-start mb-4">
+          <img 
+            src="/lovable-uploads/c423e530-03cd-49ed-bb9a-2edbb78ff2c7.png" 
+            alt="Antikythera Logo" 
+            className="h-12 object-contain"
+          />
+        </div>
+      </div>
+      
+      {/* Main header content */}
+      <div className="max-w-6xl mx-auto px-6 pb-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-30 h-30 flex items-center justify-center">
-                <img 
-                  src="/lovable-uploads/eb8b367e-f658-4eb1-8d60-947f96b41ed4.png" 
-                  alt="Antikythera Logo" 
-                  className="w-24 h-24 object-contain"
-                  onError={(e) => {
-                    // Fallback to a simple geometric logo if the image fails to load
-                    const target = e.currentTarget as HTMLImageElement;
-                    const fallback = target.nextElementSibling as HTMLElement;
-                    target.style.display = 'none';
-                    if (fallback) fallback.style.display = 'flex';
-                  }}
-                />
-                <div className="w-24 h-24 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl hidden">
-                  A
-                </div>
-              </div>
               <h1 className="text-2xl font-medium text-purple-800 tracking-wide">
                 polylogos
               </h1>
