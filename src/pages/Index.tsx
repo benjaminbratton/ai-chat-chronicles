@@ -91,15 +91,29 @@ const Index = () => {
       <Header />
       
       <main className="max-w-6xl mx-auto px-6 py-12">
-        {/* Hero Section */}
-        <div className="mb-16">
-          <h1 className="text-4xl md:text-6xl font-thin text-black mb-6 tracking-tight">
-            Dialogues with AI
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed font-thin">
-            Discover and share fascinating conversations with artificial intelligence. 
-            Join our community of AI enthusiasts exploring the future of human-machine dialogue.
-          </p>
+        {/* Hero Section - Two Column Layout */}
+        <div className="mb-16 grid md:grid-cols-2 gap-16">
+          {/* Left Column - Dialogues with AI */}
+          <div>
+            <h1 className="text-4xl md:text-6xl font-thin text-black mb-6 tracking-tight">
+              Dialogues with AI
+            </h1>
+            <p className="text-lg text-gray-600 leading-relaxed font-thin">
+              Discover and share fascinating conversations with artificial intelligence. 
+              Join our community of AI enthusiasts exploring the future of human-machine dialogue.
+            </p>
+          </div>
+
+          {/* Right Column - Deep Research */}
+          <div className="text-right">
+            <h1 className="text-4xl md:text-6xl font-thin text-black mb-6 tracking-tight">
+              Deep Research
+            </h1>
+            <p className="text-lg text-gray-600 leading-relaxed font-thin">
+              Share comprehensive research reports and in-depth analyses. 
+              Engage with scholarly work and contribute to meaningful academic discussions through collaborative commentary.
+            </p>
+          </div>
         </div>
 
         {/* Featured Conversation */}
