@@ -79,7 +79,7 @@ const mockConversations = [
 const featuredResearch = {
   id: 6,
   title: "Artificial Evolution in Context",
-  excerpt: "Comprehensive analysis of evolutionary algorithms and their applications in modern AI systems, exploring how computational evolution mirrors biological processes and drives innovation in machine learning architectures...",
+  excerpt: "Comprehensive analysis of evolutionary algorithms and their applications in modern AI systems, exploring how computational evolution mirrors biological processes and drives innovation in machine learning architectures. This research examines the fundamental principles of genetic algorithms, evolutionary strategies, and their role in optimizing neural network architectures and hyperparameters...",
   author: "Dr. Michael Harrison",
   authorImage: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop&crop=face",
   readTime: 15,
@@ -137,22 +137,25 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Featured Section - Two Column Layout */}
+        {/* Featured Section - Two Column Layout with Equal Heights */}
         <div className="mb-20">
-          <h2 className="text-lg font-thin text-black mb-8 uppercase tracking-wider">Featured</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 items-stretch">
             {/* Left - Featured Dialogue */}
-            <div>
+            <div className="flex flex-col">
               <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
-              {featuredConversation && (
-                <FeaturedConversation conversation={featuredConversation} />
-              )}
+              <div className="flex-1">
+                {featuredConversation && (
+                  <FeaturedConversation conversation={featuredConversation} />
+                )}
+              </div>
             </div>
             
             {/* Right - Featured Deep Research */}
-            <div>
+            <div className="flex flex-col">
               <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Deep Research</h3>
-              <FeaturedConversation conversation={featuredResearch} />
+              <div className="flex-1">
+                <FeaturedConversation conversation={featuredResearch} />
+              </div>
             </div>
           </div>
         </div>
