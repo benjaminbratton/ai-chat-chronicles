@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
 import { FeaturedConversation } from "@/components/FeaturedConversation";
@@ -101,7 +102,9 @@ const Index = () => {
             <p className="text-lg text-gray-600 leading-relaxed font-thin">
               Discover and share fascinating conversations with artificial intelligence. 
               Join our community of AI enthusiasts exploring the future of human-machine dialogue.{" "}
-              <Link to="/explore" className="text-black hover:underline">Explore</Link>
+              <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
+                Explore <ArrowRight className="w-4 h-4" />
+              </Link>
             </p>
           </div>
 
@@ -113,7 +116,9 @@ const Index = () => {
             <p className="text-lg text-gray-600 leading-relaxed font-thin">
               Share comprehensive research reports and in-depth analyses. 
               Engage with scholarly work and contribute to meaningful academic discussions through collaborative commentary.{" "}
-              <Link to="/explore" className="text-black hover:underline">Explore</Link>
+              <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
+                Explore <ArrowRight className="w-4 h-4" />
+              </Link>
             </p>
           </div>
         </div>
