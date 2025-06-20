@@ -11,7 +11,7 @@ export const Header = () => {
       <div className="max-w-6xl mx-auto px-6 pt-4">
         <div className="flex justify-start mb-4">
           <img 
-            src="/lovable-uploads/c423e530-03cd-49ed-bb9a-2edbb78ff2c7.png" 
+            src="/lovable-uploads/6d0b0b90-2ccb-48c9-a546-f7589d6fa23d.png" 
             alt="Antikythera Logo" 
             className="h-12 object-contain"
           />
