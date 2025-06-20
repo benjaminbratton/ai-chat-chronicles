@@ -73,6 +73,123 @@ const mockConversations = [
     likes: 98,
     comments: 18,
     featured: false
+  },
+  {
+    id: 7,
+    title: "The Ethics of AI Decision Making",
+    excerpt: "A comprehensive dialogue exploring moral frameworks for artificial intelligence and algorithmic accountability...",
+    author: "Dr. Robert Kim",
+    authorImage: "https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=150&h=150&fit=crop&crop=face",
+    readTime: 9,
+    publishDate: "2024-01-10",
+    category: "Philosophy",
+    likes: 167,
+    comments: 28,
+    featured: false
+  },
+  {
+    id: 8,
+    title: "Building Interactive Stories with ChatGPT",
+    excerpt: "Exploring collaborative storytelling techniques and character development through AI-human creative partnerships...",
+    author: "Luna Martinez",
+    authorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+    readTime: 6,
+    publishDate: "2024-01-09",
+    category: "Creative Writing",
+    likes: 124,
+    comments: 15,
+    featured: false
+  },
+  {
+    id: 9,
+    title: "Machine Learning Model Optimization Strategies",
+    excerpt: "Deep dive into hyperparameter tuning and architectural decisions through collaborative AI problem-solving...",
+    author: "David Park",
+    authorImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+    readTime: 14,
+    publishDate: "2024-01-08",
+    category: "Programming",
+    likes: 201,
+    comments: 52,
+    featured: false
+  },
+  {
+    id: 10,
+    title: "Climate Science and AI Modeling",
+    excerpt: "How artificial intelligence is helping researchers understand complex climate patterns and predict environmental changes...",
+    author: "Dr. Maria Santos",
+    authorImage: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=150&h=150&fit=crop&crop=face",
+    readTime: 11,
+    publishDate: "2024-01-07",
+    category: "Science",
+    likes: 178,
+    comments: 34,
+    featured: false
+  },
+  {
+    id: 11,
+    title: "Personalized Learning with AI Tutors",
+    excerpt: "Examining how artificial intelligence adapts to individual learning styles and creates customized educational experiences...",
+    author: "Professor James Wilson",
+    authorImage: "https://images.unsplash.com/photo-1556157382-97eda2d62296?w=150&h=150&fit=crop&crop=face",
+    readTime: 8,
+    publishDate: "2024-01-06",
+    category: "Education",
+    likes: 143,
+    comments: 21,
+    featured: false
+  },
+  {
+    id: 12,
+    title: "AI in Business Strategy and Decision Making",
+    excerpt: "How executives are leveraging AI conversations to analyze market trends and develop strategic initiatives...",
+    author: "Sarah Johnson",
+    authorImage: "https://images.unsplash.com/photo-1594736797933-d0d00f23a26c?w=150&h=150&fit=crop&crop=face",
+    readTime: 10,
+    publishDate: "2024-01-05",
+    category: "Business",
+    likes: 189,
+    comments: 41,
+    featured: false
+  },
+  {
+    id: 13,
+    title: "Personal Growth Through AI Reflection",
+    excerpt: "Using AI as a mirror for self-discovery and personal development through thoughtful dialogue and introspection...",
+    author: "Michael Chen",
+    authorImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face",
+    readTime: 7,
+    publishDate: "2024-01-04",
+    category: "Personal",
+    likes: 112,
+    comments: 19,
+    featured: false
+  },
+  {
+    id: 14,
+    title: "The Nature of Language and Communication",
+    excerpt: "Philosophical exploration of how AI and humans understand and generate language, questioning the nature of meaning itself...",
+    author: "Dr. Elena Rodriguez",
+    authorImage: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face",
+    readTime: 13,
+    publishDate: "2024-01-03",
+    category: "Philosophy",
+    likes: 156,
+    comments: 29,
+    featured: false
+  },
+  {
+    id: 15,
+    title: "Poetry Generation and Literary Analysis",
+    excerpt: "Collaborative exploration of poetic forms, metaphor creation, and literary interpretation with AI assistance...",
+    author: "Amanda Foster",
+    authorImage: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=150&h=150&fit=crop&crop=face",
+    readTime: 9,
+    publishDate: "2024-01-02",
+    category: "Creative Writing",
+    likes: 94,
+    comments: 16,
+    featured: false
   }
 ];
 
@@ -92,6 +209,7 @@ const featuredResearch = {
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [displayCount, setDisplayCount] = useState(9);
   
   const featuredConversation = mockConversations.find(conv => conv.featured);
   const regularConversations = mockConversations.filter(conv => !conv.featured);
@@ -99,6 +217,13 @@ const Index = () => {
   const filteredConversations = selectedCategory === "All" 
     ? regularConversations 
     : regularConversations.filter(conv => conv.category === selectedCategory);
+
+  const displayedConversations = filteredConversations.slice(0, displayCount);
+  const hasMore = filteredConversations.length > displayCount;
+
+  const handleLoadMore = () => {
+    setDisplayCount(prev => Math.min(prev + 9, filteredConversations.length));
+  };
 
   return (
     <div className="min-h-screen bg-gray-200">
@@ -172,22 +297,30 @@ const Index = () => {
         {/* Category Filter */}
         <CategoryFilter 
           selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
+          onCategoryChange={(category) => {
+            setSelectedCategory(category);
+            setDisplayCount(9); // Reset display count when changing categories
+          }}
         />
 
         {/* Conversations Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {filteredConversations.map((conversation) => (
+          {displayedConversations.map((conversation) => (
             <ConversationCard key={conversation.id} conversation={conversation} />
           ))}
         </div>
 
-        {/* Load More */}
-        <div className="text-center">
-          <button className="bg-black text-white px-8 py-3 font-thin text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors">
-            Load More
-          </button>
-        </div>
+        {/* Load More / See More */}
+        {hasMore && (
+          <div className="text-center">
+            <button 
+              onClick={handleLoadMore}
+              className="bg-black text-white px-8 py-3 font-thin text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors"
+            >
+              See More
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );
