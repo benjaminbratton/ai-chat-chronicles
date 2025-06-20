@@ -11,8 +11,8 @@ export const Header = () => {
       <div className="max-w-6xl mx-auto px-6 pt-6">
         <div className="flex justify-start mb-6">
           <img 
-            src="/lovable-uploads/6d0b0b90-2ccb-48c9-a546-f7589d6fa23d.png" 
-            alt="Antikythera Logo" 
+            src="/lovable-uploads/d86f97bb-49ac-4cf2-98b6-4da396479b99.png" 
+            alt="Logo" 
             className="h-24 object-contain"
           />
         </div>
@@ -24,7 +24,7 @@ export const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center space-x-3">
-              <h1 className="text-4xl font-medium text-purple-300 tracking-wide">
+              <h1 className="text-6xl font-medium text-purple-300 tracking-wide">
                 polylogos
               </h1>
             </Link>
