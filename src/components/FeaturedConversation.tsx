@@ -14,6 +14,7 @@ interface Conversation {
   category: string;
   likes: number;
   comments: number;
+  image?: string;
 }
 
 interface FeaturedConversationProps {
@@ -38,9 +39,19 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
           </span>
         </div>
         
-        <h2 className="text-3xl md:text-4xl font-serif font-thin text-gray-900 mb-4 leading-tight">
+        <h2 className="text-3xl md:text-4xl font-serif font-thin text-gray-900 mb-6 leading-tight">
           {conversation.title}
         </h2>
+
+        {conversation.image && (
+          <div className="mb-6">
+            <img
+              src={conversation.image}
+              alt={conversation.title}
+              className="w-full h-48 md:h-64 object-cover rounded-lg shadow-md"
+            />
+          </div>
+        )}
         
         <p className="text-lg text-gray-600 mb-6 leading-relaxed flex-1">
           {conversation.excerpt}
