@@ -1,5 +1,6 @@
 
-import { Clock, Heart, MessageSquare } from "lucide-react";
+import { Clock, Heart, MessageSquare, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { categories } from "./CategoryFilter";
 
 interface Conversation {
@@ -17,58 +18,70 @@ interface Conversation {
 
 interface ConversationCardProps {
   conversation: Conversation;
+  bgColor?: string;
 }
 
-export const ConversationCard = ({ conversation }: ConversationCardProps) => {
+export const ConversationCard = ({ conversation, bgColor = "bg-white" }: ConversationCardProps) => {
   const categoryData = categories.find(cat => cat.name === conversation.category);
   const categoryColor = categoryData?.color || "bg-gray-500";
   const categoryTextColor = categoryData?.textColor || "text-white";
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-3">
-          <span className={`${categoryColor} ${categoryTextColor} text-xs font-medium px-3 py-1 rounded-full`}>
+    <div className={`${bgColor} rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 h-full flex flex-col`}>
+      <div className="p-6 flex-1 flex flex-col">
+        <div className="flex items-center space-x-2 mb-3">
+          <span className={`${categoryColor} ${categoryTextColor} text-xs font-medium px-2 py-1 rounded-full`}>
             {conversation.category}
           </span>
-          <div className="flex items-center space-x-1 text-gray-500 text-sm">
-            <Clock className="w-3 h-3" />
-            <span>{conversation.readTime} min</span>
-          </div>
         </div>
         
-        <h3 className="text-xl font-serif font-thin text-gray-900 mb-3 leading-tight line-clamp-2">
+        <h3 className="text-xl font-serif font-thin text-gray-900 mb-3 leading-tight flex-1">
           {conversation.title}
         </h3>
         
-        <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+        <p className="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
           {conversation.excerpt}
         </p>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-auto">
           <div className="flex items-center space-x-3">
-            <img
-              src={conversation.authorImage}
-              alt={conversation.author}
-              className="w-8 h-8 rounded-full object-cover"
-            />
+            <Link to="/profile">
+              <img
+                src={conversation.authorImage}
+                alt={conversation.author}
+                className="w-8 h-8 rounded-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
+              />
+            </Link>
             <div>
-              <p className="font-medium text-gray-900 text-sm">{conversation.author}</p>
-              <p className="text-gray-500 text-xs">
-                {new Date(conversation.publishDate).toLocaleDateString()}
-              </p>
+              <Link to="/profile">
+                <p className="text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors cursor-pointer">{conversation.author}</p>
+              </Link>
+              <div className="flex items-center space-x-3 text-xs text-gray-500">
+                <span>{new Date(conversation.publishDate).toLocaleDateString()}</span>
+                <div className="flex items-center space-x-1">
+                  <Clock className="w-3 h-3" />
+                  <span>{conversation.readTime} min</span>
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-1 text-gray-500">
-              <Heart className="w-4 h-4" />
-              <span className="text-sm">{conversation.likes}</span>
+              <Heart className="w-3 h-3" />
+              <span className="text-xs">{conversation.likes}</span>
             </div>
             <div className="flex items-center space-x-1 text-gray-500">
-              <MessageSquare className="w-4 h-4" />
-              <span className="text-sm">{conversation.comments}</span>
+              <MessageSquare className="w-3 h-3" />
+              <span className="text-xs">{conversation.comments}</span>
             </div>
+            <Link 
+              to="/ai-consciousness"
+              className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-xs"
+            >
+              <span>Read</span>
+              <ArrowRight className="w-3 h-3" />
+            </Link>
           </div>
         </div>
       </div>

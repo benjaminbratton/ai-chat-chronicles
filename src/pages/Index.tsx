@@ -847,8 +847,12 @@ const Index = () => {
 
         {/* Conversations Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {displayedConversations.map((conversation) => (
-            <ConversationCard key={conversation.id} conversation={conversation} />
+          {displayedConversations.map((conversation, index) => (
+            <ConversationCard 
+              key={conversation.id} 
+              conversation={conversation} 
+              bgColor={index % 2 === 0 ? "bg-green-50" : "bg-blue-50"}
+            />
           ))}
         </div>
 
