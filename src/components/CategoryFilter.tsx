@@ -5,7 +5,7 @@ interface CategoryFilterProps {
   excludeAll?: boolean;
 }
 
-const categories = [
+export const categories = [
   { name: "All", color: "bg-gray-500", textColor: "text-white" },
   { name: "Philosophy", color: "bg-purple-500", textColor: "text-white" }, 
   { name: "Creative Writing", color: "bg-pink-500", textColor: "text-white" },
@@ -16,9 +16,6 @@ const categories = [
   { name: "Personal", color: "bg-indigo-500", textColor: "text-white" },
   { name: "Research", color: "bg-teal-500", textColor: "text-white" }
 ];
-
-// Export categories for use in other components
-export { categories };
 
 export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll = false }: CategoryFilterProps) => {
   const filteredCategories = excludeAll ? categories.filter(cat => cat.name !== "All") : categories;
