@@ -30,10 +30,10 @@ export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll 
           <button
             key={category.name}
             onClick={() => onCategoryChange(category.name)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${category.color} ${category.textColor} ${
               selectedCategory === category.name
-                ? `${category.color} ${category.textColor}`
-                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+                ? "ring-2 ring-offset-2 ring-gray-400 shadow-lg scale-105"
+                : "hover:shadow-md hover:scale-102 opacity-80 hover:opacity-100"
             }`}
           >
             {category.name}
