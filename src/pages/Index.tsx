@@ -110,7 +110,7 @@ const Index = () => {
         <div className="mb-16 grid md:grid-cols-2 gap-16">
           {/* Left Column - Dialogues with AI */}
           <div>
-            <h1 className="text-4xl md:text-6xl font-thin text-black mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-thin text-green-800 mb-6 tracking-tight">
               Dialogues with AI
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed font-thin">
@@ -124,7 +124,7 @@ const Index = () => {
 
           {/* Right Column - Deep Research */}
           <div className="text-right">
-            <h1 className="text-4xl md:text-6xl font-thin text-black mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-thin text-blue-800 mb-6 tracking-tight">
               Deep Research
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed font-thin">
@@ -145,7 +145,7 @@ const Index = () => {
               <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
               <div className="flex-1">
                 {featuredConversation && (
-                  <FeaturedConversation conversation={featuredConversation} />
+                  <FeaturedConversation conversation={featuredConversation} bgColor="bg-green-50" />
                 )}
               </div>
             </div>
@@ -154,7 +154,7 @@ const Index = () => {
             <div className="flex flex-col">
               <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Deep Research</h3>
               <div className="flex-1">
-                <FeaturedConversation conversation={featuredResearch} />
+                <FeaturedConversation conversation={featuredResearch} bgColor="bg-blue-50" />
               </div>
             </div>
           </div>

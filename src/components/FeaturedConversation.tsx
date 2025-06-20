@@ -17,11 +17,12 @@ interface Conversation {
 
 interface FeaturedConversationProps {
   conversation: Conversation;
+  bgColor?: string;
 }
 
-export const FeaturedConversation = ({ conversation }: FeaturedConversationProps) => {
+export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: FeaturedConversationProps) => {
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
+    <div className={`${bgColor} rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col`}>
       <div className="p-8 md:p-12 flex-1 flex flex-col">
         <div className="flex items-center space-x-2 mb-4">
           <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
