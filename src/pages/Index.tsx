@@ -742,7 +742,7 @@ const Index = () => {
   
   const featuredConversation = {
     ...mockConversations.find(conv => conv.featured),
-    image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=800&h=400&fit=crop"
+    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800&h=400&fit=crop"
   };
   const regularConversations = mockConversations.filter(conv => !conv.featured);
   
