@@ -114,10 +114,6 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             {/* Left Column - Dialogues with AI */}
             <div className="relative z-10">
-              <div className="mb-4 flex items-center gap-3">
-                <Sparkles className="w-6 h-6 text-emerald-500" />
-                <span className="text-sm font-medium text-emerald-600 uppercase tracking-widest">Live Conversations</span>
-              </div>
               <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-green-700 mb-8 tracking-tighter leading-tight">
                 Dialogues<br />
                 <span className="text-3xl md:text-4xl font-light italic">with AI</span>
@@ -138,10 +134,6 @@ const Index = () => {
 
             {/* Right Column - Deep Research */}
             <div className="relative z-10">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
-                <span className="text-sm font-medium text-blue-600 uppercase tracking-widest">Academic Focus</span>
-              </div>
               <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 mb-8 tracking-tighter leading-tight">
                 Deep<br />
                 <span className="text-3xl md:text-4xl font-light italic">Research</span>
