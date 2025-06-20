@@ -28,7 +28,7 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
   const categoryTextColor = categoryData?.textColor || "text-white";
 
   return (
-    <div className={`${bgColor} rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col border border-gray-100`}>
+    <div className={`${bgColor} rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col`}>
       <div className="p-8 md:p-12 flex-1 flex flex-col">
         <div className="flex items-center space-x-2 mb-4">
           <span className={`${categoryColor} ${categoryTextColor} text-xs font-medium px-3 py-1 rounded-full`}>
@@ -53,7 +53,7 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
           </div>
         )}
         
-        <p className="text-lg text-gray-600 mb-6 leading-relaxed flex-1 font-light">
+        <p className="text-lg text-gray-600 mb-6 leading-relaxed flex-1">
           {conversation.excerpt}
         </p>
 
@@ -71,10 +71,10 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
                 <p className="font-medium text-gray-900 hover:text-blue-600 transition-colors cursor-pointer">{conversation.author}</p>
               </Link>
               <div className="flex items-center space-x-4 text-sm text-gray-500">
-                <span className="font-light">{new Date(conversation.publishDate).toLocaleDateString()}</span>
+                <span>{new Date(conversation.publishDate).toLocaleDateString()}</span>
                 <div className="flex items-center space-x-1">
                   <Clock className="w-3 h-3" />
-                  <span className="font-light">{conversation.readTime} min read</span>
+                  <span>{conversation.readTime} min read</span>
                 </div>
               </div>
             </div>
@@ -83,15 +83,15 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2 text-gray-500">
               <Heart className="w-4 h-4" />
-              <span className="text-sm font-light">{conversation.likes}</span>
+              <span className="text-sm">{conversation.likes}</span>
             </div>
             <div className="flex items-center space-x-2 text-gray-500">
               <MessageSquare className="w-4 h-4" />
-              <span className="text-sm font-light">{conversation.comments}</span>
+              <span className="text-sm">{conversation.comments}</span>
             </div>
             <Link 
               to="/ai-consciousness"
-              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium"
             >
               <span>Read more</span>
               <ArrowRight className="w-4 h-4" />

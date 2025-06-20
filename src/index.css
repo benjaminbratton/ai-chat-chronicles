@@ -106,31 +106,6 @@
   p, span, div, button, input, textarea, label {
     font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif !important;
   }
-
-  /* Ensure consistent font weights across the site */
-  .font-thin {
-    font-weight: 300 !important;
-  }
-
-  .font-light {
-    font-weight: 300 !important;
-  }
-
-  .font-normal {
-    font-weight: 400 !important;
-  }
-
-  .font-medium {
-    font-weight: 500 !important;
-  }
-
-  .font-semibold {
-    font-weight: 600 !important;
-  }
-
-  .font-bold {
-    font-weight: 700 !important;
-  }
 }
 
 @layer utilities {
@@ -146,28 +121,5 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-  }
-
-  /* Theme-specific background utilities */
-  .bg-dialogue {
-    background-color: rgb(240 253 244); /* green-50 */
-  }
-
-  .bg-research {
-    background-color: rgb(239 246 255); /* blue-50 */
-  }
-
-  /* Consistent transition utilities */
-  .transition-theme {
-    transition: all 0.2s ease-in-out;
-  }
-
-  /* Consistent shadow utilities */
-  .shadow-theme {
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  }
-
-  .shadow-theme-hover {
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
 }
