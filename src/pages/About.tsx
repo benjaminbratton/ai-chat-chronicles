@@ -7,6 +7,17 @@ const About = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
+      {/* Add the URL section matching home page style */}
+      <div className="max-w-6xl mx-auto px-6 pt-4">
+        <div className="flex justify-start mb-4">
+          <img 
+            src="/lovable-uploads/6d0b0b90-2ccb-48c9-a546-f7589d6fa23d.png" 
+            alt="Antikythera Logo" 
+            className="h-12 object-contain"
+          />
+        </div>
+      </div>
+      
       <main className="max-w-4xl mx-auto px-6 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-purple-800 tracking-tight mb-4">about polylogos</h1>
