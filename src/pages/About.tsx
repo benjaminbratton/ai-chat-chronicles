@@ -1,3 +1,4 @@
+
 import { Header } from "@/components/Header";
 import { Info, Users, Target, Heart } from "lucide-react";
 
@@ -6,8 +7,8 @@ const About = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      {/* URL Display Section matching home page */}
-      <div className="max-w-6xl mx-auto px-6 pt-4">
+      {/* Browser-style URL Display Section matching home page exactly */}
+      <div className="max-w-6xl mx-auto px-6 pt-8">
         <div className="flex justify-start mb-8">
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 max-w-md">
             <div className="flex items-center space-x-2 mb-2">
