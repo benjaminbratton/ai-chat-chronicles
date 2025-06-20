@@ -1,4 +1,5 @@
 
+
 interface CategoryFilterProps {
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
@@ -6,30 +7,30 @@ interface CategoryFilterProps {
 }
 
 const categories = [
-  { name: "All" },
-  { name: "Philosophy" }, 
-  { name: "Creative Writing" },
-  { name: "Programming" },
-  { name: "Science" },
-  { name: "Education" },
-  { name: "Business" },
-  { name: "Personal" }
+  { name: "All", color: "bg-gray-400" },
+  { name: "Philosophy", color: "bg-purple-300" }, 
+  { name: "Creative Writing", color: "bg-pink-300" },
+  { name: "Programming", color: "bg-blue-300" },
+  { name: "Science", color: "bg-green-300" },
+  { name: "Education", color: "bg-yellow-300" },
+  { name: "Business", color: "bg-orange-300" },
+  { name: "Personal", color: "bg-indigo-300" }
 ];
 
 export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll = false }: CategoryFilterProps) => {
   const filteredCategories = excludeAll ? categories.filter(cat => cat.name !== "All") : categories;
 
   return (
-    <div className="text-center">
-      <div className="inline-flex flex-wrap gap-6 justify-center">
+    <div className="mb-8">
+      <div className="flex flex-wrap gap-3">
         {filteredCategories.map((category) => (
           <button
             key={category.name}
             onClick={() => onCategoryChange(category.name)}
-            className={`text-sm font-medium transition-colors ${
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               selectedCategory === category.name
-                ? "text-gray-900 border-b border-gray-900 pb-1"
-                : "text-gray-600 hover:text-gray-900"
+                ? `${category.color} text-gray-700`
+                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
             }`}
           >
             {category.name}
@@ -39,3 +40,4 @@ export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll 
     </div>
   );
 };
+

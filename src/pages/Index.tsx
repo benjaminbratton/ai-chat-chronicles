@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Header } from "@/components/Header";
+import { BrowserWindow } from "@/components/BrowserWindow";
 import { FeaturedConversation } from "@/components/FeaturedConversation";
 import { ConversationCard } from "@/components/ConversationCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
@@ -11,7 +12,7 @@ const mockConversations = [
   {
     id: 1,
     title: "Exploring the Philosophy of Consciousness with GPT-4",
-    excerpt: "A deep dive into what it means to be conscious, examining the hard problem of consciousness through the lens of artificial intelligence. This conversation explores fundamental questions about subjective experience, qualia, and the nature of awareness itself.",
+    excerpt: "A deep dive into what it means to be conscious, examining the hard problem of consciousness through the lens of artificial intelligence. This conversation explores fundamental questions about subjective experience, qualia, and the nature of awareness itself. We delve into philosophical frameworks from Chalmers to Dennett, questioning whether machines can truly experience consciousness or merely simulate it convincingly...",
     author: "Dr. Sarah Chen",
     authorImage: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=150&h=150&fit=crop&crop=face",
     readTime: 8,
@@ -78,7 +79,7 @@ const mockConversations = [
 const featuredResearch = {
   id: 6,
   title: "Artificial Evolution in Context",
-  excerpt: "Comprehensive analysis of evolutionary algorithms and their applications in modern AI systems, exploring how computational evolution mirrors biological processes and drives innovation in machine learning architectures.",
+  excerpt: "Comprehensive analysis of evolutionary algorithms and their applications in modern AI systems, exploring how computational evolution mirrors biological processes and drives innovation in machine learning architectures. This research examines the fundamental principles of genetic algorithms, evolutionary strategies, and their role in optimizing neural network architectures and hyperparameters...",
   author: "Dr. Michael Harrison",
   authorImage: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop&crop=face",
   readTime: 15,
@@ -100,70 +101,81 @@ const Index = () => {
     : regularConversations.filter(conv => conv.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-200">
+      <BrowserWindow />
       <Header />
       
-      <main className="max-w-5xl mx-auto px-6 py-12">
-        {/* Hero Section - Clean and Minimal */}
-        <div className="mb-16">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-6 leading-tight">
+      <main className="max-w-6xl mx-auto px-6 py-12">
+        {/* Hero Section - Two Column Layout */}
+        <div className="mb-16 grid md:grid-cols-2 gap-16">
+          {/* Left Column - Dialogues with AI */}
+          <div>
+            <h1 className="text-4xl md:text-6xl font-thin text-green-800 mb-6 tracking-tight">
               Dialogues with AI
             </h1>
-            <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto leading-relaxed">
-              A curated collection of conversations exploring the intersection of human thought 
-              and artificial intelligence. Join researchers, writers, and thinkers in examining 
-              the future of human-machine dialogue.
+            <p className="text-lg text-gray-600 leading-relaxed font-thin">
+              Discover and share fascinating conversations with artificial intelligence. 
+              Join our community of AI enthusiasts exploring the future of human-machine dialogue.{" "}
+              <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
+                Explore <ArrowRight className="w-4 h-4" />
+              </Link>
             </p>
           </div>
-          
-          <div className="flex justify-center">
-            <Link 
-              to="/explore" 
-              className="inline-flex items-center gap-2 text-blue-600 font-medium hover:text-blue-800 transition-colors border-b border-blue-200 hover:border-blue-400 pb-1"
-            >
-              Browse All Conversations <ArrowRight className="w-4 h-4" />
-            </Link>
+
+          {/* Right Column - Deep Research */}
+          <div className="text-right">
+            <h1 className="text-4xl md:text-6xl font-thin text-blue-800 mb-6 tracking-tight">
+              Deep Research
+            </h1>
+            <p className="text-lg text-gray-600 leading-relaxed font-thin">
+              Share comprehensive research reports and in-depth analyses. 
+              Engage with scholarly work and contribute to meaningful academic discussions through collaborative commentary.{" "}
+              <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
+                Explore <ArrowRight className="w-4 h-4" />
+              </Link>
+            </p>
           </div>
         </div>
 
-        {/* Featured Content */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-light text-gray-900 mb-8 text-center">Featured</h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {featuredConversation && (
-              <div>
-                <h3 className="text-lg font-medium text-gray-700 mb-4">Dialogue</h3>
-                <FeaturedConversation conversation={featuredConversation} />
+        {/* Featured Section - Two Column Layout with Equal Heights */}
+        <div className="mb-20">
+          <div className="grid md:grid-cols-2 gap-8 items-stretch">
+            {/* Left - Featured Dialogue */}
+            <div className="flex flex-col">
+              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
+              <div className="flex-1">
+                {featuredConversation && (
+                  <FeaturedConversation conversation={featuredConversation} bgColor="bg-green-50" />
+                )}
               </div>
-            )}
+            </div>
             
-            <div>
-              <h3 className="text-lg font-medium text-gray-700 mb-4">Research</h3>
-              <FeaturedConversation conversation={featuredResearch} />
+            {/* Right - Featured Deep Research */}
+            <div className="flex flex-col">
+              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Deep Research</h3>
+              <div className="flex-1">
+                <FeaturedConversation conversation={featuredResearch} bgColor="bg-blue-50" />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Category Filter */}
-        <div className="mb-12">
-          <CategoryFilter 
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-          />
-        </div>
+        <CategoryFilter 
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
 
         {/* Conversations Grid */}
-        <div className="space-y-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {filteredConversations.map((conversation) => (
             <ConversationCard key={conversation.id} conversation={conversation} />
           ))}
         </div>
 
         {/* Load More */}
-        <div className="text-center mt-12">
-          <button className="text-blue-600 font-medium hover:text-blue-800 transition-colors border-b border-blue-200 hover:border-blue-400 pb-1">
+        <div className="text-center">
+          <button className="bg-black text-white px-8 py-3 font-thin text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors">
             Load More
           </button>
         </div>
