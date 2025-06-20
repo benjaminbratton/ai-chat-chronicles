@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
 import { FeaturedConversation } from "@/components/FeaturedConversation";
@@ -101,82 +101,142 @@ const Index = () => {
     : regularConversations.filter(conv => conv.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gray-200">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-zinc-100">
       <BrowserWindow />
       <Header />
       
-      <main className="max-w-6xl mx-auto px-6 py-12">
-        {/* Hero Section - Two Column Layout */}
-        <div className="mb-16 grid md:grid-cols-2 gap-16">
-          {/* Left Column - Dialogues with AI */}
-          <div>
-            <h1 className="text-4xl md:text-6xl font-thin text-green-800 mb-6 tracking-tight">
-              Dialogues with AI
-            </h1>
-            <p className="text-lg text-gray-600 leading-relaxed font-thin">
-              Discover and share fascinating conversations with artificial intelligence. 
-              Join our community of AI enthusiasts exploring the future of human-machine dialogue.{" "}
-              <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
-                Explore <ArrowRight className="w-4 h-4" />
-              </Link>
-            </p>
-          </div>
+      <main className="max-w-7xl mx-auto px-6 py-16 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-40 left-10 w-96 h-96 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-20"></div>
+        
+        {/* Hero Section - Asymmetric Layout */}
+        <div className="mb-24 relative">
+          <div className="grid grid-cols-12 gap-8 items-start">
+            {/* Left Column - Dialogues with AI */}
+            <div className="col-span-12 md:col-span-7 relative z-10">
+              <div className="mb-4 flex items-center gap-3">
+                <Sparkles className="w-6 h-6 text-emerald-500" />
+                <span className="text-sm font-medium text-emerald-600 uppercase tracking-widest">Live Conversations</span>
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-green-700 mb-8 tracking-tighter leading-tight">
+                Dialogues<br />
+                <span className="text-4xl md:text-6xl font-light italic">with AI</span>
+              </h1>
+              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl">
+                <p className="text-xl text-gray-700 leading-relaxed font-light mb-6">
+                  Discover fascinating conversations with artificial intelligence. 
+                  Join our community exploring the future of human-machine dialogue.
+                </p>
+                <Link 
+                  to="/explore" 
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
+                >
+                  Explore Now <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
+            </div>
 
-          {/* Right Column - Deep Research */}
-          <div className="text-right">
-            <h1 className="text-4xl md:text-6xl font-thin text-blue-800 mb-6 tracking-tight">
-              Deep Research
-            </h1>
-            <p className="text-lg text-gray-600 leading-relaxed font-thin">
-              Share comprehensive research reports and in-depth analyses. 
-              Engage with scholarly work and contribute to meaningful academic discussions through collaborative commentary.{" "}
-              <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
-                Explore <ArrowRight className="w-4 h-4" />
-              </Link>
-            </p>
+            {/* Right Column - Deep Research */}
+            <div className="col-span-12 md:col-span-5 mt-16 md:mt-0">
+              <div className="text-right mb-4 flex items-center justify-end gap-3">
+                <span className="text-sm font-medium text-blue-600 uppercase tracking-widest">Academic Focus</span>
+                <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 mb-8 tracking-tighter text-right">
+                Deep<br />
+                <span className="text-3xl md:text-4xl font-light italic">Research</span>
+              </h1>
+              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl">
+                <p className="text-lg text-gray-700 leading-relaxed font-light mb-6 text-right">
+                  Comprehensive research reports and scholarly analyses. 
+                  Engage with academic work through collaborative commentary.
+                </p>
+                <div className="text-right">
+                  <Link 
+                    to="/explore" 
+                    className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
+                  >
+                    Dive Deep <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Featured Section - Two Column Layout with Equal Heights */}
-        <div className="mb-20">
-          <div className="grid md:grid-cols-2 gap-8 items-stretch">
+        {/* Featured Section - Creative Layout */}
+        <div className="mb-24">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Featured</span> Content
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-blue-500 mx-auto rounded-full"></div>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-12 items-stretch">
             {/* Left - Featured Dialogue */}
-            <div className="flex flex-col">
-              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
-              <div className="flex-1">
-                {featuredConversation && (
-                  <FeaturedConversation conversation={featuredConversation} bgColor="bg-green-50" />
-                )}
+            <div className="transform hover:rotate-1 transition-transform duration-500">
+              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-2 rounded-3xl">
+                <div className="bg-white rounded-2xl p-1">
+                  <h3 className="text-sm font-bold text-emerald-700 mb-4 uppercase tracking-wider text-center py-3">
+                    ✨ Featured Dialogue
+                  </h3>
+                  <div className="flex-1">
+                    {featuredConversation && (
+                      <FeaturedConversation conversation={featuredConversation} bgColor="bg-gradient-to-br from-emerald-50 via-white to-teal-50" />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
             
             {/* Right - Featured Deep Research */}
-            <div className="flex flex-col">
-              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Deep Research</h3>
-              <div className="flex-1">
-                <FeaturedConversation conversation={featuredResearch} bgColor="bg-blue-50" />
+            <div className="transform hover:-rotate-1 transition-transform duration-500">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-2 rounded-3xl">
+                <div className="bg-white rounded-2xl p-1">
+                  <h3 className="text-sm font-bold text-blue-700 mb-4 uppercase tracking-wider text-center py-3">
+                    🔬 Featured Research
+                  </h3>
+                  <div className="flex-1">
+                    <FeaturedConversation conversation={featuredResearch} bgColor="bg-gradient-to-br from-blue-50 via-white to-indigo-50" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Category Filter */}
-        <CategoryFilter 
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-        />
+        {/* Category Filter - Modern Design */}
+        <div className="mb-16">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl">
+            <CategoryFilter 
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+            />
+          </div>
+        </div>
 
-        {/* Conversations Grid */}
+        {/* Conversations Grid - Masonry-like Layout */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {filteredConversations.map((conversation) => (
-            <ConversationCard key={conversation.id} conversation={conversation} />
+          {filteredConversations.map((conversation, index) => (
+            <div 
+              key={conversation.id} 
+              className={`transform transition-all duration-500 hover:scale-105 ${
+                index % 3 === 0 ? 'md:translate-y-8' : 
+                index % 3 === 1 ? 'md:-translate-y-4' : ''
+              }`}
+            >
+              <ConversationCard conversation={conversation} />
+            </div>
           ))}
         </div>
 
-        {/* Load More */}
+        {/* Load More - Artistic Button */}
         <div className="text-center">
-          <button className="bg-black text-white px-8 py-3 font-thin text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors">
-            Load More
+          <button className="group relative bg-gradient-to-r from-gray-900 via-black to-gray-900 text-white px-12 py-4 rounded-full font-bold text-lg tracking-wide uppercase overflow-hidden hover:shadow-2xl transition-all duration-300">
+            <span className="relative z-10">Load More Magic</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
         </div>
       </main>

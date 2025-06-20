@@ -22,22 +22,27 @@ export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll 
 
   return (
     <div className="mb-8">
-      <div className="flex flex-wrap gap-3">
-        {filteredCategories.map((category) => (
+      <div className="flex flex-wrap gap-4 justify-center">
+        {filteredCategories.map((category, index) => (
           <button
             key={category.name}
             onClick={() => onCategoryChange(category.name)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`group relative px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 transform hover:scale-105 ${
               selectedCategory === category.name
-                ? `${category.color} text-gray-700`
-                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+                ? `bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg`
+                : "bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300 shadow-md hover:shadow-lg"
             }`}
+            style={{
+              animationDelay: `${index * 0.1}s`
+            }}
           >
-            {category.name}
+            <span className="relative z-10">{category.name}</span>
+            {selectedCategory !== category.name && (
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full"></div>
+            )}
           </button>
         ))}
       </div>
     </div>
   );
 };
-
