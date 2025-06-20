@@ -12,8 +12,16 @@ export const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-purple-200 flex items-center justify-center">
-                <span className="text-transparent font-medium text-2xl tracking-wider leading-none flex items-center justify-center" style={{ marginTop: '-17%' }}>p</span>
+              <div className="w-10 h-10 flex items-center justify-center">
+                <img 
+                  src="https://antikythera.org/favicon.ico" 
+                  alt="Antikythera Logo" 
+                  className="w-8 h-8"
+                  onError={(e) => {
+                    // Fallback to a direct logo URL if favicon doesn't work
+                    e.currentTarget.src = "https://antikythera.org/static/images/antikythera-logo.png";
+                  }}
+                />
               </div>
               <h1 className="text-2xl font-medium text-black tracking-wide">
                 polylogos
