@@ -1,4 +1,3 @@
-
 import { Header } from "@/components/Header";
 import { Info, Users, Target, Heart } from "lucide-react";
 
