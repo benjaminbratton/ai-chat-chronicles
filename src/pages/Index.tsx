@@ -733,7 +733,7 @@ const featuredResearch = {
   likes: 87,
   comments: 19,
   featured: true,
-  image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=400&fit=crop"
+  image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=400&fit=crop"
 };
 
 const Index = () => {
@@ -742,7 +742,7 @@ const Index = () => {
   
   const featuredConversation = {
     ...mockConversations.find(conv => conv.featured),
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=400&fit=crop"
+    image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=800&h=400&fit=crop"
   };
   const regularConversations = mockConversations.filter(conv => !conv.featured);
   
