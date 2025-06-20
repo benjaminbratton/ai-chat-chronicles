@@ -106,6 +106,15 @@ const Index = () => {
       <Header />
       
       <main className="max-w-6xl mx-auto px-6 py-12">
+        {/* Main Site Explanation */}
+        <div className="mb-16 text-center">
+          <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto font-light">
+            Polylogos is a forum for the socialization and analysis of human-machine communication, 
+            and thereby a way for collective intelligence crossing the boundary between the two 
+            to understand itself as it emerges.
+          </p>
+        </div>
+
         {/* Hero Section - Two Column Layout */}
         <div className="mb-16 grid md:grid-cols-2 gap-16">
           {/* Left Column - Dialogues with AI */}
