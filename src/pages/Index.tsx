@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Zap, Globe, Eye } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
 import { FeaturedConversation } from "@/components/FeaturedConversation";
@@ -101,196 +100,132 @@ const Index = () => {
     : regularConversations.filter(conv => conv.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden relative">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-zinc-100">
       <BrowserWindow />
       <Header />
       
-      {/* Radical Background Elements */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-red-500/20 to-pink-500/20 blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-gradient-to-bl from-cyan-400/30 to-blue-600/30 blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-0 w-64 h-64 bg-gradient-to-r from-yellow-400/25 to-orange-500/25 blur-2xl animate-pulse delay-500"></div>
+      <main className="max-w-7xl mx-auto px-6 py-16 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-40 left-10 w-96 h-96 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-20"></div>
         
-        {/* Geometric Overlays */}
-        <div className="absolute top-20 right-20 w-32 h-32 border-2 border-red-500/50 rotate-45 animate-spin-slow"></div>
-        <div className="absolute bottom-40 left-32 w-24 h-24 bg-cyan-400/20 blur-sm animate-bounce"></div>
-        <div className="absolute top-1/3 right-1/3 w-16 h-16 bg-yellow-400/30 rotate-12 animate-pulse"></div>
-      </div>
-      
-      <main className="max-w-7xl mx-auto px-6 py-16 relative z-10">
-        {/* Deconstructed Hero Section */}
-        <div className="mb-32 relative">
-          <div className="grid grid-cols-12 gap-4 min-h-screen">
-            
-            {/* Fragmented Title Treatment */}
-            <div className="col-span-12 md:col-span-8 relative">
-              <div className="absolute -top-16 -left-8 text-red-500/30 text-8xl font-black rotate-12 select-none">
-                POLY
-              </div>
-              <div className="relative z-10 pt-20">
-                <h1 className="text-6xl md:text-8xl font-black leading-none mb-8">
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-pink-500 to-yellow-400 transform -skew-x-12">
-                    DIALOGUES
-                  </span>
-                  <span className="block text-cyan-400 italic font-light text-4xl md:text-6xl ml-16 transform skew-x-6">
-                    ↗ with machines
-                  </span>
-                </h1>
-                
-                <div className="flex items-center gap-8 mt-12 mb-8">
-                  <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-transparent"></div>
-                  <Eye className="w-8 h-8 text-cyan-400 animate-pulse" />
-                  <div className="w-16 h-1 bg-gradient-to-l from-yellow-400 to-transparent"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* Experimental Research Block */}
-            <div className="col-span-12 md:col-span-4 relative">
-              <div className="bg-white/5 backdrop-blur-sm border border-cyan-400/30 p-8 transform rotate-2 hover:rotate-0 transition-transform duration-700">
-                <div className="text-cyan-400 text-xs uppercase tracking-[0.3em] mb-4 font-mono">
-                  /// DEEP_RESEARCH.EXE
-                </div>
-                <h2 className="text-2xl font-bold mb-4 text-white">
-                  Academic<br/>
-                  <span className="text-cyan-400 italic">Synthesis</span>
-                </h2>
-                <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                  Comprehensive research reports through collaborative commentary systems
+        {/* Hero Section - Symmetric Layout */}
+        <div className="mb-24 relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            {/* Left Column - Dialogues with AI */}
+            <div className="relative z-10">
+              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-green-700 mb-8 tracking-tighter leading-tight">
+                Dialogues<br />
+                <span className="text-3xl md:text-4xl font-light italic">with AI</span>
+              </h1>
+              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl h-48">
+                <p className="text-lg text-gray-700 leading-relaxed font-light mb-6">
+                  Discover fascinating conversations with artificial intelligence. 
+                  Join our community exploring the future of human-machine dialogue.
                 </p>
                 <Link 
                   to="/explore" 
-                  className="inline-flex items-center gap-2 bg-cyan-400 text-black px-6 py-3 text-sm font-bold hover:bg-cyan-300 transition-colors"
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
                 >
-                  ACCESS <ArrowRight className="w-4 h-4" />
+                  Explore Now <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
             </div>
 
-            {/* Floating Action Elements */}
-            <div className="col-span-12 md:col-span-6 relative mt-16">
-              <div className="bg-red-500/10 border-l-4 border-red-500 p-8 backdrop-blur-sm transform -skew-x-3">
-                <div className="transform skew-x-3">
-                  <Zap className="w-12 h-12 text-red-400 mb-4" />
-                  <h3 className="text-xl font-bold text-white mb-3">
-                    LIVE DISCOURSE
-                  </h3>
-                  <p className="text-gray-300 text-sm mb-6">
-                    Real-time conversations exploring the boundaries of artificial intelligence and human creativity
-                  </p>
-                  <Link 
-                    to="/explore" 
-                    className="inline-flex items-center gap-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-8 py-4 font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 transform -skew-x-12"
-                  >
-                    <span className="transform skew-x-12">ENGAGE</span>
-                    <ArrowRight className="w-5 h-5 transform skew-x-12" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-span-12 md:col-span-6 relative mt-8">
-              <div className="bg-yellow-400/10 border border-yellow-400/30 p-8 backdrop-blur-sm transform rotate-1">
-                <Globe className="w-12 h-12 text-yellow-400 mb-4" />
-                <div className="text-yellow-400 text-xs uppercase tracking-widest mb-2 font-mono">
-                  NETWORK_STATUS: ACTIVE
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3">
-                  GLOBAL SYNTHESIS
-                </h3>
-                <p className="text-gray-300 text-sm">
-                  Distributed intelligence networks forming new paradigms of collaborative knowledge creation
+            {/* Right Column - Deep Research */}
+            <div className="relative z-10">
+              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 mb-8 tracking-tighter leading-tight">
+                Deep<br />
+                <span className="text-3xl md:text-4xl font-light italic">Research</span>
+              </h1>
+              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl h-48">
+                <p className="text-lg text-gray-700 leading-relaxed font-light mb-6">
+                  Comprehensive research reports and scholarly analyses. 
+                  Engage with academic work through collaborative commentary.
                 </p>
+                <Link 
+                  to="/explore" 
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
+                >
+                  Dive Deep <ArrowRight className="w-5 h-5" />
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Radical Featured Section */}
-        <div className="mb-32 relative">
-          <div className="text-center mb-20 relative">
-            <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-6xl font-black text-white/5 select-none">
-              FEATURED
-            </div>
-            <h2 className="text-4xl font-black text-white relative z-10 mb-4">
-              <span className="text-red-400">[</span>
-              CURATED
-              <span className="text-cyan-400">]</span>
+        {/* Featured Section - Creative Layout */}
+        <div className="mb-24">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Featured</span> Content
             </h2>
-            <div className="flex justify-center gap-4">
-              <div className="w-16 h-0.5 bg-red-400"></div>
-              <div className="w-8 h-0.5 bg-yellow-400"></div>
-              <div className="w-12 h-0.5 bg-cyan-400"></div>
-            </div>
+            <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-blue-500 mx-auto rounded-full"></div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-16 items-start">
-            <div className="transform hover:scale-105 transition-transform duration-500">
-              <div className="bg-gradient-to-br from-red-500/20 to-pink-500/20 p-1 backdrop-blur-sm">
-                <div className="bg-black/80 p-1">
-                  <div className="text-red-400 text-xs font-mono uppercase tracking-wider text-center py-3 bg-black/50">
-                    /// FEATURED_DIALOGUE.AI
+          <div className="grid md:grid-cols-2 gap-12 items-stretch">
+            {/* Left - Featured Dialogue */}
+            <div className="transform hover:rotate-1 transition-transform duration-500">
+              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-2 rounded-3xl">
+                <div className="bg-white rounded-2xl p-1">
+                  <h3 className="text-sm font-bold text-emerald-700 mb-4 uppercase tracking-wider text-center py-3">
+                    ✨ Featured Dialogue
+                  </h3>
+                  <div className="flex-1">
+                    {featuredConversation && (
+                      <FeaturedConversation conversation={featuredConversation} bgColor="bg-gradient-to-br from-emerald-50 via-white to-teal-50" />
+                    )}
                   </div>
-                  {featuredConversation && (
-                    <FeaturedConversation conversation={featuredConversation} bgColor="bg-black/90 border border-red-500/30" />
-                  )}
                 </div>
               </div>
             </div>
             
-            <div className="transform hover:scale-105 transition-transform duration-500">
-              <div className="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 p-1 backdrop-blur-sm">
-                <div className="bg-black/80 p-1">
-                  <div className="text-cyan-400 text-xs font-mono uppercase tracking-wider text-center py-3 bg-black/50">
-                    /// DEEP_RESEARCH.REPORT
+            {/* Right - Featured Deep Research */}
+            <div className="transform hover:-rotate-1 transition-transform duration-500">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-2 rounded-3xl">
+                <div className="bg-white rounded-2xl p-1">
+                  <h3 className="text-sm font-bold text-blue-700 mb-4 uppercase tracking-wider text-center py-3">
+                    🔬 Featured Research
+                  </h3>
+                  <div className="flex-1">
+                    <FeaturedConversation conversation={featuredResearch} bgColor="bg-gradient-to-br from-blue-50 via-white to-indigo-50" />
                   </div>
-                  <FeaturedConversation conversation={featuredResearch} bgColor="bg-black/90 border border-cyan-500/30" />
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Experimental Category Filter */}
-        <div className="mb-20">
-          <div className="bg-black/50 backdrop-blur-xl border border-white/10 p-8 transform -skew-x-1">
-            <div className="transform skew-x-1">
-              <CategoryFilter 
-                selectedCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
-              />
-            </div>
+        {/* Category Filter - Modern Design */}
+        <div className="mb-16">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl">
+            <CategoryFilter 
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+            />
           </div>
         </div>
 
-        {/* Deconstructed Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
+        {/* Conversations Grid - Masonry-like Layout */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {filteredConversations.map((conversation, index) => (
             <div 
               key={conversation.id} 
-              className={`transform transition-all duration-700 hover:scale-105 ${
-                index % 4 === 0 ? 'md:translate-y-12 rotate-1' : 
-                index % 4 === 1 ? 'md:-translate-y-8 -rotate-1' : 
-                index % 4 === 2 ? 'md:translate-y-4 rotate-0.5' : 'rotate-0'
+              className={`transform transition-all duration-500 hover:scale-105 ${
+                index % 3 === 0 ? 'md:translate-y-8' : 
+                index % 3 === 1 ? 'md:-translate-y-4' : ''
               }`}
-              style={{
-                animationDelay: `${index * 0.2}s`
-              }}
             >
               <ConversationCard conversation={conversation} />
             </div>
           ))}
         </div>
 
-        {/* Radical Load More */}
-        <div className="text-center relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
-          <button className="relative group bg-black border-2 border-white text-white px-16 py-6 font-black text-lg tracking-wider uppercase overflow-hidden hover:border-red-400 transition-all duration-500 transform hover:skew-x-12">
-            <span className="relative z-10 transform group-hover:-skew-x-12 transition-transform duration-500">
-              LOAD_MORE.EXE
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <Sparkles className="absolute top-2 right-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Load More - Artistic Button */}
+        <div className="text-center">
+          <button className="group relative bg-gradient-to-r from-gray-900 via-black to-gray-900 text-white px-12 py-4 rounded-full font-bold text-lg tracking-wide uppercase overflow-hidden hover:shadow-2xl transition-all duration-300">
+            <span className="relative z-10">Load More Magic</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
         </div>
       </main>
