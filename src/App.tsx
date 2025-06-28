@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,6 +19,7 @@ import Signup from "./pages/Signup";
 import AIConsciousnessPost from "./pages/AIConsciousnessPost";
 import NotFound from "./pages/NotFound";
 import MaxTegmark from "./pages/MaxTegmark";
+import Model from "./pages/Model";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +41,7 @@ const App = () => (
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/max-tegmark" element={<MaxTegmark />} />
+                <Route path="/model" element={<Model />} />
                 <Route path="/post/:id" element={<Post />} />
                 <Route path="/ai-consciousness" element={<AIConsciousnessPost />} />
                 

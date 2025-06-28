@@ -139,6 +139,16 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
               Explore
             </Link>
             <Link 
+              to="/model" 
+              className={`text-sm tracking-wide uppercase transition-colors ${
+                location.pathname === '/model' 
+                  ? 'text-black font-medium' 
+                  : 'text-gray-600 hover:text-black'
+              }`}
+            >
+              Model
+            </Link>
+            <Link 
               to="/visualize" 
               className={`text-sm tracking-wide uppercase transition-colors ${
                 location.pathname === '/visualize' 
