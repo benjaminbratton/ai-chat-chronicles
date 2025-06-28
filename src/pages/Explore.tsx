@@ -18,44 +18,49 @@ const Explore = () => {
 
   console.log('Explore page - Current filters:', { selectedCategory, sortBy, searchQuery });
 
-  // Fetch real conversations from Supabase
-  const { data: conversations = [], isLoading, error } = useConversations(
-    selectedCategory === "All" ? undefined : selectedCategory
-  );
+  // Fetch all conversations from Supabase (no category filter initially)
+  const { data: conversations = [], isLoading, error, refetch } = useConversations();
 
-  console.log('Fetched conversations:', conversations.length);
+  console.log('Raw conversations from database:', conversations);
+  console.log('Total conversations fetched:', conversations.length);
 
   // Transform Supabase data to match PostCard interface
-  const transformedPosts = conversations.map(conversation => ({
-    id: parseInt(conversation.id),
-    title: conversation.title,
-    content: conversation.content,
-    author: conversation.profiles?.username || conversation.profiles?.full_name || 'Anonymous',
-    authorAvatar: conversation.profiles?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
-    category: conversation.category,
-    aiModel: "AI Model", // You might want to add this field to your database
-    upvotes: conversation.likes_count || Math.floor(Math.random() * 50), // Add some random upvotes for demo
-    comments: conversation.comments_count || Math.floor(Math.random() * 20),
-    timestamp: new Date(conversation.created_at).toLocaleDateString(),
-    readTime: conversation.read_time || 5
-  }));
+  const transformedPosts = conversations.map(conversation => {
+    console.log('Transforming conversation:', conversation.id, conversation.title);
+    return {
+      id: parseInt(conversation.id),
+      title: conversation.title,
+      content: conversation.content,
+      author: conversation.profiles?.username || conversation.profiles?.full_name || 'Anonymous',
+      authorAvatar: conversation.profiles?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
+      category: conversation.category,
+      aiModel: "GPT-4", 
+      upvotes: conversation.likes_count || Math.floor(Math.random() * 50),
+      comments: conversation.comments_count || Math.floor(Math.random() * 20),
+      timestamp: new Date(conversation.created_at).toLocaleDateString(),
+      readTime: conversation.read_time || 5
+    };
+  });
 
   console.log('Transformed posts:', transformedPosts.length);
 
+  // Apply filters
   const filteredPosts = transformedPosts.filter(post => {
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.author.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    console.log(`Post "${post.title}": category match = ${matchesCategory}, search match = ${matchesSearch}`);
     return matchesCategory && matchesSearch;
   });
 
   console.log('Filtered posts:', filteredPosts.length);
 
+  // Sort posts
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     switch (sortBy) {
       case "hot":
-        // Sort by upvotes with some time decay
         const aScore = a.upvotes + (new Date(a.timestamp).getTime() / 1000000000);
         const bScore = b.upvotes + (new Date(b.timestamp).getTime() / 1000000000);
         return bScore - aScore;
@@ -68,7 +73,7 @@ const Explore = () => {
     }
   });
 
-  console.log('Sorted posts:', sortedPosts.length, 'Sort by:', sortBy);
+  console.log('Final sorted posts to display:', sortedPosts.length);
 
   if (isLoading) {
     return (
@@ -93,7 +98,12 @@ const Explore = () => {
         <main className="max-w-5xl mx-auto px-4 py-6">
           <div className="text-center py-8">
             <p className="text-red-600">Error loading conversations: {error.message}</p>
-            <p className="text-sm text-gray-500 mt-2">Try generating some synthetic posts first</p>
+            <button 
+              onClick={() => refetch()}
+              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Retry
+            </button>
           </div>
         </main>
       </div>
@@ -118,6 +128,19 @@ const Explore = () => {
             <SyntheticDataGenerator />
           </div>
         )}
+
+        {/* Debug Info */}
+        <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded">
+          <p className="text-sm text-blue-800">
+            Debug: Found {conversations.length} total conversations, showing {sortedPosts.length} after filters
+          </p>
+          <button 
+            onClick={() => refetch()}
+            className="mt-2 text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+          >
+            Refresh Data
+          </button>
+        </div>
 
         {/* Search and Filters */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
@@ -157,6 +180,11 @@ const Explore = () => {
               {conversations.length === 0 && (
                 <p className="text-sm text-gray-500 mt-2">
                   {user ? "Try generating some synthetic posts using the tool above." : "Please log in to generate content."}
+                </p>
+              )}
+              {conversations.length > 0 && (
+                <p className="text-sm text-gray-500 mt-2">
+                  Try adjusting your filters or search terms.
                 </p>
               )}
             </div>
