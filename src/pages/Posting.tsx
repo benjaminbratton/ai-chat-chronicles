@@ -4,13 +4,62 @@ import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
 import { PostForm } from "@/components/PostForm";
 import { CommentSection } from "@/components/CommentSection";
+import { useCreateConversation } from "@/hooks/useConversations";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const Posting = () => {
   const [showComments, setShowComments] = useState(false);
   const [postData, setPostData] = useState(null);
   const [postType, setPostType] = useState<"dialogue" | "research">("dialogue");
+  
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const createConversationMutation = useCreateConversation();
 
-  const handlePostSubmit = (data: any) => {
+  const handlePostSubmit = async (data: any) => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to create a post.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Save to database
+      const conversationData = {
+        title: data.title,
+        content: data.content,
+        category: data.category || (postType === "research" ? "Research" : "Philosophy"),
+        read_time: Math.ceil(data.content.length / 1000) * 2, // Rough estimate
+        published: true,
+        featured: false,
+        excerpt: data.content.substring(0, 200) + (data.content.length > 200 ? "..." : "")
+      };
+
+      await createConversationMutation.mutateAsync(conversationData);
+      
+      toast({
+        title: "Success!",
+        description: "Your conversation has been published.",
+      });
+
+      // Navigate to explore page to see the new post
+      navigate('/explore');
+    } catch (error) {
+      console.error('Error creating conversation:', error);
+      toast({
+        title: "Error",
+        description: "Failed to publish your conversation. Please try again.",
+        variant: "destructive",
+      });
+    }
+
+    // Still show preview for now
     setPostData(data);
     setShowComments(true);
   };
