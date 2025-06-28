@@ -5,7 +5,6 @@ import { BrowserWindow } from "@/components/BrowserWindow";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { PostCard } from "@/components/PostCard";
 import { SortOptions } from "@/components/SortOptions";
-import { SyntheticDataGenerator } from "@/components/SyntheticDataGenerator";
 import { Search } from "lucide-react";
 import { useConversations } from "@/hooks/useConversations";
 import { useAuth } from "@/hooks/useAuth";
@@ -16,22 +15,11 @@ const Explore = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useAuth();
 
-  console.log('🔍 Explore page - Current filters:', { selectedCategory, sortBy, searchQuery, userLoggedIn: !!user });
-
   // Fetch conversations from Supabase
   const { data: conversations = [], isLoading, error, refetch } = useConversations(selectedCategory);
 
-  console.log('📊 Database query results:', {
-    conversationsCount: conversations.length,
-    isLoading,
-    hasError: !!error,
-    errorMessage: error?.message
-  });
-
   // Transform Supabase data to match PostCard interface
   const transformedPosts = conversations.map(conversation => {
-    console.log('🔄 Transforming conversation:', conversation.id, conversation.title);
-    
     // Handle profile data safely - it could be null or an object
     const profile = Array.isArray(conversation.profiles) ? conversation.profiles[0] : conversation.profiles;
     
@@ -50,8 +38,6 @@ const Explore = () => {
     };
   });
 
-  console.log('🎯 Transformed posts:', transformedPosts.length);
-
   // Apply filters
   const filteredPosts = transformedPosts.filter(post => {
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
@@ -59,11 +45,8 @@ const Explore = () => {
                          post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.author.toLowerCase().includes(searchQuery.toLowerCase());
     
-    console.log(`🔍 Post "${post.title}": category match = ${matchesCategory}, search match = ${matchesSearch}`);
     return matchesCategory && matchesSearch;
   });
-
-  console.log('📋 Filtered posts:', filteredPosts.length);
 
   // Sort posts
   const sortedPosts = [...filteredPosts].sort((a, b) => {
@@ -81,8 +64,6 @@ const Explore = () => {
     }
   });
 
-  console.log('📈 Final sorted posts to display:', sortedPosts.length);
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-100">
@@ -98,7 +79,6 @@ const Explore = () => {
   }
 
   if (error) {
-    console.error('❌ Error loading conversations:', error);
     return (
       <div className="min-h-screen bg-gray-100">
         <BrowserWindow />
@@ -128,31 +108,6 @@ const Explore = () => {
         <div className="mb-6">
           <h1 className="text-3xl font-thin text-black mb-2">Explore AI Conversations</h1>
           <p className="text-gray-600">Discover the latest conversations and insights from our community</p>
-        </div>
-
-        {/* Development Tool - Only show when user is logged in */}
-        {user && (
-          <div className="mb-6">
-            <SyntheticDataGenerator />
-          </div>
-        )}
-
-        {/* Enhanced Debug Info */}
-        <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded">
-          <h3 className="font-semibold text-blue-800 mb-2">Debug Information</h3>
-          <div className="text-sm text-blue-800 space-y-1">
-            <p>• Database conversations: {conversations.length}</p>
-            <p>• After filtering: {filteredPosts.length}</p>
-            <p>• User logged in: {user ? '✅ Yes' : '❌ No'}</p>
-            <p>• Selected category: {selectedCategory}</p>
-            <p>• Sort by: {sortBy}</p>
-          </div>
-          <button 
-            onClick={() => refetch()}
-            className="mt-2 text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-          >
-            Refresh Data
-          </button>
         </div>
 
         {/* Search and Filters */}
@@ -192,15 +147,9 @@ const Explore = () => {
               <p className="text-gray-600">No conversations found matching your criteria.</p>
               {conversations.length === 0 && (
                 <div className="mt-4 space-y-2">
-                  {user ? (
-                    <p className="text-sm text-gray-500">
-                      ⬆️ Try generating some synthetic posts using the tool above.
-                    </p>
-                  ) : (
-                    <p className="text-sm text-gray-500">
-                      Please log in to generate content and see conversations.
-                    </p>
-                  )}
+                  <p className="text-sm text-gray-500">
+                    Please log in to generate content and see conversations.
+                  </p>
                 </div>
               )}
               {conversations.length > 0 && (
