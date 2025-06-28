@@ -1,4 +1,3 @@
-
 import { useState, useEffect, createContext, useContext } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase, Profile } from '@/lib/supabase';
@@ -25,6 +24,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session:', session);
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state change:', event, session);
       setSession(session);
       setUser(session?.user ?? null);
       
@@ -114,8 +115,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         data: {
           full_name: fullName,
         },
+        emailRedirectTo: `${window.location.origin}/login?confirmed=true`,
       },
     });
+    
+    console.log('SignUp result:', { data, error });
     return { data, error };
   };
 
@@ -124,6 +128,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       email,
       password,
     });
+    
+    console.log('SignIn result:', { data, error });
     return { data, error };
   };
 

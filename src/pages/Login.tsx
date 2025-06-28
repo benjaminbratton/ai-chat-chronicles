@@ -1,6 +1,6 @@
 
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,17 @@ const Login = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    // Check if user was redirected after email confirmation
+    if (searchParams.get('confirmed') === 'true') {
+      toast({
+        title: "Email Confirmed",
+        description: "Your email has been confirmed! You can now log in.",
+      });
+    }
+  }, [searchParams, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +36,7 @@ const Login = () => {
     try {
       const { error } = await signIn(email, password);
       if (error) {
+        console.error('Login error:', error);
         toast({
           title: "Error",
           description: error.message,
@@ -38,6 +50,7 @@ const Login = () => {
         navigate('/');
       }
     } catch (error) {
+      console.error('Unexpected login error:', error);
       toast({
         title: "Error",
         description: "An unexpected error occurred",
