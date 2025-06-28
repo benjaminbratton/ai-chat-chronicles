@@ -1,12 +1,11 @@
-
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
-export const useConversations = (category?: string, page: number = 1, limit: number = 12) => {
-  return useQuery({
-    queryKey: ['conversations', category, page, limit],
-    queryFn: async () => {
-      console.log('Fetching conversations from database...', { category, page, limit });
+export const useConversations = (category?: string, limit: number = 12) => {
+  return useInfiniteQuery({
+    queryKey: ['conversations', category, limit],
+    queryFn: async ({ pageParam = 0 }) => {
+      console.log('Fetching conversations from database...', { category, page: pageParam + 1, limit });
       
       let query = supabase
         .from('conversations')
@@ -38,23 +37,19 @@ export const useConversations = (category?: string, page: number = 1, limit: num
       }
 
       // Get total count for pagination
-      const { count } = await supabase
+      const countQuery = supabase
         .from('conversations')
         .select('*', { count: 'exact', head: true })
-        .eq('published', true)
-        .then(result => {
-          if (category && category !== 'All') {
-            return supabase
-              .from('conversations')
-              .select('*', { count: 'exact', head: true })
-              .eq('published', true)
-              .eq('category', category);
-          }
-          return result;
-        });
+        .eq('published', true);
+
+      if (category && category !== 'All') {
+        countQuery.eq('category', category);
+      }
+
+      const { count } = await countQuery;
 
       // Apply pagination
-      const startIndex = (page - 1) * limit;
+      const startIndex = pageParam * limit;
       query = query.range(startIndex, startIndex + limit - 1);
 
       const { data, error } = await query;
@@ -66,20 +61,23 @@ export const useConversations = (category?: string, page: number = 1, limit: num
 
       const conversations = data || [];
       const total = count || 0;
-      const totalPages = Math.ceil(total / limit);
+      const hasNextPage = startIndex + limit < total;
 
       console.log(`Fetched ${conversations.length} conversations, total: ${total}`);
 
       return {
         conversations,
         total,
-        page,
+        page: pageParam + 1,
         limit,
-        totalPages,
-        hasNextPage: startIndex + limit < total,
-        hasPreviousPage: page > 1
+        hasNextPage,
+        hasPreviousPage: pageParam > 0
       };
     },
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.hasNextPage ? allPages.length : undefined;
+    },
+    initialPageParam: 0,
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
