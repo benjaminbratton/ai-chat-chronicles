@@ -1,5 +1,5 @@
 
-import { Search, PlusCircle } from "lucide-react";
+import { Search, PlusCircle, Twitter, Instagram, Linkedin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from '@/hooks/useAuth';
 import { UserMenu } from './UserMenu';
@@ -13,12 +13,50 @@ export const Header = () => {
     <header className="bg-white border-b border-gray-200">
       {/* Top logo section */}
       <div className="max-w-6xl mx-auto px-6 pt-4">
-        <div className="flex justify-start mb-4">
+        <div className="flex justify-between items-center mb-4">
           <img 
             src="/lovable-uploads/6d0b0b90-2ccb-48c9-a546-f7589d6fa23d.png" 
             alt="Antikythera Logo" 
             className="h-12 object-contain"
           />
+          
+          {/* Social Media Icons */}
+          <div className="flex items-center space-x-4">
+            <a 
+              href="https://twitter.com/polylogos" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-500 transition-colors"
+            >
+              <Twitter className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://instagram.com/polylogos" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-pink-500 transition-colors"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://substack.com/polylogos" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-orange-500 transition-colors"
+            >
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+              </svg>
+            </a>
+            <a 
+              href="https://linkedin.com/company/polylogos" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-700 transition-colors"
+            >
+              <Linkedin className="w-5 h-5" />
+            </a>
+          </div>
         </div>
       </div>
       
