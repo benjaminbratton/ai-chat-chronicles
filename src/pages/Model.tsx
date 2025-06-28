@@ -111,7 +111,7 @@ const Model = () => {
             <div className="flex items-center justify-center h-full">
               <div className="text-center max-w-md">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                  Research the polylogos collective intelligence
+                  Research polylogos collective intelligence
                 </h2>
                 <p className="text-gray-600">
                   Explore patterns and insights
