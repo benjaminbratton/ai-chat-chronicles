@@ -1,11 +1,12 @@
+
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
-export const useConversations = (category?: string, limit: number = 12) => {
+export const useConversations = (category?: string, limit: number = 12, searchQuery?: string) => {
   return useInfiniteQuery({
-    queryKey: ['conversations', category, limit],
+    queryKey: ['conversations', category, limit, searchQuery],
     queryFn: async ({ pageParam = 0 }) => {
-      console.log('Fetching conversations from database...', { category, page: pageParam + 1, limit });
+      console.log('Fetching conversations from database...', { category, page: pageParam + 1, limit, searchQuery });
       
       let query = supabase
         .from('conversations')
@@ -36,6 +37,11 @@ export const useConversations = (category?: string, limit: number = 12) => {
         query = query.eq('category', category);
       }
 
+      // Apply search filter if provided
+      if (searchQuery && searchQuery.trim()) {
+        query = query.or(`title.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%,excerpt.ilike.%${searchQuery}%`);
+      }
+
       // Get total count for pagination
       const countQuery = supabase
         .from('conversations')
@@ -44,6 +50,10 @@ export const useConversations = (category?: string, limit: number = 12) => {
 
       if (category && category !== 'All') {
         countQuery.eq('category', category);
+      }
+
+      if (searchQuery && searchQuery.trim()) {
+        countQuery.or(`title.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%,excerpt.ilike.%${searchQuery}%`);
       }
 
       const { count } = await countQuery;

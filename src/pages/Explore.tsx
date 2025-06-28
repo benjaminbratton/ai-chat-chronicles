@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from "react";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
@@ -23,7 +22,7 @@ const Explore = () => {
   // Debounce search query to reduce API calls
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  // Fetch conversations with infinite scroll
+  // Fetch conversations with infinite scroll and search
   const { 
     data, 
     isLoading, 
@@ -32,7 +31,7 @@ const Explore = () => {
     fetchNextPage, 
     hasNextPage, 
     isFetchingNextPage 
-  } = useConversations(selectedCategory, POSTS_PER_PAGE);
+  } = useConversations(selectedCategory, POSTS_PER_PAGE, debouncedSearchQuery);
 
   // Flatten all pages of data
   const allConversations = useMemo(() => {
@@ -70,18 +69,8 @@ const Explore = () => {
     };
   });
 
-  // Apply search filter (using debounced query)
-  const filteredPosts = transformedPosts.filter(post => {
-    const matchesSearch = debouncedSearchQuery === "" || 
-                         post.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
-                         post.content.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
-                         post.author.toLowerCase().includes(debouncedSearchQuery.toLowerCase());
-    
-    return matchesSearch;
-  });
-
-  // Sort posts
-  const sortedPosts = [...filteredPosts].sort((a, b) => {
+  // Sort posts (search filtering is now done server-side)
+  const sortedPosts = [...transformedPosts].sort((a, b) => {
     switch (sortBy) {
       case "hot":
         const aScore = a.upvotes + (new Date(a.timestamp).getTime() / 1000000000);
@@ -96,7 +85,7 @@ const Explore = () => {
     }
   });
 
-  // Reset to top when category changes
+  // Reset to top when category or search changes
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     window.scrollTo({ top: 0, behavior: 'smooth' });
