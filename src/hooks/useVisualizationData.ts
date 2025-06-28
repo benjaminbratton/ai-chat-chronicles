@@ -1,6 +1,6 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { useConversations } from './useConversations';
 
 interface VisualizationNode {
   id: string;
@@ -21,31 +21,19 @@ interface VisualizationLink {
 }
 
 export const useVisualizationData = (filter: string) => {
+  // Use the same conversations data as the explore page
+  const { data: conversationsData } = useConversations(filter === 'all' ? undefined : filter, 1, 1000);
+  
   return useQuery({
     queryKey: ['visualization-data', filter],
-    queryFn: async () => {
+    queryFn: () => {
       console.log('Fetching visualization data for filter:', filter);
       
-      // Fetch conversations from Supabase
-      let query = supabase
-        .from('conversations')
-        .select('*')
-        .eq('published', true);
+      const conversations = conversationsData?.conversations || [];
+      
+      console.log('Fetched conversations for visualization:', conversations.length);
 
-      if (filter !== 'all') {
-        query = query.eq('category', filter);
-      }
-
-      const { data: conversations, error } = await query;
-
-      if (error) {
-        console.error('Error fetching conversations for visualization:', error);
-        throw error;
-      }
-
-      console.log('Fetched conversations for visualization:', conversations?.length || 0);
-
-      if (!conversations || conversations.length === 0) {
+      if (conversations.length === 0) {
         return { nodes: [], links: [] };
       }
 
@@ -152,5 +140,6 @@ export const useVisualizationData = (filter: string) => {
       console.log('Generated visualization data:', { nodes: nodes.length, links: links.length });
       return { nodes, links };
     },
+    enabled: !!conversationsData, // Only run when we have conversations data
   });
 };
