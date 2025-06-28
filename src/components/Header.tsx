@@ -5,9 +5,21 @@ import { useAuth } from '@/hooks/useAuth';
 import { UserMenu } from './UserMenu';
 import { AuthButtons } from './AuthButtons';
 
-export const Header = () => {
+interface HeaderProps {
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
+  onSearchSubmit?: () => void;
+}
+
+export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: HeaderProps) => {
   const location = useLocation();
   const { user, loading } = useAuth();
+
+  const handleSearchKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && onSearchSubmit) {
+      onSearchSubmit();
+    }
+  };
   
   return (
     <header className="bg-white border-b border-gray-200">
@@ -147,6 +159,9 @@ export const Header = () => {
               <input
                 type="text"
                 placeholder="Search conversations..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange?.(e.target.value)}
+                onKeyPress={handleSearchKeyPress}
                 className="w-full pl-10 pr-4 py-2.5 border border-gray-300 bg-white text-sm focus:ring-1 focus:ring-black focus:border-black transition-all"
               />
             </div>
