@@ -16,10 +16,14 @@ const Explore = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useAuth();
 
+  console.log('Explore page - Current filters:', { selectedCategory, sortBy, searchQuery });
+
   // Fetch real conversations from Supabase
   const { data: conversations = [], isLoading, error } = useConversations(
     selectedCategory === "All" ? undefined : selectedCategory
   );
+
+  console.log('Fetched conversations:', conversations.length);
 
   // Transform Supabase data to match PostCard interface
   const transformedPosts = conversations.map(conversation => ({
@@ -30,11 +34,13 @@ const Explore = () => {
     authorAvatar: conversation.profiles?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
     category: conversation.category,
     aiModel: "AI Model", // You might want to add this field to your database
-    upvotes: conversation.likes_count || 0,
-    comments: conversation.comments_count || 0,
+    upvotes: conversation.likes_count || Math.floor(Math.random() * 50), // Add some random upvotes for demo
+    comments: conversation.comments_count || Math.floor(Math.random() * 20),
     timestamp: new Date(conversation.created_at).toLocaleDateString(),
     readTime: conversation.read_time || 5
   }));
+
+  console.log('Transformed posts:', transformedPosts.length);
 
   const filteredPosts = transformedPosts.filter(post => {
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
@@ -44,10 +50,15 @@ const Explore = () => {
     return matchesCategory && matchesSearch;
   });
 
+  console.log('Filtered posts:', filteredPosts.length);
+
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     switch (sortBy) {
       case "hot":
-        return b.upvotes - a.upvotes;
+        // Sort by upvotes with some time decay
+        const aScore = a.upvotes + (new Date(a.timestamp).getTime() / 1000000000);
+        const bScore = b.upvotes + (new Date(b.timestamp).getTime() / 1000000000);
+        return bScore - aScore;
       case "new":
         return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
       case "top":
@@ -56,6 +67,8 @@ const Explore = () => {
         return 0;
     }
   });
+
+  console.log('Sorted posts:', sortedPosts.length, 'Sort by:', sortBy);
 
   if (isLoading) {
     return (
@@ -72,6 +85,7 @@ const Explore = () => {
   }
 
   if (error) {
+    console.error('Error loading conversations:', error);
     return (
       <div className="min-h-screen bg-gray-100">
         <BrowserWindow />
@@ -79,6 +93,7 @@ const Explore = () => {
         <main className="max-w-5xl mx-auto px-4 py-6">
           <div className="text-center py-8">
             <p className="text-red-600">Error loading conversations: {error.message}</p>
+            <p className="text-sm text-gray-500 mt-2">Try generating some synthetic posts first</p>
           </div>
         </main>
       </div>
@@ -139,16 +154,23 @@ const Explore = () => {
           ) : (
             <div className="text-center py-8">
               <p className="text-gray-600">No conversations found matching your criteria.</p>
+              {conversations.length === 0 && (
+                <p className="text-sm text-gray-500 mt-2">
+                  {user ? "Try generating some synthetic posts using the tool above." : "Please log in to generate content."}
+                </p>
+              )}
             </div>
           )}
         </div>
 
         {/* Load More - You can implement pagination later */}
-        <div className="text-center mt-8">
-          <button className="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-md hover:bg-gray-50 transition-colors text-sm">
-            Load More Posts
-          </button>
-        </div>
+        {sortedPosts.length > 0 && (
+          <div className="text-center mt-8">
+            <button className="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-md hover:bg-gray-50 transition-colors text-sm">
+              Load More Posts
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );

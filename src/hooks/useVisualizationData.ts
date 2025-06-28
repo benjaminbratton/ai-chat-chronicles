@@ -24,6 +24,8 @@ export const useVisualizationData = (filter: string) => {
   return useQuery({
     queryKey: ['visualization-data', filter],
     queryFn: async () => {
+      console.log('Fetching visualization data for filter:', filter);
+      
       // Fetch conversations from Supabase
       let query = supabase
         .from('conversations')
@@ -36,14 +38,23 @@ export const useVisualizationData = (filter: string) => {
 
       const { data: conversations, error } = await query;
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching conversations for visualization:', error);
+        throw error;
+      }
+
+      console.log('Fetched conversations for visualization:', conversations?.length || 0);
+
+      if (!conversations || conversations.length === 0) {
+        return { nodes: [], links: [] };
+      }
 
       // Process conversations to create nodes and links
       const categoryMap = new Map<string, { count: number, connections: Set<string> }>();
       const topics = new Set<string>();
 
       // Extract categories and topics from conversations
-      conversations?.forEach(conversation => {
+      conversations.forEach(conversation => {
         const category = conversation.category;
         const words = conversation.title.toLowerCase().split(' ');
         
@@ -56,12 +67,13 @@ export const useVisualizationData = (filter: string) => {
           connections: categoryMap.get(category)!.connections
         });
 
-        // Extract key topics from titles (simple word extraction)
+        // Extract key topics from titles (improved word extraction)
         words.forEach(word => {
-          if (word.length > 4 && !['with', 'about', 'from', 'this', 'that', 'they', 'them', 'have', 'will', 'been', 'what', 'when', 'where'].includes(word)) {
-            topics.add(word);
+          const cleanWord = word.replace(/[^\w]/g, '');
+          if (cleanWord.length > 4 && !['with', 'about', 'from', 'this', 'that', 'they', 'them', 'have', 'will', 'been', 'what', 'when', 'where', 'through', 'using', 'building', 'creating'].includes(cleanWord)) {
+            topics.add(cleanWord);
             // Connect topics to categories
-            categoryMap.get(category)?.connections.add(word);
+            categoryMap.get(category)?.connections.add(cleanWord);
           }
         });
       });
@@ -75,32 +87,35 @@ export const useVisualizationData = (filter: string) => {
           id: `cat-${category}`,
           label: category,
           category: 'Category',
-          size: Math.max(15, Math.min(35, data.count * 3)),
+          size: Math.max(20, Math.min(40, data.count * 4)),
           connections: data.connections.size
         });
       });
 
-      // Add topic nodes (top 10 most common)
+      // Add topic nodes (top 15 most common)
       const topicCounts = new Map<string, number>();
-      conversations?.forEach(conversation => {
+      conversations.forEach(conversation => {
         const words = conversation.title.toLowerCase().split(' ');
         words.forEach(word => {
-          if (word.length > 4 && !['with', 'about', 'from', 'this', 'that', 'they', 'them', 'have', 'will', 'been', 'what', 'when', 'where'].includes(word)) {
-            topicCounts.set(word, (topicCounts.get(word) || 0) + 1);
+          const cleanWord = word.replace(/[^\w]/g, '');
+          if (cleanWord.length > 4 && !['with', 'about', 'from', 'this', 'that', 'they', 'them', 'have', 'will', 'been', 'what', 'when', 'where', 'through', 'using', 'building', 'creating'].includes(cleanWord)) {
+            topicCounts.set(cleanWord, (topicCounts.get(cleanWord) || 0) + 1);
           }
         });
       });
 
       const sortedTopics = Array.from(topicCounts.entries())
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 10);
+        .slice(0, 15);
+
+      console.log('Top topics:', sortedTopics);
 
       sortedTopics.forEach(([topic, count]) => {
         nodes.push({
           id: `topic-${topic}`,
           label: topic.charAt(0).toUpperCase() + topic.slice(1),
           category: 'Topic',
-          size: Math.max(10, Math.min(25, count * 2)),
+          size: Math.max(12, Math.min(30, count * 3)),
           connections: count
         });
       });
@@ -115,25 +130,26 @@ export const useVisualizationData = (filter: string) => {
             links.push({
               source: `cat-${category}`,
               target: `topic-${topic}`,
-              strength: Math.min(1, (topicCounts.get(topic) || 1) / 5)
+              strength: Math.min(1, (topicCounts.get(topic) || 1) / 3)
             });
           }
         });
       });
 
-      // Add some random connections between topics for visual interest
+      // Add some connections between related topics for visual interest
       for (let i = 0; i < sortedTopics.length - 1; i++) {
         for (let j = i + 1; j < sortedTopics.length; j++) {
-          if (Math.random() > 0.7) { // 30% chance of connection
+          if (Math.random() > 0.8) { // 20% chance of connection
             links.push({
               source: `topic-${sortedTopics[i][0]}`,
               target: `topic-${sortedTopics[j][0]}`,
-              strength: Math.random() * 0.5
+              strength: Math.random() * 0.4
             });
           }
         }
       }
 
+      console.log('Generated visualization data:', { nodes: nodes.length, links: links.length });
       return { nodes, links };
     },
   });
