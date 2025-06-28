@@ -1,9 +1,34 @@
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
 const categories = [
   'Philosophy', 'Creative Writing', 'Programming', 'Science', 
   'Education', 'Business', 'Personal', 'Research'
+];
+
+// Synthetic user data
+const syntheticUsers = [
+  { username: 'alex_researcher', full_name: 'Alex Chen', avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face' },
+  { username: 'sophia_writer', full_name: 'Sophia Martinez', avatar_url: 'https://images.unsplash.com/photo-1494790108755-2616b332b7ae?w=40&h=40&fit=crop&crop=face' },
+  { username: 'mike_coder', full_name: 'Michael Johnson', avatar_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face' },
+  { username: 'dr_sarah_k', full_name: 'Dr. Sarah Kim', avatar_url: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face' },
+  { username: 'prof_david', full_name: 'Prof. David Brown', avatar_url: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=40&h=40&fit=crop&crop=face' },
+  { username: 'emma_entrepreneur', full_name: 'Emma Wilson', avatar_url: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=40&h=40&fit=crop&crop=face' },
+  { username: 'james_philosopher', full_name: 'James Taylor', avatar_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face' },
+  { username: 'lisa_scientist', full_name: 'Lisa Anderson', avatar_url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face' },
+  { username: 'tom_teacher', full_name: 'Tom Rodriguez', avatar_url: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=40&h=40&fit=crop&crop=face' },
+  { username: 'anna_creative', full_name: 'Anna Thompson', avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face' },
+  { username: 'ryan_dev', full_name: 'Ryan Lee', avatar_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=40&h=40&fit=crop&crop=face' },
+  { username: 'maria_analyst', full_name: 'Maria Garcia', avatar_url: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=40&h=40&fit=crop&crop=face' },
+  { username: 'kevin_innovator', full_name: 'Kevin Chang', avatar_url: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=40&h=40&fit=crop&crop=face' },
+  { username: 'rachel_scholar', full_name: 'Rachel White', avatar_url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=40&h=40&fit=crop&crop=face' },
+  { username: 'daniel_thinker', full_name: 'Daniel Smith', avatar_url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=40&h=40&fit=crop&crop=face' },
+  { username: 'nina_explorer', full_name: 'Nina Patel', avatar_url: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=40&h=40&fit=crop&crop=face' },
+  { username: 'chris_builder', full_name: 'Chris Murphy', avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=40&h=40&fit=crop&crop=face' },
+  { username: 'jade_visionary', full_name: 'Jade Liu', avatar_url: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=40&h=40&fit=crop&crop=face' },
+  { username: 'marcus_genius', full_name: 'Marcus Johnson', avatar_url: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=40&h=40&fit=crop&crop=face' },
+  { username: 'zoe_futurist', full_name: 'Zoe Adams', avatar_url: 'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=40&h=40&fit=crop&crop=face' }
 ];
 
 const syntheticPosts = [
@@ -109,27 +134,80 @@ export const useSyntheticData = () => {
       
       console.log('✅ Database connection successful');
 
+      // First, create synthetic user profiles if they don't exist
+      console.log('👥 Creating synthetic user profiles...');
+      const syntheticProfiles = [];
+      
+      for (const syntheticUser of syntheticUsers) {
+        // Check if profile already exists
+        const { data: existingProfile } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('username', syntheticUser.username)
+          .single();
+        
+        if (!existingProfile) {
+          // Create new synthetic user profile
+          const { data: newProfile, error: profileError } = await supabase
+            .from('profiles')
+            .insert({
+              id: crypto.randomUUID(), // Generate a random UUID for synthetic users
+              username: syntheticUser.username,
+              full_name: syntheticUser.full_name,
+              avatar_url: syntheticUser.avatar_url,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString()
+            })
+            .select('id')
+            .single();
+          
+          if (profileError) {
+            console.error('❌ Error creating synthetic profile:', profileError);
+            // Continue with other profiles even if one fails
+          } else {
+            syntheticProfiles.push(newProfile);
+            console.log(`✅ Created profile for ${syntheticUser.username}`);
+          }
+        } else {
+          syntheticProfiles.push(existingProfile);
+          console.log(`✅ Profile already exists for ${syntheticUser.username}`);
+        }
+      }
+
+      // Get all synthetic profile IDs for assigning to posts
+      const { data: allSyntheticProfiles, error: fetchError } = await supabase
+        .from('profiles')
+        .select('id, username')
+        .in('username', syntheticUsers.map(u => u.username));
+      
+      if (fetchError) {
+        console.error('❌ Error fetching synthetic profiles:', fetchError);
+        throw new Error('Failed to fetch synthetic profiles: ' + fetchError.message);
+      }
+
       // Combine base posts with generated posts
       const allPosts = [...syntheticPosts, ...generateMorePosts()];
       console.log(`📝 Generated ${allPosts.length} posts total`);
       
-      // Prepare posts with author_id and published status - removing columns that don't exist
+      // Prepare posts with random synthetic authors
       const postsToInsert = allPosts.map((post, index) => {
+        // Assign a random synthetic user to each post
+        const randomProfile = allSyntheticProfiles[index % allSyntheticProfiles.length];
+        
         const postData = {
           title: post.title,
           content: post.content,
           excerpt: post.content.substring(0, 200) + '...',
-          author_id: user.id,
+          author_id: randomProfile.id, // Use synthetic user ID instead of current user
           category: post.category,
           read_time: post.read_time,
           published: true,
           featured: Math.random() > 0.8, // 20% chance of being featured
           created_at: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
           updated_at: new Date().toISOString()
-          // Removed likes_count and comments_count as they don't exist in the schema
         };
         
-        console.log(`📄 Post ${index + 1}: "${postData.title}" - Category: ${postData.category}`);
+        console.log(`📄 Post ${index + 1}: "${postData.title}" - Author: ${randomProfile.username} - Category: ${postData.category}`);
         return postData;
       });
 
@@ -174,12 +252,12 @@ export const useSyntheticData = () => {
       const { data: verifyData, error: verifyError } = await supabase
         .from('conversations')
         .select('count')
-        .eq('author_id', user.id);
+        .in('author_id', allSyntheticProfiles.map(p => p.id));
         
       if (verifyError) {
         console.error('❌ Error verifying data:', verifyError);
       } else {
-        console.log('🔍 Verification - Total conversations in DB for user:', verifyData);
+        console.log('🔍 Verification - Total synthetic conversations in DB:', verifyData);
       }
       
       return results;
