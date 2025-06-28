@@ -1,7 +1,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-// Mock data for when Supabase isn't available
+// Mock data for conversations
 const mockConversations = [
   {
     id: '1',
@@ -60,24 +60,18 @@ export const useConversations = (category?: string) => {
   return useQuery({
     queryKey: ['conversations', category],
     queryFn: async () => {
-      // Return mock data immediately to prevent hanging
-      console.log('🔍 Using mock conversations data');
-      
-      let filteredData = mockConversations;
+      // Return mock data immediately - no Supabase calls
+      let filteredData = [...mockConversations];
       
       // Apply category filter if specified and not "All"
       if (category && category !== 'All') {
         filteredData = mockConversations.filter(conv => conv.category === category);
       }
       
-      console.log('✅ Returning conversations:', filteredData.length);
       return filteredData;
     },
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
-    retry: 1,
-    retryDelay: 1000,
-    enabled: true,
   });
 };
 
@@ -86,8 +80,6 @@ export const useCreateConversation = () => {
 
   return useMutation({
     mutationFn: async (conversationData: any) => {
-      console.log('Creating conversation:', conversationData);
-      
       // Mock creation - just return the data with an ID
       const newConversation = {
         ...conversationData,
@@ -97,7 +89,6 @@ export const useCreateConversation = () => {
         published: true,
       };
 
-      console.log('Successfully created conversation:', newConversation);
       return newConversation;
     },
     onSuccess: () => {
