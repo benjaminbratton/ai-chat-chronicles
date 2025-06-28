@@ -109,8 +109,8 @@ const Model = () => {
         <div className="flex-1 overflow-y-auto">
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
-              <div className="text-center max-w-md">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <div className="text-center max-w-lg">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4 whitespace-nowrap">
                   Research polylogos collective intelligence
                 </h2>
                 <p className="text-gray-600">
