@@ -50,8 +50,8 @@ const Explore = () => {
       authorAvatar: conversation.profiles?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
       category: conversation.category,
       aiModel: "GPT-4", 
-      upvotes: conversation.likes_count || Math.floor(Math.random() * 50),
-      comments: conversation.comments_count || Math.floor(Math.random() * 20),
+      upvotes: Math.floor(Math.random() * 50), // Generate random since these columns don't exist
+      comments: Math.floor(Math.random() * 20), // Generate random since these columns don't exist
       timestamp: new Date(conversation.created_at).toLocaleDateString(),
       readTime: conversation.read_time || 5
     };

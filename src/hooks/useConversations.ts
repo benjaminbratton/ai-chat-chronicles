@@ -62,8 +62,6 @@ export const useCreateConversation = () => {
           author_id: user.id,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
-          likes_count: 0,
-          comments_count: 0,
         })
         .select()
         .single();
