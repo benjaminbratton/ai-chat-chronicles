@@ -20,15 +20,12 @@ const Explore = () => {
 
   // Transform Supabase data to match PostCard interface
   const transformedPosts = conversations.map(conversation => {
-    // Handle profile data safely - it could be null or an object
-    const profile = Array.isArray(conversation.profiles) ? conversation.profiles[0] : conversation.profiles;
-    
     return {
       id: parseInt(conversation.id),
       title: conversation.title,
       content: conversation.content,
-      author: profile?.username || profile?.full_name || 'Anonymous',
-      authorAvatar: profile?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
+      author: 'Anonymous', // Default since we're not fetching profile data yet
+      authorAvatar: `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
       category: conversation.category,
       aiModel: "GPT-4", 
       upvotes: Math.floor(Math.random() * 50),
