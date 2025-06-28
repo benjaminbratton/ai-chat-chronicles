@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from "react";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
@@ -23,46 +22,94 @@ const Explore = () => {
   // Debounce search query to reduce API calls
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  // Function to assign relevant images based on content and category
+  // Function to assign unique images based on content, category, and variety
   const getRelevantImage = (conversation: any, index: number) => {
     const title = conversation.title?.toLowerCase() || '';
     const content = conversation.content?.toLowerCase() || '';
     const category = conversation.category?.toLowerCase() || '';
     
-    // Define image mappings based on keywords and themes
-    if (category.includes('programming') || category.includes('coding') || title.includes('code') || content.includes('programming') || content.includes('javascript') || content.includes('python')) {
-      return `https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=100&h=100&fit=crop&crop=center`;
+    // Create a hash from the conversation ID to ensure consistency
+    const idHash = parseInt(conversation.id) || index;
+    
+    // Programming/Coding themed images
+    if (category.includes('programming') || category.includes('coding') || title.includes('code') || content.includes('programming')) {
+      const programmingImages = [
+        'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=100&h=100&fit=crop&crop=center', // Java code
+        'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=100&h=100&fit=crop&crop=center', // Colorful code
+        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=100&h=100&fit=crop&crop=center', // MacBook code
+        'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=100&h=100&fit=crop&crop=center', // Matrix code
+      ];
+      return programmingImages[idHash % programmingImages.length];
     }
     
-    if (category.includes('technology') || title.includes('ai') || title.includes('artificial intelligence') || content.includes('machine learning') || content.includes('neural')) {
-      return `https://images.unsplash.com/photo-1518770660439-4636190af475?w=100&h=100&fit=crop&crop=center`;
+    // AI/Technology themed images
+    if (category.includes('technology') || title.includes('ai') || title.includes('artificial intelligence') || content.includes('machine learning')) {
+      const techImages = [
+        'https://images.unsplash.com/photo-1518770660439-4636190af475?w=100&h=100&fit=crop&crop=center', // Circuit board
+        'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=100&h=100&fit=crop&crop=center', // AI robot
+        'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=100&h=100&fit=crop&crop=center', // Tech background
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=center', // Data visualization
+      ];
+      return techImages[idHash % techImages.length];
     }
     
-    if (category.includes('philosophy') || title.includes('consciousness') || title.includes('thinking') || content.includes('philosophy') || content.includes('consciousness')) {
-      return `https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=100&h=100&fit=crop&crop=center`;
+    // Philosophy/Consciousness themed images
+    if (category.includes('philosophy') || title.includes('consciousness') || title.includes('thinking') || content.includes('philosophy')) {
+      const philosophyImages = [
+        'https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=100&h=100&fit=crop&crop=center', // Starry night
+        'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=100&h=100&fit=crop&crop=center', // Thinking statue
+        'https://images.unsplash.com/photo-1444927714506-8492d94b5ba0?w=100&h=100&fit=crop&crop=center', // Brain/mind
+        'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=100&h=100&fit=crop&crop=center', // Mountain reflection
+      ];
+      return philosophyImages[idHash % philosophyImages.length];
     }
     
+    // Science/Research themed images
     if (category.includes('science') || title.includes('research') || content.includes('study') || content.includes('experiment')) {
-      return `https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=100&h=100&fit=crop&crop=center`;
+      const scienceImages = [
+        'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=100&h=100&fit=crop&crop=center', // Laboratory
+        'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=100&h=100&fit=crop&crop=center', // Microscope
+        'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=100&h=100&fit=crop&crop=center', // DNA/molecules
+        'https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=100&h=100&fit=crop&crop=center', // Scientific equipment
+      ];
+      return scienceImages[idHash % scienceImages.length];
     }
     
+    // Computer/Laptop themed images
     if (title.includes('laptop') || title.includes('computer') || content.includes('desktop') || content.includes('macbook')) {
-      return `https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=100&h=100&fit=crop&crop=center`;
+      const computerImages = [
+        'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=100&h=100&fit=crop&crop=center', // MacBook
+        'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=100&h=100&fit=crop&crop=center', // Woman with laptop
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=100&h=100&fit=crop&crop=center', // Workspace
+        'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=100&h=100&fit=crop&crop=center', // Modern setup
+      ];
+      return computerImages[idHash % computerImages.length];
     }
     
-    if (title.includes('work') || content.includes('productivity') || content.includes('business')) {
-      return `https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=100&h=100&fit=crop&crop=center`;
+    // Business/Work themed images
+    if (title.includes('work') || content.includes('productivity') || content.includes('business') || category.includes('business')) {
+      const businessImages = [
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=center', // Charts/data
+        'https://images.unsplash.com/photo-1552664730-d307ca884978?w=100&h=100&fit=crop&crop=center', // Team meeting
+        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=100&h=100&fit=crop&crop=center', // Business analytics
+        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=100&h=100&fit=crop&crop=center', // Office space
+      ];
+      return businessImages[idHash % businessImages.length];
     }
     
-    // Default rotation through different images based on index
-    const defaultImages = [
-      'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=100&h=100&fit=crop&crop=center',
-      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=100&h=100&fit=crop&crop=center',
-      'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=100&h=100&fit=crop&crop=center',
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=100&h=100&fit=crop&crop=center'
+    // Nature/Abstract themed images for general content
+    const generalImages = [
+      'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=100&h=100&fit=crop&crop=center', // Forest lights
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=100&h=100&fit=crop&crop=center', // Mountain lake
+      'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=100&h=100&fit=crop&crop=center', // Green mountains
+      'https://images.unsplash.com/photo-1493397212122-2b85dda8106b?w=100&h=100&fit=crop&crop=center', // Abstract architecture
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=100&h=100&fit=crop&crop=center', // Sunset landscape
+      'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=100&h=100&fit=crop&crop=center', // Ocean waves
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=100&h=100&fit=crop&crop=center', // Forest path
+      'https://images.unsplash.com/photo-1504198458649-3128b932f49e?w=100&h=100&fit=crop&crop=center', // City skyline
     ];
     
-    return defaultImages[index % defaultImages.length];
+    return generalImages[idHash % generalImages.length];
   };
 
   // Fetch conversations with infinite scroll and search
