@@ -59,8 +59,8 @@ const mockConversations = [
 export const useConversations = (category?: string) => {
   return useQuery({
     queryKey: ['conversations', category],
-    queryFn: async () => {
-      // Return mock data immediately - no Supabase calls
+    queryFn: () => {
+      // Return mock data synchronously - no async needed
       let filteredData = [...mockConversations];
       
       // Apply category filter if specified and not "All"
