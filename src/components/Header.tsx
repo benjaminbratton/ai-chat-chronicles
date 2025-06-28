@@ -1,9 +1,13 @@
 
-import { Search, PlusCircle, User } from "lucide-react";
+import { Search, PlusCircle } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from '@/hooks/useAuth';
+import { UserMenu } from './UserMenu';
+import { AuthButtons } from './AuthButtons';
 
 export const Header = () => {
   const location = useLocation();
+  const { user, loading } = useAuth();
   
   return (
     <header className="bg-white border-b border-gray-200">
@@ -82,16 +86,18 @@ export const Header = () => {
             >
               About
             </Link>
-            <Link 
-              to="/posting" 
-              className={`text-sm tracking-wide uppercase transition-colors ${
-                location.pathname === '/posting' 
-                  ? 'text-black font-medium' 
-                  : 'text-gray-600 hover:text-black'
-              }`}
-            >
-              Share
-            </Link>
+            {user && (
+              <Link 
+                to="/posting" 
+                className={`text-sm tracking-wide uppercase transition-colors ${
+                  location.pathname === '/posting' 
+                    ? 'text-black font-medium' 
+                    : 'text-gray-600 hover:text-black'
+                }`}
+              >
+                Share
+              </Link>
+            )}
           </nav>
 
           {/* Search Bar */}
@@ -108,15 +114,22 @@ export const Header = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
-            <Link to="/posting">
-              <button className="flex items-center space-x-2 bg-black text-white px-4 py-2.5 font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors">
-                <PlusCircle className="w-4 h-4" />
-                <span className="hidden sm:block uppercase">Share</span>
-              </button>
-            </Link>
-            <button className="p-2.5 text-gray-600 hover:text-black transition-colors">
-              <User className="w-5 h-5" />
-            </button>
+            {user && (
+              <Link to="/posting">
+                <button className="flex items-center space-x-2 bg-black text-white px-4 py-2.5 font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors">
+                  <PlusCircle className="w-4 h-4" />
+                  <span className="hidden sm:block uppercase">Share</span>
+                </button>
+              </Link>
+            )}
+            
+            {loading ? (
+              <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse"></div>
+            ) : user ? (
+              <UserMenu />
+            ) : (
+              <AuthButtons />
+            )}
           </div>
         </div>
       </div>
