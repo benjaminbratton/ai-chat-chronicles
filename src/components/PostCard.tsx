@@ -2,6 +2,7 @@
 import { ArrowUp, ArrowDown, MessageSquare, Clock, Share2, Bookmark } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { categories } from "./CategoryFilter";
 
 interface Post {
   id: number;
@@ -26,6 +27,11 @@ export const PostCard = ({ post }: PostCardProps) => {
   const [downvoted, setDownvoted] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [currentUpvotes, setCurrentUpvotes] = useState(post.upvotes);
+
+  // Get the category color from the CategoryFilter
+  const categoryData = categories.find(cat => cat.name === post.category);
+  const categoryColor = categoryData?.color || "bg-gray-500";
+  const categoryTextColor = categoryData?.textColor || "text-white";
 
   const handleUpvote = () => {
     if (upvoted) {
@@ -79,7 +85,7 @@ export const PostCard = ({ post }: PostCardProps) => {
         <div className="flex-1 p-4">
           {/* Post Header */}
           <div className="flex items-center space-x-2 mb-2 text-xs text-gray-500">
-            <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full font-medium">
+            <span className={`${categoryColor} ${categoryTextColor} px-2 py-1 rounded-full font-medium`}>
               r/{post.category}
             </span>
             <span>•</span>
