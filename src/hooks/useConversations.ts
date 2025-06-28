@@ -1,3 +1,4 @@
+
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
@@ -32,7 +33,10 @@ export const useConversations = (category?: string) => {
 
         // Only apply category filter if specified and not "All"
         if (category && category !== 'All') {
+          console.log('🏷️ Filtering by category:', category);
           query = query.eq('category', category);
+        } else {
+          console.log('🌟 Fetching all categories');
         }
 
         console.log('🚀 Executing query...');
