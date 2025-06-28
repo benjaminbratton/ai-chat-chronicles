@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
@@ -35,7 +34,10 @@ const Explore = () => {
 
   // Transform data to match PostCard interface
   const transformedPosts = conversations.map(conversation => {
-    const profile = conversation.profiles;
+    // Handle profiles - it might be an array or single object depending on Supabase query
+    const profile = Array.isArray(conversation.profiles) 
+      ? conversation.profiles[0] 
+      : conversation.profiles;
     
     return {
       id: parseInt(conversation.id),
