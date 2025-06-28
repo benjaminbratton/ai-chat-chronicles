@@ -1,5 +1,5 @@
 
-import { Instagram, Linkedin } from "lucide-react";
+import { Instagram, Linkedin, Youtube } from "lucide-react";
 
 export const Footer = () => {
   return (
@@ -17,6 +17,14 @@ export const Footer = () => {
               <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
               </svg>
+            </a>
+            <a 
+              href="https://youtube.com/@polylogos" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-red-500 transition-colors"
+            >
+              <Youtube className="w-6 h-6" />
             </a>
             <a 
               href="https://instagram.com/polylogos" 
