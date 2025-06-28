@@ -43,6 +43,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       if (session?.user) {
         await fetchProfile(session.user.id);
+        
+        // For OAuth users, create profile if it doesn't exist
+        if (event === 'SIGNED_IN' && session.user.app_metadata?.provider === 'google') {
+          await ensureProfileExists(session.user);
+        }
       } else {
         setProfile(null);
         setLoading(false);
@@ -51,6 +56,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  const ensureProfileExists = async (user: User) => {
+    try {
+      const { data: existingProfile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (!existingProfile) {
+        // Create profile for OAuth user
+        const { error } = await supabase
+          .from('profiles')
+          .insert({
+            id: user.id,
+            email: user.email!,
+            full_name: user.user_metadata?.full_name || user.user_metadata?.name || '',
+            avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || '',
+            username: user.user_metadata?.preferred_username || user.email?.split('@')[0] || '',
+          });
+
+        if (error) {
+          console.error('Error creating OAuth profile:', error);
+        } else {
+          // Fetch the newly created profile
+          await fetchProfile(user.id);
+        }
+      }
+    } catch (error) {
+      console.error('Error ensuring profile exists:', error);
+    }
+  };
 
   const fetchProfile = async (userId: string) => {
     try {
