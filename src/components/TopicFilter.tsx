@@ -1,6 +1,7 @@
 
-
-import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/lib/supabase';
 
 interface TopicFilterProps {
   selectedFilter: string;
@@ -8,35 +9,38 @@ interface TopicFilterProps {
 }
 
 export const TopicFilter = ({ selectedFilter, onFilterChange }: TopicFilterProps) => {
-  const filters = [
-    { value: 'all', label: 'All Topics', color: 'bg-gray-400' },
-    { value: 'technology', label: 'Technology', color: 'bg-blue-300' },
-    { value: 'philosophy', label: 'Philosophy', color: 'bg-purple-300' },
-    { value: 'society', label: 'Society', color: 'bg-green-300' },
-    { value: 'economics', label: 'Economics', color: 'bg-yellow-300' },
-    { value: 'environment', label: 'Environment', color: 'bg-cyan-300' },
-  ];
+  const { data: categories = [] } = useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('conversations')
+        .select('category')
+        .eq('published', true);
+
+      if (error) throw error;
+
+      // Get unique categories
+      const uniqueCategories = [...new Set(data.map(item => item.category))];
+      return uniqueCategories.sort();
+    },
+  });
 
   return (
-    <div className="flex flex-wrap gap-2">
-      {filters.map((filter) => (
-        <Button
-          key={filter.value}
-          onClick={() => onFilterChange(filter.value)}
-          variant={selectedFilter === filter.value ? "default" : "outline"}
-          className={`
-            ${selectedFilter === filter.value 
-              ? `${filter.color} text-gray-700 border-transparent hover:opacity-90` 
-              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-            }
-            transition-all duration-200
-          `}
-        >
-          <div className={`w-2 h-2 rounded-full ${filter.color} mr-2`}></div>
-          {filter.label}
-        </Button>
-      ))}
+    <div className="flex items-center space-x-3">
+      <span className="text-sm font-medium text-gray-700">Filter by:</span>
+      <Select value={selectedFilter} onValueChange={onFilterChange}>
+        <SelectTrigger className="w-48 bg-white border-gray-300">
+          <SelectValue placeholder="Select category" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All Topics</SelectItem>
+          {categories.map(category => (
+            <SelectItem key={category} value={category}>
+              {category}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 };
-

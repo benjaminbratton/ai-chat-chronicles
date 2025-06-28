@@ -1,6 +1,6 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { Card } from '@/components/ui/card';
+import { useVisualizationData } from '@/hooks/useVisualizationData';
 
 interface Node {
   id: string;
@@ -32,47 +32,28 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [hoveredNode, setHoveredNode] = useState<Node | null>(null);
 
-  // Mock data for demonstration
-  const nodes: Node[] = [
-    { id: '1', label: 'AI Ethics', category: 'Philosophy', size: 25, connections: 8 },
-    { id: '2', label: 'Machine Learning', category: 'Technology', size: 30, connections: 12 },
-    { id: '3', label: 'Neural Networks', category: 'Technology', size: 22, connections: 7 },
-    { id: '4', label: 'Privacy', category: 'Society', size: 18, connections: 5 },
-    { id: '5', label: 'Automation', category: 'Economics', size: 20, connections: 6 },
-    { id: '6', label: 'Consciousness', category: 'Philosophy', size: 15, connections: 4 },
-    { id: '7', label: 'Data Science', category: 'Technology', size: 28, connections: 10 },
-    { id: '8', label: 'Future Work', category: 'Society', size: 16, connections: 3 },
-    { id: '9', label: 'Robotics', category: 'Technology', size: 24, connections: 9 },
-    { id: '10', label: 'Climate Change', category: 'Environment', size: 19, connections: 5 },
-  ];
-
-  const links: Link[] = [
-    { source: '1', target: '2', strength: 0.8 },
-    { source: '2', target: '3', strength: 0.9 },
-    { source: '1', target: '4', strength: 0.6 },
-    { source: '2', target: '7', strength: 0.7 },
-    { source: '5', target: '8', strength: 0.5 },
-    { source: '1', target: '6', strength: 0.4 },
-    { source: '9', target: '2', strength: 0.6 },
-    { source: '10', target: '5', strength: 0.3 },
-    { source: '7', target: '9', strength: 0.5 },
-    { source: '4', target: '8', strength: 0.4 },
-  ];
+  const { data: visualizationData, isLoading, error } = useVisualizationData(filter);
+  
+  const nodes = visualizationData?.nodes || [];
+  const links = visualizationData?.links || [];
 
   const getCategoryColor = (category: string) => {
     const colors = {
+      'Category': '#6366F1',
+      'Topic': '#10B981',
       'Technology': '#9CA3AF',
       'Philosophy': '#A78BFA',
       'Society': '#86EFAC',
       'Economics': '#FDE047',
       'Environment': '#67E8F9',
+      'Research': '#F87171',
     };
     return colors[category as keyof typeof colors] || '#9CA3AF';
   };
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || nodes.length === 0) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -193,7 +174,7 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isAnimating, hoveredNode, selectedNode]);
+  }, [isAnimating, hoveredNode, selectedNode, nodes, links]);
 
   const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -230,6 +211,30 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
     canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
   };
 
+  if (isLoading) {
+    return (
+      <Card className="bg-white border-gray-200">
+        <div className="p-6">
+          <div className="flex items-center justify-center h-[600px] bg-gray-50 rounded-lg border border-gray-200">
+            <p className="text-gray-600">Loading visualization data...</p>
+          </div>
+        </div>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className="bg-white border-gray-200">
+        <div className="p-6">
+          <div className="flex items-center justify-center h-[600px] bg-gray-50 rounded-lg border border-gray-200">
+            <p className="text-red-600">Error loading visualization data</p>
+          </div>
+        </div>
+      </Card>
+    );
+  }
+
   return (
     <Card className="bg-white border-gray-200">
       <div className="p-6">
@@ -244,7 +249,7 @@ export const NetworkVisualization = ({ filter, viewMode, isAnimating }: NetworkV
           {selectedNode && (
             <div className="absolute top-4 right-4 bg-white border border-gray-200 rounded-lg p-4 max-w-xs shadow-lg">
               <h3 className="text-black font-semibold mb-2">{selectedNode.label}</h3>
-              <p className="text-gray-600 text-sm mb-2">Category: {selectedNode.category}</p>
+              <p className="text-gray-600 text-sm mb-2">Type: {selectedNode.category}</p>
               <p className="text-gray-600 text-sm">Connections: {selectedNode.connections}</p>
             </div>
           )}

@@ -1,114 +1,177 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { TrendingUp, Users, MessageSquare, Zap } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/lib/supabase';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 interface StatsPanelProps {
   selectedFilter: string;
 }
 
 export const StatsPanel = ({ selectedFilter }: StatsPanelProps) => {
-  const stats = [
-    {
-      title: 'Total Topics',
-      value: '1,247',
-      change: '+12%',
-      icon: TrendingUp,
-      color: 'text-blue-600'
-    },
-    {
-      title: 'Active Conversations',
-      value: '3,892',
-      change: '+8%',
-      icon: MessageSquare,
-      color: 'text-green-600'
-    },
-    {
-      title: 'Contributors',
-      value: '15,234',
-      change: '+24%',
-      icon: Users,
-      color: 'text-purple-600'
-    },
-    {
-      title: 'Connections',
-      value: '8,745',
-      change: '+15%',
-      icon: Zap,
-      color: 'text-yellow-600'
-    }
-  ];
+  const { data: stats, isLoading } = useQuery({
+    queryKey: ['visualization-stats', selectedFilter],
+    queryFn: async () => {
+      // Fetch conversations
+      let query = supabase
+        .from('conversations')
+        .select('category, created_at')
+        .eq('published', true);
 
-  const topTopics = [
-    { name: 'AI Ethics', connections: 847, growth: '+23%' },
-    { name: 'Machine Learning', connections: 692, growth: '+18%' },
-    { name: 'Climate Change', connections: 534, growth: '+12%' },
-    { name: 'Neural Networks', connections: 423, growth: '+31%' },
-    { name: 'Data Privacy', connections: 389, growth: '+9%' },
-  ];
+      if (selectedFilter !== 'all') {
+        query = query.eq('category', selectedFilter);
+      }
+
+      const { data: conversations, error } = await query;
+      if (error) throw error;
+
+      // Calculate category distribution
+      const categoryStats = conversations?.reduce((acc, conv) => {
+        acc[conv.category] = (acc[conv.category] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>) || {};
+
+      const categoryData = Object.entries(categoryStats).map(([name, value]) => ({
+        name,
+        value,
+        fill: getCategoryColor(name)
+      }));
+
+      // Calculate activity over time (last 30 days)
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      const recentConversations = conversations?.filter(conv => 
+        new Date(conv.created_at) >= thirtyDaysAgo
+      ) || [];
+
+      const activityData = [];
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const dayStart = new Date(date.setHours(0, 0, 0, 0));
+        const dayEnd = new Date(date.setHours(23, 59, 59, 999));
+        
+        const dayCount = recentConversations.filter(conv => {
+          const convDate = new Date(conv.created_at);
+          return convDate >= dayStart && convDate <= dayEnd;
+        }).length;
+
+        activityData.push({
+          day: date.toLocaleDateString('en-US', { weekday: 'short' }),
+          conversations: dayCount
+        });
+      }
+
+      return {
+        total: conversations?.length || 0,
+        categories: categoryData,
+        activity: activityData,
+        topCategory: categoryData.reduce((max, cat) => 
+          cat.value > (max?.value || 0) ? cat : max, categoryData[0]
+        )
+      };
+    },
+  });
+
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      'Technology': '#6366F1',
+      'Philosophy': '#8B5CF6',
+      'Society': '#10B981',
+      'Economics': '#F59E0B',
+      'Environment': '#06B6D4',
+      'Research': '#EF4444',
+    };
+    return colors[category as keyof typeof colors] || '#6B7280';
+  };
+
+  const chartConfig = {
+    conversations: {
+      label: "Conversations",
+    },
+  };
+
+  if (isLoading) {
+    return (
+      <Card className="border-gray-200">
+        <CardHeader>
+          <CardTitle className="text-xl text-black">Statistics</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-gray-600">Loading statistics...</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-6">
-      {/* Key Statistics */}
-      <Card className="bg-white border-gray-200">
+      {/* Overview Stats */}
+      <Card className="border-gray-200">
         <CardHeader>
-          <CardTitle className="text-black text-lg">Network Overview</CardTitle>
+          <CardTitle className="text-xl text-black">Overview</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {stats.map((stat, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <stat.icon className={`w-5 h-5 ${stat.color}`} />
-                <div>
-                  <p className="text-sm text-gray-600">{stat.title}</p>
-                  <p className="text-xl font-semibold text-black">{stat.value}</p>
-                </div>
-              </div>
-              <span className="text-sm text-green-600">{stat.change}</span>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-black">{stats?.total || 0}</div>
+            <div className="text-sm text-gray-500">Total Conversations</div>
+          </div>
+          
+          {stats?.topCategory && (
+            <div className="text-center">
+              <div className="text-xl font-semibold text-gray-700">{stats.topCategory.name}</div>
+              <div className="text-sm text-gray-500">Most Active Category</div>
             </div>
-          ))}
+          )}
         </CardContent>
       </Card>
 
-      {/* Top Topics */}
-      <Card className="bg-white border-gray-200">
+      {/* Category Distribution */}
+      <Card className="border-gray-200">
         <CardHeader>
-          <CardTitle className="text-black text-lg">Trending Topics</CardTitle>
+          <CardTitle className="text-lg text-black">Categories</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {topTopics.map((topic, index) => (
-              <div key={index} className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-black">{topic.name}</p>
-                  <p className="text-xs text-gray-600">{topic.connections} connections</p>
-                </div>
-                <span className="text-xs text-green-600">{topic.growth}</span>
-              </div>
-            ))}
-          </div>
+          <ChartContainer config={chartConfig} className="h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={stats?.categories || []}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={30}
+                  outerRadius={70}
+                  dataKey="value"
+                >
+                  {stats?.categories?.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Pie>
+                <ChartTooltip content={<ChartTooltipContent />} />
+              </PieChart>
+            </ResponsiveContainer>
+          </ChartContainer>
         </CardContent>
       </Card>
 
-      {/* Legend */}
-      <Card className="bg-white border-gray-200">
+      {/* Activity Chart */}
+      <Card className="border-gray-200">
         <CardHeader>
-          <CardTitle className="text-black text-lg">Categories</CardTitle>
+          <CardTitle className="text-lg text-black">Recent Activity</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            {[
-              { name: 'Technology', color: 'bg-gray-400' },
-              { name: 'Philosophy', color: 'bg-purple-400' },
-              { name: 'Society', color: 'bg-green-400' },
-              { name: 'Economics', color: 'bg-yellow-400' },
-              { name: 'Environment', color: 'bg-cyan-400' },
-            ].map((category, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <div className={`w-3 h-3 rounded-full ${category.color}`}></div>
-                <span className="text-sm text-gray-700">{category.name}</span>
-              </div>
-            ))}
-          </div>
+          <ChartContainer config={chartConfig} className="h-32">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={stats?.activity || []}>
+                <XAxis dataKey="day" fontSize={10} />
+                <YAxis fontSize={10} />
+                <Bar dataKey="conversations" fill="#6366F1" radius={2} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
         </CardContent>
       </Card>
     </div>
