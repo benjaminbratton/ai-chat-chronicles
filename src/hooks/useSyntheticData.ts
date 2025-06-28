@@ -59,13 +59,13 @@ const generateMorePosts = () => {
   ];
 
   // Generate variations of posts
-  for (let i = 0; i < 95; i++) {
+  for (let i = 0; i < 88; i++) { // Reduced to 88 to make total 100 with base posts
     const basePost = topics[i % topics.length];
     const variation = Math.floor(i / topics.length) + 1;
     
     additionalPosts.push({
       title: `${basePost.title} ${variation > 1 ? `- Part ${variation}` : ''}`,
-      content: `${basePost.content}. This comprehensive analysis delves deep into the subject matter, exploring various perspectives and methodologies that professionals and researchers have developed over recent years. We examine current trends, future implications, and practical applications that both beginners and experienced practitioners will find valuable and actionable. The discussion includes detailed case studies, expert opinions from industry leaders, and actionable insights that can be implemented immediately in real-world scenarios. Whether you're just starting to explore this field or you're an experienced professional seeking advanced knowledge and cutting-edge insights, this content provides valuable information across multiple dimensions of the topic. The research presented here draws from recent peer-reviewed studies, industry best practices, and real-world examples that illustrate key concepts and their practical applications in various contexts. We also consider the broader implications of these developments and how this knowledge connects to related fields and emerging disciplines. The content is carefully structured to provide both theoretical understanding and practical guidance, ensuring readers can apply what they learn in their own professional contexts and personal situations. Additional sections cover common challenges practitioners face, potential solutions that have proven effective, and emerging trends that will likely shape the future direction of this rapidly evolving field.`,
+      content: `${basePost.content}. This comprehensive analysis delves deep into the subject matter, exploring various perspectives and methodologies that professionals and researchers have developed over recent years. We examine current trends, future implications, and practical applications that both beginners and experienced practitioners will find valuable and actionable.`,
       category: basePost.category,
       read_time: Math.floor(Math.random() * 10) + 5
     });
@@ -79,64 +79,123 @@ export const useSyntheticData = () => {
   
   return useMutation({
     mutationFn: async () => {
-      // Get current user
-      const { data: { user } } = await supabase.auth.getUser();
+      console.log('🚀 Starting synthetic data generation...');
+      
+      // Get current user first
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      
+      if (userError) {
+        console.error('❌ Error getting user:', userError);
+        throw new Error('Failed to get user: ' + userError.message);
+      }
+      
       if (!user) {
-        throw new Error('User not authenticated');
+        console.error('❌ No authenticated user found');
+        throw new Error('User not authenticated - please log in first');
       }
 
-      console.log('Starting synthetic data generation for user:', user.id);
+      console.log('✅ User authenticated:', user.id);
+
+      // Test database connection first
+      console.log('🔍 Testing database connection...');
+      const { data: testData, error: testError } = await supabase
+        .from('conversations')
+        .select('count')
+        .limit(1);
+      
+      if (testError) {
+        console.error('❌ Database connection failed:', testError);
+        throw new Error('Database connection failed: ' + testError.message);
+      }
+      
+      console.log('✅ Database connection successful');
 
       // Combine base posts with generated posts
       const allPosts = [...syntheticPosts, ...generateMorePosts()];
-      console.log('Generated', allPosts.length, 'posts');
+      console.log(`📝 Generated ${allPosts.length} posts total`);
       
       // Prepare posts with author_id and published status
-      const postsToInsert = allPosts.map((post, index) => ({
-        ...post,
-        author_id: user.id,
-        published: true,
-        featured: Math.random() > 0.8, // 20% chance of being featured
-        excerpt: post.content.substring(0, 200) + '...',
-        // Add some randomness to creation dates for better sorting
-        created_at: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString()
-      }));
+      const postsToInsert = allPosts.map((post, index) => {
+        const postData = {
+          title: post.title,
+          content: post.content,
+          excerpt: post.content.substring(0, 200) + '...',
+          author_id: user.id,
+          category: post.category,
+          read_time: post.read_time,
+          published: true,
+          featured: Math.random() > 0.8, // 20% chance of being featured
+          created_at: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
+          updated_at: new Date().toISOString(),
+          likes_count: Math.floor(Math.random() * 50),
+          comments_count: Math.floor(Math.random() * 20)
+        };
+        
+        console.log(`📄 Post ${index + 1}: "${postData.title}" - Category: ${postData.category}`);
+        return postData;
+      });
 
-      console.log('Inserting posts to database...');
+      console.log('💾 Starting database insertion...');
 
-      // Insert posts in batches to avoid overwhelming the database
-      const batchSize = 10;
+      // Insert posts in smaller batches to avoid issues
+      const batchSize = 5;
       const results = [];
       
       for (let i = 0; i < postsToInsert.length; i += batchSize) {
         const batch = postsToInsert.slice(i, i + batchSize);
-        console.log(`Inserting batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(postsToInsert.length/batchSize)}`);
+        const batchNumber = Math.floor(i/batchSize) + 1;
+        const totalBatches = Math.ceil(postsToInsert.length/batchSize);
+        
+        console.log(`🔄 Inserting batch ${batchNumber}/${totalBatches} (${batch.length} posts)...`);
         
         const { data, error } = await supabase
           .from('conversations')
           .insert(batch)
-          .select();
+          .select('id, title, category, published');
         
         if (error) {
-          console.error('Error inserting batch:', error);
-          throw error;
+          console.error(`❌ Error inserting batch ${batchNumber}:`, error);
+          throw new Error(`Failed to insert batch ${batchNumber}: ${error.message}`);
         }
         
-        console.log('Batch inserted successfully:', data?.length, 'posts');
-        results.push(...(data || []));
+        if (!data || data.length === 0) {
+          console.error(`❌ No data returned for batch ${batchNumber}`);
+          throw new Error(`No data returned for batch ${batchNumber}`);
+        }
+        
+        console.log(`✅ Batch ${batchNumber} inserted successfully:`, data.length, 'posts');
+        results.push(...data);
         
         // Small delay between batches
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise(resolve => setTimeout(resolve, 200));
       }
 
-      console.log('All posts inserted successfully. Total:', results.length);
+      console.log(`🎉 All posts inserted successfully! Total: ${results.length}`);
+      
+      // Verify the data was inserted
+      const { data: verifyData, error: verifyError } = await supabase
+        .from('conversations')
+        .select('count')
+        .eq('author_id', user.id);
+        
+      if (verifyError) {
+        console.error('❌ Error verifying data:', verifyError);
+      } else {
+        console.log('🔍 Verification - Total conversations in DB for user:', verifyData);
+      }
+      
       return results;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log('🔄 Invalidating queries to refresh data...');
       // Invalidate all related queries to refresh the data
       queryClient.invalidateQueries({ queryKey: ['conversations'] });
+      queryClient.invalidateQueries({ queryKey: ['featured-conversations'] });
       queryClient.invalidateQueries({ queryKey: ['visualization-data'] });
-      console.log('Cache invalidated, data should refresh');
+      console.log('✅ Cache invalidated, data should refresh automatically');
     },
+    onError: (error) => {
+      console.error('💥 Synthetic data generation failed:', error);
+    }
   });
 };

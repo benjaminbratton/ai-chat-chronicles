@@ -16,17 +16,32 @@ const Explore = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useAuth();
 
-  console.log('Explore page - Current filters:', { selectedCategory, sortBy, searchQuery });
+  console.log('🔍 Explore page - Current filters:', { selectedCategory, sortBy, searchQuery, userLoggedIn: !!user });
 
-  // Fetch all conversations from Supabase (no category filter initially)
-  const { data: conversations = [], isLoading, error, refetch } = useConversations();
+  // Fetch conversations from Supabase
+  const { data: conversations = [], isLoading, error, refetch } = useConversations(selectedCategory);
 
-  console.log('Raw conversations from database:', conversations);
-  console.log('Total conversations fetched:', conversations.length);
+  console.log('📊 Database query results:', {
+    conversationsCount: conversations.length,
+    isLoading,
+    hasError: !!error,
+    errorMessage: error?.message
+  });
+
+  // Log first few conversations for debugging
+  if (conversations.length > 0) {
+    console.log('📝 Sample conversations:', conversations.slice(0, 3).map(c => ({
+      id: c.id,
+      title: c.title,
+      category: c.category,
+      published: c.published,
+      author_id: c.author_id
+    })));
+  }
 
   // Transform Supabase data to match PostCard interface
   const transformedPosts = conversations.map(conversation => {
-    console.log('Transforming conversation:', conversation.id, conversation.title);
+    console.log('🔄 Transforming conversation:', conversation.id, conversation.title);
     return {
       id: parseInt(conversation.id),
       title: conversation.title,
@@ -42,7 +57,7 @@ const Explore = () => {
     };
   });
 
-  console.log('Transformed posts:', transformedPosts.length);
+  console.log('🎯 Transformed posts:', transformedPosts.length);
 
   // Apply filters
   const filteredPosts = transformedPosts.filter(post => {
@@ -51,11 +66,11 @@ const Explore = () => {
                          post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.author.toLowerCase().includes(searchQuery.toLowerCase());
     
-    console.log(`Post "${post.title}": category match = ${matchesCategory}, search match = ${matchesSearch}`);
+    console.log(`🔍 Post "${post.title}": category match = ${matchesCategory}, search match = ${matchesSearch}`);
     return matchesCategory && matchesSearch;
   });
 
-  console.log('Filtered posts:', filteredPosts.length);
+  console.log('📋 Filtered posts:', filteredPosts.length);
 
   // Sort posts
   const sortedPosts = [...filteredPosts].sort((a, b) => {
@@ -73,7 +88,7 @@ const Explore = () => {
     }
   });
 
-  console.log('Final sorted posts to display:', sortedPosts.length);
+  console.log('📈 Final sorted posts to display:', sortedPosts.length);
 
   if (isLoading) {
     return (
@@ -90,7 +105,7 @@ const Explore = () => {
   }
 
   if (error) {
-    console.error('Error loading conversations:', error);
+    console.error('❌ Error loading conversations:', error);
     return (
       <div className="min-h-screen bg-gray-100">
         <BrowserWindow />
@@ -129,11 +144,16 @@ const Explore = () => {
           </div>
         )}
 
-        {/* Debug Info */}
+        {/* Enhanced Debug Info */}
         <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded">
-          <p className="text-sm text-blue-800">
-            Debug: Found {conversations.length} total conversations, showing {sortedPosts.length} after filters
-          </p>
+          <h3 className="font-semibold text-blue-800 mb-2">Debug Information</h3>
+          <div className="text-sm text-blue-800 space-y-1">
+            <p>• Database conversations: {conversations.length}</p>
+            <p>• After filtering: {filteredPosts.length}</p>
+            <p>• User logged in: {user ? '✅ Yes' : '❌ No'}</p>
+            <p>• Selected category: {selectedCategory}</p>
+            <p>• Sort by: {sortBy}</p>
+          </div>
           <button 
             onClick={() => refetch()}
             className="mt-2 text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
@@ -178,9 +198,17 @@ const Explore = () => {
             <div className="text-center py-8">
               <p className="text-gray-600">No conversations found matching your criteria.</p>
               {conversations.length === 0 && (
-                <p className="text-sm text-gray-500 mt-2">
-                  {user ? "Try generating some synthetic posts using the tool above." : "Please log in to generate content."}
-                </p>
+                <div className="mt-4 space-y-2">
+                  {user ? (
+                    <p className="text-sm text-gray-500">
+                      ⬆️ Try generating some synthetic posts using the tool above.
+                    </p>
+                  ) : (
+                    <p className="text-sm text-gray-500">
+                      Please log in to generate content and see conversations.
+                    </p>
+                  )}
+                </div>
               )}
               {conversations.length > 0 && (
                 <p className="text-sm text-gray-500 mt-2">
