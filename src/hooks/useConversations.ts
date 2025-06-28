@@ -1,3 +1,4 @@
+
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
@@ -5,36 +6,57 @@ export const useConversations = (category?: string) => {
   return useQuery({
     queryKey: ['conversations', category],
     queryFn: async () => {
+      console.log('Starting to fetch conversations...');
+      console.log('Category:', category);
+      
       try {
-        // Build a simple query first
+        // First, let's test if we can connect to Supabase at all
+        console.log('Testing Supabase connection...');
+        
+        // Very simple query first
+        const { data: testData, error: testError } = await supabase
+          .from('conversations')
+          .select('id')
+          .limit(1);
+          
+        console.log('Test query result:', { testData, testError });
+        
+        if (testError) {
+          console.error('Supabase connection failed:', testError);
+          return [];
+        }
+        
+        // Now try the full query
+        console.log('Executing full query...');
         let query = supabase
           .from('conversations')
-          .select('*')
+          .select('id, title, content, category, published, created_at, updated_at, author_id, read_time')
           .eq('published', true)
-          .order('created_at', { ascending: false });
+          .order('created_at', { ascending: false })
+          .limit(20);
 
-        // Only apply category filter if specified and not "All"
         if (category && category !== 'All') {
           query = query.eq('category', category);
         }
 
         const { data, error } = await query;
+        
+        console.log('Full query result:', { data: data?.length, error });
 
         if (error) {
-          console.error('Error fetching conversations:', error);
-          throw error;
+          console.error('Query error:', error);
+          return [];
         }
 
         return data || [];
       } catch (error) {
-        console.error('Query failed:', error);
-        throw error;
+        console.error('Catch block error:', error);
+        return [];
       }
     },
-    staleTime: 30 * 1000, // 30 seconds
+    staleTime: 0,
     refetchOnWindowFocus: false,
-    retry: 2,
-    retryDelay: 1000,
+    retry: false,
     enabled: true,
   });
 };
