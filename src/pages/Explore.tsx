@@ -15,13 +15,12 @@ const Explore = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useAuth();
 
-  // Fetch conversations from Supabase
+  // Fetch conversations
   const { data: conversations = [], isLoading, error, refetch } = useConversations(selectedCategory);
 
-  // Transform Supabase data to match PostCard interface
+  // Transform data to match PostCard interface
   const transformedPosts = conversations.map(conversation => {
-    // Handle profile data safely - it could be null or an object
-    const profile = Array.isArray(conversation.profiles) ? conversation.profiles[0] : conversation.profiles;
+    const profile = conversation.profiles;
     
     return {
       id: parseInt(conversation.id),
@@ -31,8 +30,8 @@ const Explore = () => {
       authorAvatar: profile?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
       category: conversation.category,
       aiModel: "GPT-4", 
-      upvotes: Math.floor(Math.random() * 50),
-      comments: Math.floor(Math.random() * 20),
+      upvotes: Math.floor(Math.random() * 50) + 10,
+      comments: Math.floor(Math.random() * 20) + 2,
       timestamp: new Date(conversation.created_at).toLocaleDateString(),
       readTime: conversation.read_time || 5
     };
@@ -145,23 +144,14 @@ const Explore = () => {
           ) : (
             <div className="text-center py-8">
               <p className="text-gray-600">No conversations found matching your criteria.</p>
-              {conversations.length === 0 && (
-                <div className="mt-4 space-y-2">
-                  <p className="text-sm text-gray-500">
-                    Please log in to generate content and see conversations.
-                  </p>
-                </div>
-              )}
-              {conversations.length > 0 && (
-                <p className="text-sm text-gray-500 mt-2">
-                  Try adjusting your filters or search terms.
-                </p>
-              )}
+              <p className="text-sm text-gray-500 mt-2">
+                Try adjusting your filters or search terms.
+              </p>
             </div>
           )}
         </div>
 
-        {/* Load More - You can implement pagination later */}
+        {/* Load More */}
         {sortedPosts.length > 0 && (
           <div className="text-center mt-8">
             <button className="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-md hover:bg-gray-50 transition-colors text-sm">
