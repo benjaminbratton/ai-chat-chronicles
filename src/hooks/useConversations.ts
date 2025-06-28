@@ -1,4 +1,3 @@
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
@@ -7,8 +6,24 @@ export const useConversations = (category?: string) => {
     queryKey: ['conversations', category],
     queryFn: async () => {
       console.log('🔍 Fetching conversations from Supabase...');
+      console.log('🔍 Category filter:', category);
       
       try {
+        // Test basic connection first
+        console.log('🧪 Testing Supabase connection...');
+        const { data: testData, error: testError } = await supabase
+          .from('conversations')
+          .select('count(*)', { count: 'exact', head: true });
+        
+        if (testError) {
+          console.error('❌ Supabase connection test failed:', testError);
+          throw testError;
+        }
+        
+        console.log('✅ Supabase connection OK, total rows:', testData);
+
+        // Now try the full query
+        console.log('🚀 Building full query...');
         let query = supabase
           .from('conversations')
           .select(`
@@ -39,8 +54,16 @@ export const useConversations = (category?: string) => {
           console.log('🌟 Fetching all categories');
         }
 
-        console.log('🚀 Executing query...');
-        const { data, error } = await query;
+        console.log('🚀 Executing main query...');
+        
+        // Add a timeout to prevent infinite hanging
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Query timeout after 10 seconds')), 10000);
+        });
+
+        const queryPromise = query;
+        const result = await Promise.race([queryPromise, timeoutPromise]);
+        const { data, error } = result as any;
 
         if (error) {
           console.error('❌ Error fetching conversations:', error);
@@ -48,18 +71,18 @@ export const useConversations = (category?: string) => {
         }
 
         console.log('✅ Successfully fetched conversations:', data?.length || 0);
-        console.log('📄 Sample data:', data?.slice(0, 2));
+        console.log('📄 Sample data:', data?.slice(0, 1));
         return data || [];
       } catch (error) {
-        console.error('💥 Query failed:', error);
+        console.error('💥 Query failed with error:', error);
         throw error;
       }
     },
-    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
-    refetchOnWindowFocus: false, // Don't refetch on window focus to avoid loops
-    retry: 1, // Only retry once
-    retryDelay: 1000, // Wait 1 second between retries
-    enabled: true, // Ensure query is enabled
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+    retryDelay: 1000,
+    enabled: true,
   });
 };
 
