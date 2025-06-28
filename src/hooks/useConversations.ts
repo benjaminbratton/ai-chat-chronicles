@@ -9,21 +9,8 @@ export const useConversations = (category?: string) => {
       console.log('🔍 Category filter:', category);
       
       try {
-        // Test basic connection first
-        console.log('🧪 Testing Supabase connection...');
-        const { data: testData, error: testError } = await supabase
-          .from('conversations')
-          .select('count(*)', { count: 'exact', head: true });
-        
-        if (testError) {
-          console.error('❌ Supabase connection test failed:', testError);
-          throw testError;
-        }
-        
-        console.log('✅ Supabase connection OK, total rows:', testData);
-
-        // Now try the full query
-        console.log('🚀 Building full query...');
+        // Build the query
+        console.log('🚀 Building query...');
         let query = supabase
           .from('conversations')
           .select(`
@@ -54,16 +41,8 @@ export const useConversations = (category?: string) => {
           console.log('🌟 Fetching all categories');
         }
 
-        console.log('🚀 Executing main query...');
-        
-        // Add a timeout to prevent infinite hanging
-        const timeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => reject(new Error('Query timeout after 10 seconds')), 10000);
-        });
-
-        const queryPromise = query;
-        const result = await Promise.race([queryPromise, timeoutPromise]);
-        const { data, error } = result as any;
+        console.log('🚀 Executing query...');
+        const { data, error } = await query;
 
         if (error) {
           console.error('❌ Error fetching conversations:', error);
