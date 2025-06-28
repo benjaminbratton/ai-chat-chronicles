@@ -20,7 +20,7 @@ export const useConversations = (category?: string) => {
             updated_at,
             author_id,
             read_time,
-            profiles:author_id (
+            profiles!conversations_author_id_fkey (
               id,
               full_name,
               username,
@@ -44,6 +44,7 @@ export const useConversations = (category?: string) => {
         }
 
         console.log('✅ Successfully fetched conversations:', data?.length || 0);
+        console.log('📄 Sample data:', data?.slice(0, 2));
         return data || [];
       } catch (error) {
         console.error('💥 Query failed:', error);
@@ -52,8 +53,9 @@ export const useConversations = (category?: string) => {
     },
     staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
     refetchOnWindowFocus: false, // Don't refetch on window focus to avoid loops
-    retry: 2, // Only retry twice
+    retry: 1, // Only retry once
     retryDelay: 1000, // Wait 1 second between retries
+    enabled: true, // Ensure query is enabled
   });
 };
 

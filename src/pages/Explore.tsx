@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
@@ -28,23 +27,12 @@ const Explore = () => {
     errorMessage: error?.message
   });
 
-  // Log first few conversations for debugging
-  if (conversations.length > 0) {
-    console.log('📝 Sample conversations:', conversations.slice(0, 3).map(c => ({
-      id: c.id,
-      title: c.title,
-      category: c.category,
-      published: c.published,
-      author_id: c.author_id
-    })));
-  }
-
   // Transform Supabase data to match PostCard interface
   const transformedPosts = conversations.map(conversation => {
     console.log('🔄 Transforming conversation:', conversation.id, conversation.title);
     
-    // Fix: Access profiles object correctly (it's a single object, not an array)
-    const profile = conversation.profiles as any;
+    // Handle profile data safely - it could be null or an object
+    const profile = Array.isArray(conversation.profiles) ? conversation.profiles[0] : conversation.profiles;
     
     return {
       id: parseInt(conversation.id),
@@ -54,8 +42,8 @@ const Explore = () => {
       authorAvatar: profile?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
       category: conversation.category,
       aiModel: "GPT-4", 
-      upvotes: Math.floor(Math.random() * 50), // Generate random since these columns don't exist
-      comments: Math.floor(Math.random() * 20), // Generate random since these columns don't exist
+      upvotes: Math.floor(Math.random() * 50),
+      comments: Math.floor(Math.random() * 20),
       timestamp: new Date(conversation.created_at).toLocaleDateString(),
       readTime: conversation.read_time || 5
     };
