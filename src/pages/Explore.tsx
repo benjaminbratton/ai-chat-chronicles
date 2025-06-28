@@ -8,15 +8,30 @@ import { SortOptions } from "@/components/SortOptions";
 import { Search } from "lucide-react";
 import { useConversations } from "@/hooks/useConversations";
 import { useAuth } from "@/hooks/useAuth";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const Explore = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("hot");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const { user } = useAuth();
 
-  // Fetch conversations
-  const { data: conversations = [], isLoading, error, refetch } = useConversations(selectedCategory);
+  const POSTS_PER_PAGE = 12;
+
+  // Fetch conversations with pagination
+  const { data, isLoading, error, refetch } = useConversations(selectedCategory, currentPage, POSTS_PER_PAGE);
+  const conversations = data?.conversations || [];
+  const totalPages = data?.totalPages || 0;
+  const total = data?.total || 0;
 
   // Transform data to match PostCard interface
   const transformedPosts = conversations.map(conversation => {
@@ -37,14 +52,14 @@ const Explore = () => {
     };
   });
 
-  // Apply filters
+  // Apply search filter (pagination is handled in the hook)
   const filteredPosts = transformedPosts.filter(post => {
-    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch = searchQuery === "" || 
+                         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.author.toLowerCase().includes(searchQuery.toLowerCase());
     
-    return matchesCategory && matchesSearch;
+    return matchesSearch;
   });
 
   // Sort posts
@@ -62,6 +77,115 @@ const Explore = () => {
         return 0;
     }
   });
+
+  // Reset to page 1 when filters change
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(1);
+  };
+
+  // Generate pagination items
+  const generatePaginationItems = () => {
+    const items = [];
+    const maxVisiblePages = 5;
+    
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        items.push(
+          <PaginationItem key={i}>
+            <PaginationLink
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage(i);
+              }}
+              isActive={currentPage === i}
+            >
+              {i}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
+    } else {
+      // More complex pagination with ellipsis
+      items.push(
+        <PaginationItem key={1}>
+          <PaginationLink
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage(1);
+            }}
+            isActive={currentPage === 1}
+          >
+            1
+          </PaginationLink>
+        </PaginationItem>
+      );
+
+      if (currentPage > 3) {
+        items.push(
+          <PaginationItem key="ellipsis1">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = start; i <= end; i++) {
+        if (i !== 1 && i !== totalPages) {
+          items.push(
+            <PaginationItem key={i}>
+              <PaginationLink
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setCurrentPage(i);
+                }}
+                isActive={currentPage === i}
+              >
+                {i}
+              </PaginationLink>
+            </PaginationItem>
+          );
+        }
+      }
+
+      if (currentPage < totalPages - 2) {
+        items.push(
+          <PaginationItem key="ellipsis2">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+
+      if (totalPages > 1) {
+        items.push(
+          <PaginationItem key={totalPages}>
+            <PaginationLink
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage(totalPages);
+              }}
+              isActive={currentPage === totalPages}
+            >
+              {totalPages}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
+    }
+
+    return items;
+  };
 
   if (isLoading) {
     return (
@@ -106,7 +230,9 @@ const Explore = () => {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-3xl font-thin text-black mb-2">Explore AI Conversations</h1>
-          <p className="text-gray-600">Discover the latest conversations and insights from our community</p>
+          <p className="text-gray-600">
+            Discover the latest conversations and insights from our community ({total} total conversations)
+          </p>
         </div>
 
         {/* Search and Filters */}
@@ -119,7 +245,7 @@ const Explore = () => {
                 type="text"
                 placeholder="Search posts, authors, topics..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-black focus:border-black text-sm"
               />
             </div>
@@ -132,7 +258,7 @@ const Explore = () => {
         {/* Category Filter */}
         <CategoryFilter 
           selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
+          onCategoryChange={handleCategoryChange}
         />
 
         {/* Posts Feed */}
@@ -151,12 +277,40 @@ const Explore = () => {
           )}
         </div>
 
-        {/* Load More */}
-        {sortedPosts.length > 0 && (
-          <div className="text-center mt-8">
-            <button className="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-md hover:bg-gray-50 transition-colors text-sm">
-              Load More Posts
-            </button>
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-8">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (currentPage > 1) setCurrentPage(currentPage - 1);
+                    }}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+                
+                {generatePaginationItems()}
+                
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+                    }}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+            
+            <div className="text-center mt-4 text-sm text-gray-600">
+              Showing page {currentPage} of {totalPages} ({total} total conversations)
+            </div>
           </div>
         )}
       </main>

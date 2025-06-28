@@ -1,4 +1,3 @@
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // Mock data for conversations
@@ -209,9 +208,9 @@ const mockConversations = [
   }
 ];
 
-export const useConversations = (category?: string) => {
+export const useConversations = (category?: string, page: number = 1, limit: number = 12) => {
   return useQuery({
-    queryKey: ['conversations', category],
+    queryKey: ['conversations', category, page, limit],
     queryFn: () => {
       // Return mock data synchronously - no async needed
       let filteredData = [...mockConversations];
@@ -221,7 +220,20 @@ export const useConversations = (category?: string) => {
         filteredData = mockConversations.filter(conv => conv.category === category);
       }
       
-      return filteredData;
+      // Calculate pagination
+      const startIndex = (page - 1) * limit;
+      const endIndex = startIndex + limit;
+      const paginatedData = filteredData.slice(startIndex, endIndex);
+      
+      return {
+        conversations: paginatedData,
+        total: filteredData.length,
+        page,
+        limit,
+        totalPages: Math.ceil(filteredData.length / limit),
+        hasNextPage: endIndex < filteredData.length,
+        hasPreviousPage: page > 1
+      };
     },
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
