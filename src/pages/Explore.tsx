@@ -5,13 +5,16 @@ import { BrowserWindow } from "@/components/BrowserWindow";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { PostCard } from "@/components/PostCard";
 import { SortOptions } from "@/components/SortOptions";
-import { Search, Filter } from "lucide-react";
+import { SyntheticDataGenerator } from "@/components/SyntheticDataGenerator";
+import { Search } from "lucide-react";
 import { useConversations } from "@/hooks/useConversations";
+import { useAuth } from "@/hooks/useAuth";
 
 const Explore = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("hot");
   const [searchQuery, setSearchQuery] = useState("");
+  const { user } = useAuth();
 
   // Fetch real conversations from Supabase
   const { data: conversations = [], isLoading, error } = useConversations(
@@ -93,6 +96,13 @@ const Explore = () => {
           <h1 className="text-3xl font-thin text-black mb-2">Explore AI Conversations</h1>
           <p className="text-gray-600">Discover the latest conversations and insights from our community</p>
         </div>
+
+        {/* Development Tool - Only show when user is logged in */}
+        {user && (
+          <div className="mb-6">
+            <SyntheticDataGenerator />
+          </div>
+        )}
 
         {/* Search and Filters */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
