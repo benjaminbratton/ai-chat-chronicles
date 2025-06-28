@@ -1,33 +1,27 @@
-
 import { useState } from "react";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { PostCard } from "@/components/PostCard";
 import { SortOptions } from "@/components/SortOptions";
-import { TagFilter } from "@/components/TagFilter";
 import { SyntheticDataGenerator } from "@/components/SyntheticDataGenerator";
 import { Search } from "lucide-react";
 import { useConversations } from "@/hooks/useConversations";
-import { useAvailableTags } from "@/hooks/useAvailableTags";
 import { useAuth } from "@/hooks/useAuth";
 
 const Explore = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("hot");
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useAuth();
 
-  console.log('🔍 Explore page - Current filters:', { selectedCategory, selectedTags, sortBy, searchQuery, userLoggedIn: !!user });
+  console.log('🔍 Explore page - Current filters:', { selectedCategory, sortBy, searchQuery, userLoggedIn: !!user });
 
-  // Fetch conversations and available tags
-  const { data: conversations = [], isLoading, error, refetch } = useConversations(selectedCategory, selectedTags);
-  const { data: availableTags = [] } = useAvailableTags();
+  // Fetch conversations from Supabase
+  const { data: conversations = [], isLoading, error, refetch } = useConversations(selectedCategory);
 
   console.log('📊 Database query results:', {
     conversationsCount: conversations.length,
-    availableTagsCount: availableTags.length,
     isLoading,
     hasError: !!error,
     errorMessage: error?.message
@@ -37,6 +31,7 @@ const Explore = () => {
   const transformedPosts = conversations.map(conversation => {
     console.log('🔄 Transforming conversation:', conversation.id, conversation.title);
     
+    // Handle profile data safely - it could be null or an object
     const profile = Array.isArray(conversation.profiles) ? conversation.profiles[0] : conversation.profiles;
     
     return {
@@ -46,7 +41,6 @@ const Explore = () => {
       author: profile?.username || profile?.full_name || 'Anonymous',
       authorAvatar: profile?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
       category: conversation.category,
-      tags: conversation.tags || [conversation.category],
       aiModel: "GPT-4", 
       upvotes: Math.floor(Math.random() * 50),
       comments: Math.floor(Math.random() * 20),
@@ -57,14 +51,15 @@ const Explore = () => {
 
   console.log('🎯 Transformed posts:', transformedPosts.length);
 
-  // Apply search filter
+  // Apply filters
   const filteredPosts = transformedPosts.filter(post => {
+    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.author.toLowerCase().includes(searchQuery.toLowerCase());
     
-    console.log(`🔍 Post "${post.title}": search match = ${matchesSearch}`);
-    return matchesSearch;
+    console.log(`🔍 Post "${post.title}": category match = ${matchesCategory}, search match = ${matchesSearch}`);
+    return matchesCategory && matchesSearch;
   });
 
   console.log('📋 Filtered posts:', filteredPosts.length);
@@ -86,12 +81,6 @@ const Explore = () => {
   });
 
   console.log('📈 Final sorted posts to display:', sortedPosts.length);
-
-  const handleTagClick = (tag: string) => {
-    if (!selectedTags.includes(tag)) {
-      setSelectedTags(prev => [...prev, tag]);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -153,8 +142,6 @@ const Explore = () => {
           <div className="text-sm text-blue-800 space-y-1">
             <p>• Database conversations: {conversations.length}</p>
             <p>• After filtering: {filteredPosts.length}</p>
-            <p>• Available tags: {availableTags.length}</p>
-            <p>• Selected tags: {selectedTags.join(', ') || 'None'}</p>
             <p>• User logged in: {user ? '✅ Yes' : '❌ No'}</p>
             <p>• Selected category: {selectedCategory}</p>
             <p>• Sort by: {sortBy}</p>
@@ -169,9 +156,9 @@ const Explore = () => {
 
         {/* Search and Filters */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
             {/* Search */}
-            <div className="relative">
+            <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
@@ -182,17 +169,8 @@ const Explore = () => {
               />
             </div>
 
-            {/* Tag Filter */}
-            <TagFilter 
-              selectedTags={selectedTags}
-              onTagsChange={setSelectedTags}
-              availableTags={availableTags}
-            />
-
             {/* Sort Options */}
-            <div className="flex justify-end">
-              <SortOptions selectedSort={sortBy} onSortChange={setSortBy} />
-            </div>
+            <SortOptions selectedSort={sortBy} onSortChange={setSortBy} />
           </div>
         </div>
 
@@ -206,11 +184,7 @@ const Explore = () => {
         <div className="space-y-4">
           {sortedPosts.length > 0 ? (
             sortedPosts.map((post) => (
-              <PostCard 
-                key={post.id} 
-                post={post} 
-                onTagClick={handleTagClick}
-              />
+              <PostCard key={post.id} post={post} />
             ))
           ) : (
             <div className="text-center py-8">
@@ -237,7 +211,7 @@ const Explore = () => {
           )}
         </div>
 
-        {/* Load More */}
+        {/* Load More - You can implement pagination later */}
         {sortedPosts.length > 0 && (
           <div className="text-center mt-8">
             <button className="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-md hover:bg-gray-50 transition-colors text-sm">

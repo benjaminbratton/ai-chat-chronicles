@@ -2,7 +2,7 @@
 import { ArrowUp, ArrowDown, MessageSquare, Clock, Share2, Bookmark } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Badge } from '@/components/ui/badge';
+import { categories } from "./CategoryFilter";
 
 interface Post {
   id: number;
@@ -11,7 +11,6 @@ interface Post {
   author: string;
   authorAvatar: string;
   category: string;
-  tags: string[];
   aiModel: string;
   upvotes: number;
   comments: number;
@@ -21,14 +20,18 @@ interface Post {
 
 interface PostCardProps {
   post: Post;
-  onTagClick?: (tag: string) => void;
 }
 
-export const PostCard = ({ post, onTagClick }: PostCardProps) => {
+export const PostCard = ({ post }: PostCardProps) => {
   const [upvoted, setUpvoted] = useState(false);
   const [downvoted, setDownvoted] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [currentUpvotes, setCurrentUpvotes] = useState(post.upvotes);
+
+  // Get the category color from the CategoryFilter
+  const categoryData = categories.find(cat => cat.name === post.category);
+  const categoryColor = categoryData?.color || "bg-gray-500";
+  const categoryTextColor = categoryData?.textColor || "text-white";
 
   const handleUpvote = () => {
     if (upvoted) {
@@ -50,20 +53,6 @@ export const PostCard = ({ post, onTagClick }: PostCardProps) => {
       setDownvoted(true);
       setUpvoted(false);
     }
-  };
-
-  const getTagColor = (tag: string) => {
-    const colors = {
-      'Philosophy': 'bg-purple-100 text-purple-800',
-      'Creative Writing': 'bg-pink-100 text-pink-800',
-      'Programming': 'bg-blue-100 text-blue-800',
-      'Science': 'bg-green-100 text-green-800',
-      'Education': 'bg-yellow-100 text-yellow-800',
-      'Business': 'bg-orange-100 text-orange-800',
-      'Personal': 'bg-indigo-100 text-indigo-800',
-      'Research': 'bg-teal-100 text-teal-800',
-    };
-    return colors[tag as keyof typeof colors] || 'bg-gray-100 text-gray-800';
   };
 
   return (
@@ -96,6 +85,10 @@ export const PostCard = ({ post, onTagClick }: PostCardProps) => {
         <div className="flex-1 p-4">
           {/* Post Header */}
           <div className="flex items-center space-x-2 mb-2 text-xs text-gray-500">
+            <span className={`${categoryColor} ${categoryTextColor} px-2 py-1 rounded-full font-medium`}>
+              r/{post.category}
+            </span>
+            <span>•</span>
             <div className="flex items-center space-x-1">
               <img
                 src={post.authorAvatar}
@@ -123,22 +116,6 @@ export const PostCard = ({ post, onTagClick }: PostCardProps) => {
           <p className="text-gray-600 text-sm mb-3 line-clamp-2">
             {post.content}
           </p>
-
-          {/* Tags */}
-          {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-3">
-              {post.tags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="secondary"
-                  className={`text-xs cursor-pointer hover:opacity-80 ${getTagColor(tag)}`}
-                  onClick={() => onTagClick?.(tag)}
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          )}
 
           {/* Post Actions */}
           <div className="flex items-center space-x-4 text-xs text-gray-500">

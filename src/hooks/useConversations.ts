@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
-export const useConversations = (category?: string, tags?: string[]) => {
+export const useConversations = (category?: string) => {
   return useQuery({
-    queryKey: ['conversations', category, tags],
+    queryKey: ['conversations', category],
     queryFn: async () => {
       console.log('🔍 Fetching conversations from Supabase...');
       
@@ -15,7 +15,6 @@ export const useConversations = (category?: string, tags?: string[]) => {
             title,
             content,
             category,
-            tags,
             published,
             created_at,
             updated_at,
@@ -36,11 +35,6 @@ export const useConversations = (category?: string, tags?: string[]) => {
           query = query.eq('category', category);
         }
 
-        // Apply tags filter if specified
-        if (tags && tags.length > 0) {
-          query = query.overlaps('tags', tags);
-        }
-
         console.log('🚀 Executing query...');
         const { data, error } = await query;
 
@@ -57,11 +51,11 @@ export const useConversations = (category?: string, tags?: string[]) => {
         throw error;
       }
     },
-    staleTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
-    retry: 1,
-    retryDelay: 1000,
-    enabled: true,
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    refetchOnWindowFocus: false, // Don't refetch on window focus to avoid loops
+    retry: 1, // Only retry once
+    retryDelay: 1000, // Wait 1 second between retries
+    enabled: true, // Ensure query is enabled
   });
 };
 

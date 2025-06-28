@@ -12,7 +12,7 @@ export const SyntheticDataGenerator = () => {
 
   const handleGenerateData = async () => {
     try {
-      await syntheticDataMutation.mutateAsync(100);
+      await syntheticDataMutation.mutateAsync();
       toast({
         title: "Success!",
         description: "100 synthetic posts have been generated and added to the database.",
