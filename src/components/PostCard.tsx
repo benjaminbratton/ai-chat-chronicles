@@ -17,6 +17,7 @@ interface Post {
   comments: number;
   timestamp: string;
   readTime: number;
+  image?: string;
 }
 
 interface PostCardProps {
@@ -138,47 +139,63 @@ export const PostCard = ({ post }: PostCardProps) => {
             </span>
           </div>
 
-          {/* Post Title */}
-          <Link to={`/post/${post.id}`}>
-            <h3 className="text-lg font-medium text-gray-900 mb-2 hover:text-blue-600 cursor-pointer line-clamp-2 transition-colors duration-200">
-              {post.title}
-            </h3>
-          </Link>
+          <div className="flex gap-4">
+            {/* Main Content */}
+            <div className="flex-1">
+              {/* Post Title */}
+              <Link to={`/post/${post.id}`}>
+                <h3 className="text-lg font-medium text-gray-900 mb-2 hover:text-blue-600 cursor-pointer line-clamp-2 transition-colors duration-200">
+                  {post.title}
+                </h3>
+              </Link>
 
-          {/* Post Content Preview */}
-          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-            {post.content}
-          </p>
+              {/* Post Content Preview */}
+              <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                {post.content}
+              </p>
 
-          {/* Post Actions */}
-          <div className="flex items-center space-x-4 text-xs text-gray-500">
-            <Link 
-              to={`/post/${post.id}`}
-              className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-all duration-150 hover:scale-105"
-            >
-              <MessageSquare className="w-4 h-4" />
-              <span>{post.comments} comments</span>
-            </Link>
-            <button 
-              onClick={handleShare}
-              className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-all duration-150 hover:scale-105"
-            >
-              <Share2 className="w-4 h-4" />
-              <span>Share</span>
-            </button>
-            <button
-              onClick={() => setBookmarked(!bookmarked)}
-              className={`flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-all duration-150 hover:scale-105 ${
-                bookmarked ? 'text-blue-600' : ''
-              }`}
-            >
-              <Bookmark className="w-4 h-4" />
-              <span>Save</span>
-            </button>
-            <div className="flex items-center space-x-1">
-              <Clock className="w-3 h-3" />
-              <span>{post.readTime} min read</span>
+              {/* Post Actions */}
+              <div className="flex items-center space-x-4 text-xs text-gray-500">
+                <Link 
+                  to={`/post/${post.id}`}
+                  className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-all duration-150 hover:scale-105"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>{post.comments} comments</span>
+                </Link>
+                <button 
+                  onClick={handleShare}
+                  className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-all duration-150 hover:scale-105"
+                >
+                  <Share2 className="w-4 h-4" />
+                  <span>Share</span>
+                </button>
+                <button
+                  onClick={() => setBookmarked(!bookmarked)}
+                  className={`flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-all duration-150 hover:scale-105 ${
+                    bookmarked ? 'text-blue-600' : ''
+                  }`}
+                >
+                  <Bookmark className="w-4 h-4" />
+                  <span>Save</span>
+                </button>
+                <div className="flex items-center space-x-1">
+                  <Clock className="w-3 h-3" />
+                  <span>{post.readTime} min read</span>
+                </div>
+              </div>
             </div>
+
+            {/* Post Image */}
+            {post.image && (
+              <div className="flex-shrink-0">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-20 h-20 object-cover rounded-lg hover:scale-105 transition-transform duration-200"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

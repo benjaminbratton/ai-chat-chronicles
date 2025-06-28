@@ -23,6 +23,48 @@ const Explore = () => {
   // Debounce search query to reduce API calls
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
+  // Function to assign relevant images based on content and category
+  const getRelevantImage = (conversation: any, index: number) => {
+    const title = conversation.title?.toLowerCase() || '';
+    const content = conversation.content?.toLowerCase() || '';
+    const category = conversation.category?.toLowerCase() || '';
+    
+    // Define image mappings based on keywords and themes
+    if (category.includes('programming') || category.includes('coding') || title.includes('code') || content.includes('programming') || content.includes('javascript') || content.includes('python')) {
+      return `https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=100&h=100&fit=crop&crop=center`;
+    }
+    
+    if (category.includes('technology') || title.includes('ai') || title.includes('artificial intelligence') || content.includes('machine learning') || content.includes('neural')) {
+      return `https://images.unsplash.com/photo-1518770660439-4636190af475?w=100&h=100&fit=crop&crop=center`;
+    }
+    
+    if (category.includes('philosophy') || title.includes('consciousness') || title.includes('thinking') || content.includes('philosophy') || content.includes('consciousness')) {
+      return `https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=100&h=100&fit=crop&crop=center`;
+    }
+    
+    if (category.includes('science') || title.includes('research') || content.includes('study') || content.includes('experiment')) {
+      return `https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=100&h=100&fit=crop&crop=center`;
+    }
+    
+    if (title.includes('laptop') || title.includes('computer') || content.includes('desktop') || content.includes('macbook')) {
+      return `https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=100&h=100&fit=crop&crop=center`;
+    }
+    
+    if (title.includes('work') || content.includes('productivity') || content.includes('business')) {
+      return `https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=100&h=100&fit=crop&crop=center`;
+    }
+    
+    // Default rotation through different images based on index
+    const defaultImages = [
+      'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=100&h=100&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=100&h=100&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=100&h=100&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=100&h=100&fit=crop&crop=center'
+    ];
+    
+    return defaultImages[index % defaultImages.length];
+  };
+
   // Fetch conversations with infinite scroll and search
   const { 
     data, 
@@ -49,7 +91,7 @@ const Explore = () => {
   });
 
   // Transform data to match PostCard interface
-  const transformedPosts = allConversations.map(conversation => {
+  const transformedPosts = allConversations.map((conversation, index) => {
     // Handle profiles - it might be an array or single object depending on Supabase query
     const profile = Array.isArray(conversation.profiles) 
       ? conversation.profiles[0] 
@@ -66,7 +108,8 @@ const Explore = () => {
       upvotes: Math.floor(Math.random() * 50) + 10,
       comments: Math.floor(Math.random() * 20) + 2,
       timestamp: new Date(conversation.created_at).toLocaleDateString(),
-      readTime: conversation.read_time || 5
+      readTime: conversation.read_time || 5,
+      image: getRelevantImage(conversation, index)
     };
   });
 
