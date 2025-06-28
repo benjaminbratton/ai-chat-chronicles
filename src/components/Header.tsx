@@ -120,60 +120,60 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
           <nav className="hidden md:flex items-center space-x-12 ml-16">
             <Link 
               to="/" 
-              className={`text-sm tracking-wide uppercase transition-colors ${
+              className={`text-sm tracking-wide uppercase transition-all duration-300 transform ${
                 location.pathname === '/' 
-                  ? 'text-black font-medium' 
-                  : 'text-gray-600 hover:text-black'
+                  ? 'text-black font-medium scale-105 bg-gray-100 px-3 py-2 rounded-lg shadow-sm' 
+                  : 'text-gray-600 hover:text-black hover:scale-105 hover:bg-gray-50 hover:px-3 hover:py-2 hover:rounded-lg hover:shadow-sm px-3 py-2'
               }`}
             >
               Home
             </Link>
             <Link 
               to="/explore" 
-              className={`text-sm tracking-wide uppercase transition-colors ${
+              className={`text-sm tracking-wide uppercase transition-all duration-300 transform ${
                 location.pathname === '/explore' 
-                  ? 'text-black font-medium' 
-                  : 'text-gray-600 hover:text-black'
+                  ? 'text-black font-medium scale-105 bg-gray-100 px-3 py-2 rounded-lg shadow-sm' 
+                  : 'text-gray-600 hover:text-black hover:scale-105 hover:bg-gray-50 hover:px-3 hover:py-2 hover:rounded-lg hover:shadow-sm px-3 py-2'
               }`}
             >
               Explore
             </Link>
             <Link 
               to="/model" 
-              className={`text-sm tracking-wide uppercase transition-colors ${
+              className={`text-sm tracking-wide uppercase transition-all duration-300 transform ${
                 location.pathname === '/model' 
-                  ? 'text-black font-medium' 
-                  : 'text-gray-600 hover:text-black'
+                  ? 'text-black font-medium scale-105 bg-gray-100 px-3 py-2 rounded-lg shadow-sm' 
+                  : 'text-gray-600 hover:text-black hover:scale-105 hover:bg-gray-50 hover:px-3 hover:py-2 hover:rounded-lg hover:shadow-sm px-3 py-2'
               }`}
             >
               Model
             </Link>
             <Link 
               to="/visualize" 
-              className={`text-sm tracking-wide uppercase transition-colors ${
+              className={`text-sm tracking-wide uppercase transition-all duration-300 transform ${
                 location.pathname === '/visualize' 
-                  ? 'text-black font-medium' 
-                  : 'text-gray-600 hover:text-black'
+                  ? 'text-black font-medium scale-105 bg-gray-100 px-3 py-2 rounded-lg shadow-sm' 
+                  : 'text-gray-600 hover:text-black hover:scale-105 hover:bg-gray-50 hover:px-3 hover:py-2 hover:rounded-lg hover:shadow-sm px-3 py-2'
               }`}
             >
               Visualize
             </Link>
             <Link 
               to="/seminars" 
-              className={`text-sm tracking-wide uppercase transition-colors ${
+              className={`text-sm tracking-wide uppercase transition-all duration-300 transform ${
                 location.pathname === '/seminars' 
-                  ? 'text-black font-medium' 
-                  : 'text-gray-600 hover:text-black'
+                  ? 'text-black font-medium scale-105 bg-gray-100 px-3 py-2 rounded-lg shadow-sm' 
+                  : 'text-gray-600 hover:text-black hover:scale-105 hover:bg-gray-50 hover:px-3 hover:py-2 hover:rounded-lg hover:shadow-sm px-3 py-2'
               }`}
             >
               Seminars
             </Link>
             <Link 
               to="/about" 
-              className={`text-sm tracking-wide uppercase transition-colors ${
+              className={`text-sm tracking-wide uppercase transition-all duration-300 transform ${
                 location.pathname === '/about' 
-                  ? 'text-black font-medium' 
-                  : 'text-gray-600 hover:text-black'
+                  ? 'text-black font-medium scale-105 bg-gray-100 px-3 py-2 rounded-lg shadow-sm' 
+                  : 'text-gray-600 hover:text-black hover:scale-105 hover:bg-gray-50 hover:px-3 hover:py-2 hover:rounded-lg hover:shadow-sm px-3 py-2'
               }`}
             >
               About
@@ -181,10 +181,10 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
             {user && (
               <Link 
                 to="/posting" 
-                className={`text-sm tracking-wide uppercase transition-colors ${
+                className={`text-sm tracking-wide uppercase transition-all duration-300 transform ${
                   location.pathname === '/posting' 
-                    ? 'text-black font-medium' 
-                    : 'text-gray-600 hover:text-black'
+                    ? 'text-black font-medium scale-105 bg-gray-100 px-3 py-2 rounded-lg shadow-sm' 
+                    : 'text-gray-600 hover:text-black hover:scale-105 hover:bg-gray-50 hover:px-3 hover:py-2 hover:rounded-lg hover:shadow-sm px-3 py-2'
                 }`}
               >
                 Share
