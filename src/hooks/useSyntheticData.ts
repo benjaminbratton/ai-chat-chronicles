@@ -1,4 +1,3 @@
-
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
@@ -114,7 +113,7 @@ export const useSyntheticData = () => {
       const allPosts = [...syntheticPosts, ...generateMorePosts()];
       console.log(`📝 Generated ${allPosts.length} posts total`);
       
-      // Prepare posts with author_id and published status
+      // Prepare posts with author_id and published status - removing columns that don't exist
       const postsToInsert = allPosts.map((post, index) => {
         const postData = {
           title: post.title,
@@ -126,9 +125,8 @@ export const useSyntheticData = () => {
           published: true,
           featured: Math.random() > 0.8, // 20% chance of being featured
           created_at: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
-          updated_at: new Date().toISOString(),
-          likes_count: Math.floor(Math.random() * 50),
-          comments_count: Math.floor(Math.random() * 20)
+          updated_at: new Date().toISOString()
+          // Removed likes_count and comments_count as they don't exist in the schema
         };
         
         console.log(`📄 Post ${index + 1}: "${postData.title}" - Category: ${postData.category}`);
