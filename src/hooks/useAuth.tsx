@@ -108,6 +108,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
+    console.log('Attempting signup with email:', email);
+    
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -120,16 +122,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
     
     console.log('SignUp result:', { data, error });
+    console.log('User created:', data.user);
+    console.log('Session after signup:', data.session);
+    
     return { data, error };
   };
 
   const signIn = async (email: string, password: string) => {
+    console.log('Attempting signin with email:', email);
+    
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     
     console.log('SignIn result:', { data, error });
+    console.log('User after signin:', data.user);
+    console.log('Session after signin:', data.session);
+    
+    if (error) {
+      console.error('Detailed signin error:', {
+        message: error.message,
+        status: error.status,
+        name: error.name
+      });
+    }
+    
     return { data, error };
   };
 
