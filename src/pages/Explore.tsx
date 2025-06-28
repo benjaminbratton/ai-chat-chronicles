@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
 import { CategoryFilter } from "@/components/CategoryFilter";
+import { TopicFilter } from "@/components/TopicFilter";
 import { PostCard } from "@/components/PostCard";
 import { PostCardSkeleton } from "@/components/PostCardSkeleton";
 import { SortOptions } from "@/components/SortOptions";
@@ -13,6 +14,7 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
 const Explore = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedFilter, setSelectedFilter] = useState("all");
   const [sortBy, setSortBy] = useState("hot");
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useAuth();
@@ -189,6 +191,9 @@ const Explore = () => {
     };
   })();
 
+  // Use the selected category for filtering, but also apply topic filter if not "all"
+  const effectiveCategory = selectedFilter !== "all" ? selectedFilter : selectedCategory;
+
   // Fetch conversations with infinite scroll and search
   const { 
     data, 
@@ -198,7 +203,7 @@ const Explore = () => {
     fetchNextPage, 
     hasNextPage, 
     isFetchingNextPage 
-  } = useConversations(selectedCategory, POSTS_PER_PAGE, debouncedSearchQuery);
+  } = useConversations(effectiveCategory, POSTS_PER_PAGE, debouncedSearchQuery);
 
   // Flatten all pages of data
   const allConversations = useMemo(() => {
@@ -256,6 +261,12 @@ const Explore = () => {
   // Reset to top when category or search changes
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
+    setSelectedFilter("all"); // Reset topic filter when category changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleFilterChange = (filter: string) => {
+    setSelectedFilter(filter);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -378,6 +389,14 @@ const Explore = () => {
           selectedCategory={selectedCategory}
           onCategoryChange={handleCategoryChange}
         />
+
+        {/* Topic Filter */}
+        <div className="mb-6">
+          <TopicFilter 
+            selectedFilter={selectedFilter}
+            onFilterChange={handleFilterChange}
+          />
+        </div>
 
         {/* Posts Feed */}
         <div className="space-y-4">
