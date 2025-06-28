@@ -111,10 +111,10 @@ const Model = () => {
             <div className="flex items-center justify-center h-full">
               <div className="text-center max-w-md">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                  How can I help you today?
+                  Research the polylogos collective intelligence
                 </h2>
                 <p className="text-gray-600">
-                  Start a conversation with {selectedModel}
+                  Explore patterns and insights
                 </p>
               </div>
             </div>
