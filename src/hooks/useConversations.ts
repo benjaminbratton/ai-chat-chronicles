@@ -5,61 +5,35 @@ export const useConversations = (category?: string) => {
   return useQuery({
     queryKey: ['conversations', category],
     queryFn: async () => {
-      console.log('🔍 Fetching conversations from Supabase...');
-      console.log('🔍 Category filter:', category);
-      
       try {
-        // Build the query
-        console.log('🚀 Building query...');
+        // Build a simple query first
         let query = supabase
           .from('conversations')
-          .select(`
-            id,
-            title,
-            content,
-            category,
-            published,
-            created_at,
-            updated_at,
-            author_id,
-            read_time,
-            profiles!conversations_author_id_fkey (
-              id,
-              full_name,
-              username,
-              avatar_url
-            )
-          `)
+          .select('*')
           .eq('published', true)
           .order('created_at', { ascending: false });
 
         // Only apply category filter if specified and not "All"
         if (category && category !== 'All') {
-          console.log('🏷️ Filtering by category:', category);
           query = query.eq('category', category);
-        } else {
-          console.log('🌟 Fetching all categories');
         }
 
-        console.log('🚀 Executing query...');
         const { data, error } = await query;
 
         if (error) {
-          console.error('❌ Error fetching conversations:', error);
+          console.error('Error fetching conversations:', error);
           throw error;
         }
 
-        console.log('✅ Successfully fetched conversations:', data?.length || 0);
-        console.log('📄 Sample data:', data?.slice(0, 1));
         return data || [];
       } catch (error) {
-        console.error('💥 Query failed with error:', error);
+        console.error('Query failed:', error);
         throw error;
       }
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000, // 30 seconds
     refetchOnWindowFocus: false,
-    retry: 1,
+    retry: 2,
     retryDelay: 1000,
     enabled: true,
   });
