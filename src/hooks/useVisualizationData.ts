@@ -1,5 +1,4 @@
 
-
 import { useQuery } from '@tanstack/react-query';
 import { useConversations } from './useConversations';
 
@@ -22,19 +21,21 @@ interface VisualizationLink {
 }
 
 export const useVisualizationData = (filter: string) => {
-  // For visualization, we always fetch all conversations first, then filter if needed
-  const { data: conversationsData } = useConversations(undefined, 1, 1000);
+  // For visualization, we fetch all conversations without filtering by category initially
+  const { data: conversationsData } = useConversations(undefined, 1000);
   
   return useQuery({
     queryKey: ['visualization-data', filter],
     queryFn: () => {
       console.log('Fetching visualization data for filter:', filter);
       
-      let conversations = conversationsData?.conversations || [];
+      // Extract conversations from infinite query structure
+      const allConversations = conversationsData?.pages?.flatMap(page => page.conversations) || [];
       
       // Apply filter after fetching all conversations
+      let conversations = allConversations;
       if (filter !== 'all') {
-        conversations = conversations.filter(conv => conv.category === filter);
+        conversations = allConversations.filter(conv => conv.category === filter);
       }
       
       console.log('Fetched conversations for visualization:', conversations.length);
@@ -149,4 +150,3 @@ export const useVisualizationData = (filter: string) => {
     enabled: !!conversationsData, // Only run when we have conversations data
   });
 };
-
