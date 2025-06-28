@@ -42,12 +42,16 @@ const Explore = () => {
   // Transform Supabase data to match PostCard interface
   const transformedPosts = conversations.map(conversation => {
     console.log('🔄 Transforming conversation:', conversation.id, conversation.title);
+    
+    // Fix: Access profiles object correctly (it's a single object, not an array)
+    const profile = conversation.profiles as any;
+    
     return {
       id: parseInt(conversation.id),
       title: conversation.title,
       content: conversation.content,
-      author: conversation.profiles?.username || conversation.profiles?.full_name || 'Anonymous',
-      authorAvatar: conversation.profiles?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
+      author: profile?.username || profile?.full_name || 'Anonymous',
+      authorAvatar: profile?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
       category: conversation.category,
       aiModel: "GPT-4", 
       upvotes: Math.floor(Math.random() * 50), // Generate random since these columns don't exist
