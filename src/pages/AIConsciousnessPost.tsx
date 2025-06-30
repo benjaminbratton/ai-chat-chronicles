@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
-import { ArrowUp, ArrowDown, MessageSquare, Share2, Bookmark, ArrowLeft, Clock, User, ChevronDown } from "lucide-react";
+import { ArrowUp, ArrowDown, MessageSquare, Share2, Bookmark, ArrowLeft, Clock, User, ChevronDown, Headphones } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -220,6 +220,14 @@ What do you think - could consciousness be substrate-independent?`
               Back to Home
             </Link>
 
+            {/* Main Audio Control */}
+            <div className="flex justify-center mb-6">
+              <button className="flex items-center space-x-3 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-lg">
+                <Headphones className="w-6 h-6" />
+                <span>Listen to Full Article</span>
+              </button>
+            </div>
+
             {/* Post Header */}
             <div className="bg-white rounded-lg border border-gray-200 mb-6">
               <div className="flex">
@@ -309,8 +317,16 @@ What do you think - could consciousness be substrate-independent?`
             {/* AI Dialogue Section */}
             <div className="bg-white rounded-lg border border-gray-200 mb-6">
               <div className="p-6 border-b border-gray-200">
-                <h2 className="text-xl font-semibold text-gray-900">AI Conversation</h2>
-                <p className="text-sm text-gray-600 mt-1">Full dialogue with {post.aiModel}</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-semibold text-gray-900">AI Conversation</h2>
+                    <p className="text-sm text-gray-600 mt-1">Full dialogue with {post.aiModel}</p>
+                  </div>
+                  <button className="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                    <Headphones className="w-4 h-4" />
+                    <span>Listen to Conversation</span>
+                  </button>
+                </div>
               </div>
               <div className="p-6">
                 <div className="space-y-6">
@@ -324,9 +340,15 @@ What do you think - could consciousness be substrate-independent?`
                           <div className="border-b border-gray-200 pb-4 mb-6">
                             <CollapsibleTrigger className="w-full">
                               <div className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                <h3 className="text-lg font-semibold text-gray-900">
-                                  {message.content}
-                                </h3>
+                                <div className="flex items-center space-x-3">
+                                  <button className="flex items-center space-x-1 bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-sm font-medium transition-colors">
+                                    <Headphones className="w-3 h-3" />
+                                    <span>Listen</span>
+                                  </button>
+                                  <h3 className="text-lg font-semibold text-gray-900">
+                                    {message.content}
+                                  </h3>
+                                </div>
                                 <ChevronDown 
                                   className={`w-5 h-5 text-gray-500 transition-transform ${
                                     openSections[message.id as keyof typeof openSections] ? 'rotate-180' : ''
@@ -388,8 +410,16 @@ What do you think - could consciousness be substrate-independent?`
             {/* Analysis Section */}
             <div className="bg-white rounded-lg border border-gray-200 mb-6">
               <div className="p-6 border-b border-gray-200">
-                <h2 className="text-xl font-semibold text-gray-900">Author's Analysis</h2>
-                <p className="text-sm text-gray-600 mt-1">Reflection on the AI interaction by {post.author}</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-semibold text-gray-900">Author's Analysis</h2>
+                    <p className="text-sm text-gray-600 mt-1">Reflection on the AI interaction by {post.author}</p>
+                  </div>
+                  <button className="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                    <Headphones className="w-4 h-4" />
+                    <span>Listen to Analysis</span>
+                  </button>
+                </div>
               </div>
               <div className="p-6">
                 <div className="flex space-x-4">
