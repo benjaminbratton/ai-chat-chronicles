@@ -124,13 +124,13 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-12 ml-16">
+          <nav className="hidden md:flex items-center space-x-6 ml-16">
             <Link 
               to="/" 
               className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
                 location.pathname === '/' 
-                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full shadow-lg border-2 border-purple-200' 
-                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-6 hover:py-3 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-3 py-2'
+                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-4 py-2 rounded-full shadow-lg border-2 border-purple-200' 
+                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-4 hover:py-2 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-2 py-1'
               }`}
             >
               Home
@@ -139,8 +139,8 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
               to="/explore" 
               className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
                 location.pathname === '/explore' 
-                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full shadow-lg border-2 border-purple-200' 
-                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-6 hover:py-3 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-3 py-2'
+                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-4 py-2 rounded-full shadow-lg border-2 border-purple-200' 
+                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-4 hover:py-2 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-2 py-1'
               }`}
             >
               Explore
@@ -149,8 +149,8 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
               to="/posting" 
               className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
                 location.pathname === '/posting' 
-                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full shadow-lg border-2 border-purple-200' 
-                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-6 hover:py-3 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-3 py-2'
+                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-4 py-2 rounded-full shadow-lg border-2 border-purple-200' 
+                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-4 hover:py-2 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-2 py-1'
               }`}
             >
               Share
@@ -159,8 +159,8 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
               to="/model" 
               className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
                 location.pathname === '/model' 
-                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full shadow-lg border-2 border-purple-200' 
-                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-6 hover:py-3 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-3 py-2'
+                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-4 py-2 rounded-full shadow-lg border-2 border-purple-200' 
+                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-4 hover:py-2 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-2 py-1'
               }`}
             >
               Model
@@ -169,8 +169,8 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
               to="/visualize" 
               className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
                 location.pathname === '/visualize' 
-                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full shadow-lg border-2 border-purple-200' 
-                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-6 hover:py-3 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-3 py-2'
+                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-4 py-2 rounded-full shadow-lg border-2 border-purple-200' 
+                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-4 hover:py-2 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-2 py-1'
               }`}
             >
               Visualize
@@ -179,8 +179,8 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
               to="/seminars" 
               className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
                 location.pathname === '/seminars' 
-                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full shadow-lg border-2 border-purple-200' 
-                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-6 hover:py-3 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-3 py-2'
+                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-4 py-2 rounded-full shadow-lg border-2 border-purple-200' 
+                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-4 hover:py-2 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-2 py-1'
               }`}
             >
               Seminars
@@ -189,8 +189,8 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
               to="/about" 
               className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
                 location.pathname === '/about' 
-                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full shadow-lg border-2 border-purple-200' 
-                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-6 hover:py-3 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-3 py-2'
+                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-4 py-2 rounded-full shadow-lg border-2 border-purple-200' 
+                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-4 hover:py-2 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-2 py-1'
               }`}
             >
               About
@@ -198,7 +198,7 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
           </nav>
 
           {/* Search Bar */}
-          <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
+          <div className="hidden md:flex items-center flex-1 max-w-md mx-6">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
               <input
