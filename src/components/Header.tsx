@@ -1,4 +1,3 @@
-
 import { Search, PlusCircle, Instagram, Linkedin, Youtube } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from '@/hooks/useAuth';
@@ -147,6 +146,16 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
               Explore
             </Link>
             <Link 
+              to="/posting" 
+              className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
+                location.pathname === '/posting' 
+                  ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full shadow-lg border-2 border-purple-200' 
+                  : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-6 hover:py-3 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-3 py-2'
+              }`}
+            >
+              Share
+            </Link>
+            <Link 
               to="/model" 
               className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
                 location.pathname === '/model' 
@@ -186,18 +195,6 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
             >
               About
             </Link>
-            {user && (
-              <Link 
-                to="/posting" 
-                className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
-                  location.pathname === '/posting' 
-                    ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full shadow-lg border-2 border-purple-200' 
-                    : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-6 hover:py-3 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-3 py-2'
-                }`}
-                >
-                Share
-              </Link>
-            )}
           </nav>
 
           {/* Search Bar */}
@@ -217,15 +214,6 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
-            {user && (
-              <Link to="/posting">
-                <button className="flex items-center space-x-2 bg-black text-white px-4 py-2.5 font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors">
-                  <PlusCircle className="w-4 h-4" />
-                  <span className="hidden sm:block uppercase">Share</span>
-                </button>
-              </Link>
-            )}
-            
             {loading ? (
               <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse"></div>
             ) : user ? (
