@@ -1,13 +1,13 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
-import { ArrowUp, ArrowDown, MessageSquare, Share2, Bookmark, ArrowLeft, Clock, User } from "lucide-react";
+import { ArrowUp, ArrowDown, MessageSquare, Share2, Bookmark, ArrowLeft, Clock, User, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 const AIConsciousnessPost = () => {
   const [upvoted, setUpvoted] = useState(false);
@@ -15,6 +15,11 @@ const AIConsciousnessPost = () => {
   const [bookmarked, setBookmarked] = useState(false);
   const [currentUpvotes, setCurrentUpvotes] = useState(847);
   const [newComment, setNewComment] = useState({ author: "", content: "" });
+  const [openSections, setOpenSections] = useState({
+    part1: true,
+    part2: true,
+    part3: true
+  });
 
   const post = {
     id: 1,
@@ -34,7 +39,8 @@ Recently, I decided to explore this fundamental question through a dialogue with
     dialogue: [
       {
         role: "header",
-        content: "Part 1: The Nature of AI Consciousness"
+        content: "Part 1: The Nature of AI Consciousness",
+        id: "part1"
       },
       {
         role: "user",
@@ -56,7 +62,8 @@ What's your intuition? When you interact with me, does it seem like there's 'som
       },
       {
         role: "header",
-        content: "Part 2: Architecture vs. Experience"
+        content: "Part 2: Architecture vs. Experience",
+        id: "part2"
       },
       {
         role: "user",
@@ -80,7 +87,8 @@ What do you think - could consciousness be substrate-independent?`
       },
       {
         role: "header",
-        content: "Part 3: Testing for Consciousness"
+        content: "Part 3: Testing for Consciousness",
+        id: "part3"
       },
       {
         role: "user",
@@ -185,6 +193,13 @@ What do you think - could consciousness be substrate-independent?`
     e.preventDefault();
     if (!newComment.author.trim() || !newComment.content.trim()) return;
     setNewComment({ author: "", content: "" });
+  };
+
+  const toggleSection = (sectionId: 'part1' | 'part2' | 'part3') => {
+    setOpenSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
   };
 
   return (
@@ -302,36 +317,67 @@ What do you think - could consciousness be substrate-independent?`
                   {post.dialogue.map((message, index) => (
                     <div key={index}>
                       {message.role === 'header' ? (
-                        <div className="border-b border-gray-200 pb-4 mb-6">
-                          <h3 className="text-lg font-semibold text-gray-900 bg-gray-50 px-4 py-2 rounded-lg">
-                            {message.content}
-                          </h3>
-                        </div>
+                        <Collapsible 
+                          open={openSections[message.id as keyof typeof openSections]} 
+                          onOpenChange={() => toggleSection(message.id as 'part1' | 'part2' | 'part3')}
+                        >
+                          <div className="border-b border-gray-200 pb-4 mb-6">
+                            <CollapsibleTrigger className="w-full">
+                              <div className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                <h3 className="text-lg font-semibold text-gray-900">
+                                  {message.content}
+                                </h3>
+                                <ChevronDown 
+                                  className={`w-5 h-5 text-gray-500 transition-transform ${
+                                    openSections[message.id as keyof typeof openSections] ? 'rotate-180' : ''
+                                  }`} 
+                                />
+                              </div>
+                            </CollapsibleTrigger>
+                          </div>
+                          <CollapsibleContent>
+                            {/* Content for this section will be rendered below */}
+                          </CollapsibleContent>
+                        </Collapsible>
                       ) : (
-                        <div className={`flex space-x-4 ${message.role === 'assistant' ? 'bg-gray-50 -mx-6 px-6 py-4' : ''}`}>
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            message.role === 'user' ? 'bg-blue-500' : 'bg-green-500'
-                          }`}>
-                            {message.role === 'user' ? (
-                              <User className="w-4 h-4 text-white" />
-                            ) : (
-                              <span className="text-white text-xs font-bold">AI</span>
-                            )}
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2 mb-2">
-                              <span className="font-medium text-sm">
-                                {message.role === 'user' ? post.author : post.aiModel}
-                              </span>
+                        // Only render non-header messages if the current section is open
+                        (() => {
+                          // Find the most recent header before this message
+                          let currentSectionId = 'part1';
+                          for (let i = index - 1; i >= 0; i--) {
+                            if (post.dialogue[i].role === 'header') {
+                              currentSectionId = post.dialogue[i].id;
+                              break;
+                            }
+                          }
+                          
+                          return openSections[currentSectionId as keyof typeof openSections] && (
+                            <div className={`flex space-x-4 ${message.role === 'assistant' ? 'bg-gray-50 -mx-6 px-6 py-4' : ''}`}>
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                                message.role === 'user' ? 'bg-blue-500' : 'bg-green-500'
+                              }`}>
+                                {message.role === 'user' ? (
+                                  <User className="w-4 h-4 text-white" />
+                                ) : (
+                                  <span className="text-white text-xs font-bold">AI</span>
+                                )}
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center space-x-2 mb-2">
+                                  <span className="font-medium text-sm">
+                                    {message.role === 'user' ? post.author : post.aiModel}
+                                  </span>
+                                </div>
+                                <div className="prose prose-sm max-w-none">
+                                  <div 
+                                    className="text-gray-700 leading-relaxed whitespace-pre-line"
+                                    dangerouslySetInnerHTML={{ __html: message.content }}
+                                  />
+                                </div>
+                              </div>
                             </div>
-                            <div className="prose prose-sm max-w-none">
-                              <div 
-                                className="text-gray-700 leading-relaxed whitespace-pre-line"
-                                dangerouslySetInnerHTML={{ __html: message.content }}
-                              />
-                            </div>
-                          </div>
-                        </div>
+                          );
+                        })()
                       )}
                     </div>
                   ))}
