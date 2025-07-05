@@ -33,9 +33,7 @@ const AIConsciousnessPost = () => {
     comments: 156,
     timestamp: "3 days ago",
     readTime: 15,
-    fullContent: `As a philosophy professor specializing in consciousness studies, I've spent years grappling with what David Chalmers calls "the hard problem of consciousness" - explaining why we have qualitative, subjective experiences and how they arise from physical processes.
-
-Recently, I decided to explore this fundamental question through a dialogue with GPT-4, curious to see how an AI system would approach the very question of its own potential consciousness. What emerged was a fascinating philosophical exchange that challenged my assumptions and opened new avenues of inquiry.`,
+    fullContent: ``,
     dialogue: [
       {
         role: "header",
