@@ -798,19 +798,6 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Right Column - Deep Research */}
-          <div className="text-right">
-            <h1 className="text-4xl md:text-6xl font-thin text-blue-800 mb-6 tracking-tight">
-              Deep Research
-            </h1>
-            <p className="text-lg text-gray-600 leading-relaxed font-thin">
-              Share comprehensive research reports and in-depth analyses. 
-              Engage with scholarly work and contribute to meaningful academic discussions through collaborative commentary.{" "}
-              <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
-                Explore <ArrowRight className="w-4 h-4" />
-              </Link>
-            </p>
-          </div>
         </div>
 
         {/* Featured Section - Two Column Layout with Equal Heights */}
@@ -828,7 +815,7 @@ const Index = () => {
             
             {/* Right - Featured Deep Research */}
             <div className="flex flex-col">
-              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Deep Research</h3>
+              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
               <div className="flex-1">
                 <FeaturedConversation conversation={featuredResearch} bgColor="bg-blue-50" />
               </div>
