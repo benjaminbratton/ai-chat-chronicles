@@ -782,22 +782,22 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Hero Section - Two Column Layout */}
-        <div className="mb-16 grid md:grid-cols-2 gap-16">
-          {/* Left Column - Dialogues with AI */}
-          <div>
-            <h1 className="text-4xl md:text-6xl font-thin text-green-800 mb-6 tracking-tight">
-              Dialogues with AI
-            </h1>
-            <p className="text-lg text-gray-600 leading-relaxed font-thin">
-              Discover and share fascinating conversations with artificial intelligence. 
-              Join our community of AI enthusiasts exploring the future of human-machine dialogue.{" "}
-              <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
-                Explore <ArrowRight className="w-4 h-4" />
-              </Link>
-            </p>
-          </div>
-
+        {/* Hero Section - Full Width Layout */}
+        <div className="mb-16 text-center">
+          <h1 className="text-4xl md:text-6xl font-thin text-green-800 mb-6 tracking-tight">
+            Dialogues with AI
+          </h1>
+          <p className="text-lg text-gray-600 leading-relaxed font-thin max-w-none">
+            Discover and share fascinating conversations with artificial intelligence that push the boundaries of human understanding. 
+            Join our vibrant community of AI enthusiasts, researchers, philosophers, and curious minds exploring the intricate future of human-machine dialogue. 
+            From deep philosophical inquiries about consciousness and free will to practical explorations of creativity and problem-solving, 
+            our platform serves as a bridge between human curiosity and artificial intelligence capabilities. 
+            Experience meaningful exchanges that challenge assumptions, spark innovation, and illuminate the evolving relationship between biological and artificial minds. 
+            Whether you're a seasoned researcher or simply fascinated by the potential of AI conversation, you'll find thought-provoking discussions that expand perspectives and foster collaborative learning.{" "}
+            <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
+              Explore <ArrowRight className="w-4 h-4" />
+            </Link>
+          </p>
         </div>
 
         {/* Featured Section - Two Column Layout with Equal Heights */}
