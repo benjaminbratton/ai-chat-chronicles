@@ -4,8 +4,8 @@ import { Header } from "@/components/Header";
 import { BrowserWindow } from "@/components/BrowserWindow";
 import { PostForm } from "@/components/PostForm";
 import { CommentSection } from "@/components/CommentSection";
-import { useCreateConversation } from "@/hooks/useConversations";
-import { useAuth } from "@/hooks/useAuth";
+import { useCreateConversation } from "@/hooks/useConversationsSimple";
+import { useAuth } from "@/hooks/useAuthSimple";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -30,6 +30,8 @@ const Posting = () => {
     }
 
     try {
+      console.log('Starting to create conversation...', { user, data });
+      
       // Save to database
       const conversationData = {
         title: data.title,
@@ -41,22 +43,37 @@ const Posting = () => {
         excerpt: data.content.substring(0, 200) + (data.content.length > 200 ? "..." : "")
       };
 
-      await createConversationMutation.mutateAsync(conversationData);
+      console.log('Conversation data prepared:', conversationData);
+
+      const result = await createConversationMutation.mutateAsync(conversationData);
+      console.log('Conversation created successfully:', result);
       
       toast({
         title: "Success!",
-        description: "Your conversation has been published.",
+        description: "Your conversation has been published. Redirecting to your post...",
       });
 
-      // Navigate to explore page to see the new post
-      navigate('/explore');
+      // Navigate to the specific post page
+      setTimeout(() => {
+        console.log('Delayed navigation to post page...');
+        const postId = result?.id || result?.data?.id;
+        if (postId) {
+          window.location.href = `/post/${postId}`;
+        } else {
+          // Fallback to main page if we can't get the post ID
+          window.location.href = '/';
+        }
+      }, 1500);
     } catch (error) {
       console.error('Error creating conversation:', error);
       toast({
         title: "Error",
-        description: "Failed to publish your conversation. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to publish your conversation. Please try again.",
         variant: "destructive",
       });
+      
+      // Don't navigate on error, stay on the posting page
+      return;
     }
 
     // Still show preview for now

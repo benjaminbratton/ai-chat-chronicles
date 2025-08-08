@@ -1,6 +1,6 @@
 import { Search, PlusCircle, Instagram, Linkedin, Youtube } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuthSimple';
 import { UserMenu } from './UserMenu';
 import { AuthButtons } from './AuthButtons';
 

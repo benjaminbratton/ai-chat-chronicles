@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Chronicles - Backend Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        
+        .demo-card {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .demo-card h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .response-area {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .api-section {
+            padding: 30px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .api-section h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .endpoint {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .endpoint strong {
+            color: #1e293b;
+        }
+        
+        .endpoint code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .admin-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px;
+        }
+        
+        .admin-section h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .admin-credentials {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        
+        .status.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .status.error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AI Chat Chronicles</h1>
+            <p>Production-Ready Backend API Demo</p>
+        </div>
+        
+        <div class="admin-section">
+            <h3>🔐 Admin Authentication</h3>
+            <div class="admin-credentials">
+                <strong>Admin Credentials:</strong><br>
+                Email: admin@aichatchronicles.com<br>
+                Password: admin123
+            </div>
+            
+            <div class="form-group">
+                <label for="adminEmail">Email:</label>
+                <input type="email" id="adminEmail" value="admin@aichatchronicles.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="adminPassword">Password:</label>
+                <input type="password" id="adminPassword" value="admin123">
+            </div>
+            
+            <button class="btn" onclick="adminLogin()">🔐 Admin Login</button>
+            <button class="btn btn-secondary" onclick="getAdminProfile()">👤 Get Profile</button>
+            <button class="btn btn-success" onclick="createConversation()">➕ Create Conversation</button>
+            <button class="btn btn-danger" onclick="deleteConversation()">🗑️ Delete Conversation</button>
+            
+            <div id="admin-status" class="status" style="display: none;"></div>
+            <div id="admin-response" class="response-area" style="display: none;"></div>
+        </div>
+        
+        <div class="demo-grid">
+            <div class="demo-card">
+                <h3>🏥 Health Check</h3>
+                <button class="btn" onclick="checkHealth()">Check Health</button>
+                <div id="health-response" class="response-area" style="display: none;"></div>
+            </div>
+            
+            <div class="demo-card">
+                <h3>📚 API Documentation</h3>
+                <button class="btn" onclick="getApiDocs()">Get API Docs</button>
+                <div id="docs-response" class="response-area" style="display: none;"></div>
+            </div>
+            
+            <div class="demo-card">
+                <h3>💬 Conversations</h3>
+                <button class="btn" onclick="getConversations()">Get All</button>
+                <button class="btn btn-secondary" onclick="getFeatured()">Get Featured</button>
+                <div id="conversations-response" class="response-area" style="display: none;"></div>
+            </div>
+            
+            <div class="demo-card">
+                <h3>📊 Statistics</h3>
+                <button class="btn" onclick="getStats()">Get Stats</button>
+                <div id="stats-response" class="response-area" style="display: none;"></div>
+            </div>
+            
+            <div class="demo-card">
+                <h3>🔍 Search</h3>
+                <button class="btn" onclick="searchConversations()">Search AI</button>
+                <div id="search-response" class="response-area" style="display: none;"></div>
+            </div>
+            
+            <div class="demo-card">
+                <h3>🏷️ Categories</h3>
+                <button class="btn" onclick="getCategories()">Get Categories</button>
+                <div id="categories-response" class="response-area" style="display: none;"></div>
+            </div>
+        </div>
+        
+        <div class="api-section">
+            <h2>🔧 API Endpoints</h2>
+            <div class="endpoint">
+                <strong>Health Check:</strong> <code>GET /health</code> - Server health status
+            </div>
+            <div class="endpoint">
+                <strong>Admin Login:</strong> <code>POST /api/v1/auth/admin/login</code> - Admin authentication
+            </div>
+            <div class="endpoint">
+                <strong>Admin Profile:</strong> <code>GET /api/v1/auth/admin/me</code> - Get admin profile (requires token)
+            </div>
+            <div class="endpoint">
+                <strong>Get Conversations:</strong> <code>GET /api/v1/conversations</code> - List all conversations
+            </div>
+            <div class="endpoint">
+                <strong>Get Featured:</strong> <code>GET /api/v1/conversations/featured</code> - Get featured conversations
+            </div>
+            <div class="endpoint">
+                <strong>Get Stats:</strong> <code>GET /api/v1/conversations/stats</code> - Get conversation statistics
+            </div>
+            <div class="endpoint">
+                <strong>Search:</strong> <code>GET /api/v1/conversations/search?q=query</code> - Search conversations
+            </div>
+            <div class="endpoint">
+                <strong>Create Conversation:</strong> <code>POST /api/v1/conversations</code> - Create new conversation (admin only)
+            </div>
+            <div class="endpoint">
+                <strong>Update Conversation:</strong> <code>PUT /api/v1/conversations/:id</code> - Update conversation (admin only)
+            </div>
+            <div class="endpoint">
+                <strong>Delete Conversation:</strong> <code>DELETE /api/v1/conversations/:id</code> - Delete conversation (admin only)
+            </div>
+        </div>
+        
+        <div class="api-section">
+            <h2>✨ Production Features</h2>
+            <div class="endpoint">
+                <strong>🔐 JWT Authentication:</strong> Secure token-based authentication for admin operations
+            </div>
+            <div class="endpoint">
+                <strong>🛡️ Role-Based Access:</strong> Admin-only endpoints with proper authorization
+            </div>
+            <div class="endpoint">
+                <strong>📝 Input Validation:</strong> Comprehensive request validation and error handling
+            </div>
+            <div class="endpoint">
+                <strong>⚡ Rate Limiting:</strong> Built-in rate limiting for API protection
+            </div>
+            <div class="endpoint">
+                <strong>📊 Structured Logging:</strong> Winston-based logging with multiple transports
+            </div>
+            <div class="endpoint">
+                <strong>🔍 Search & Filtering:</strong> Full-text search and category filtering
+            </div>
+            <div class="endpoint">
+                <strong>📈 Statistics:</strong> Real-time conversation analytics and metrics
+            </div>
+            <div class="endpoint">
+                <strong>🐳 Docker Ready:</strong> Containerized deployment with Docker and Docker Compose
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:3001';
+        let adminToken = null;
+        
+        async function makeRequest(endpoint, options = {}) {
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    },
+                    ...options
+                });
+                
+                const data = await response.json();
+                return { success: response.ok, data, status: response.status };
+            } catch (error) {
+                return { success: false, data: { error: error.message }, status: 0 };
+            }
+        }
+        
+        function showResponse(elementId, response) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.textContent = JSON.stringify(response, null, 2);
+        }
+        
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('admin-status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+            statusDiv.style.display = 'block';
+        }
+        
+        async function adminLogin() {
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            const response = await makeRequest('/api/v1/auth/admin/login', {
+                method: 'POST',
+                body: JSON.stringify({ email, password })
+            });
+            
+            if (response.success) {
+                adminToken = response.data.data.token;
+                showStatus('✅ Admin login successful!', 'success');
+                showResponse('admin-response', response.data);
+            } else {
+                showStatus('❌ Admin login failed: ' + response.data.message, 'error');
+                showResponse('admin-response', response.data);
+            }
+        }
+        
+        async function getAdminProfile() {
+            if (!adminToken) {
+                showStatus('❌ Please login first', 'error');
+                return;
+            }
+            
+            const response = await makeRequest('/api/v1/auth/admin/me', {
+                headers: { 'Authorization': `Bearer ${adminToken}` }
+            });
+            
+            if (response.success) {
+                showStatus('✅ Admin profile retrieved!', 'success');
+                showResponse('admin-response', response.data);
+            } else {
+                showStatus('❌ Failed to get profile: ' + response.data.message, 'error');
+                showResponse('admin-response', response.data);
+            }
+        }
+        
+        async function createConversation() {
+            if (!adminToken) {
+                showStatus('❌ Please login first', 'error');
+                return;
+            }
+            
+            const newConversation = {
+                title: 'Test Conversation ' + new Date().toLocaleTimeString(),
+                content: 'This is a test conversation created via the admin interface. It demonstrates the admin functionality for creating new conversations.',
+                excerpt: 'A test conversation created by admin',
+                category: 'Technology'
+            };
+            
+            const response = await makeRequest('/api/v1/conversations', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${adminToken}` },
+                body: JSON.stringify(newConversation)
+            });
+            
+            if (response.success) {
+                showStatus('✅ Conversation created successfully!', 'success');
+                showResponse('admin-response', response.data);
+            } else {
+                showStatus('❌ Failed to create conversation: ' + response.data.message, 'error');
+                showResponse('admin-response', response.data);
+            }
+        }
+        
+        async function deleteConversation() {
+            if (!adminToken) {
+                showStatus('❌ Please login first', 'error');
+                return;
+            }
+            
+            const conversationId = prompt('Enter conversation ID to delete:');
+            if (!conversationId) return;
+            
+            const response = await makeRequest(`/api/v1/conversations/${conversationId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${adminToken}` }
+            });
+            
+            if (response.success) {
+                showStatus('✅ Conversation deleted successfully!', 'success');
+                showResponse('admin-response', response.data);
+            } else {
+                showStatus('❌ Failed to delete conversation: ' + response.data.message, 'error');
+                showResponse('admin-response', response.data);
+            }
+        }
+        
+        async function checkHealth() {
+            const response = await makeRequest('/health');
+            showResponse('health-response', response.data);
+        }
+        
+        async function getApiDocs() {
+            const response = await makeRequest('/');
+            showResponse('docs-response', response.data);
+        }
+        
+        async function getConversations() {
+            const response = await makeRequest('/api/v1/conversations');
+            showResponse('conversations-response', response.data);
+        }
+        
+        async function getFeatured() {
+            const response = await makeRequest('/api/v1/conversations/featured');
+            showResponse('conversations-response', response.data);
+        }
+        
+        async function getStats() {
+            const response = await makeRequest('/api/v1/conversations/stats');
+            showResponse('stats-response', response.data);
+        }
+        
+        async function searchConversations() {
+            const response = await makeRequest('/api/v1/conversations/search?q=AI');
+            showResponse('search-response', response.data);
+        }
+        
+        async function getCategories() {
+            const response = await makeRequest('/api/v1/conversations/categories');
+            showResponse('categories-response', response.data);
+        }
+        
+        // Auto-check health on page load
+        window.addEventListener('load', () => {
+            setTimeout(checkHealth, 1000);
+        });
+    </script>
+</body>
+</html>

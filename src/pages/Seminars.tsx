@@ -10,7 +10,7 @@ import { CategoryFilter } from '@/components/CategoryFilter';
 import { Clock, Users, MessageSquare, Calendar } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuthSimple';
 import { useToast } from '@/hooks/use-toast';
 
 const Seminars = () => {

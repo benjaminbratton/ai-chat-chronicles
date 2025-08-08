@@ -5,9 +5,8 @@ import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuthSimple';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/lib/supabase';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -34,26 +33,17 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const { error } = await signIn(email, password);
-      if (error) {
-        console.error('Login error:', error);
-        toast({
-          title: "Error",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Success",
-          description: "Successfully signed in!",
-        });
-        navigate('/');
-      }
-    } catch (error) {
-      console.error('Unexpected login error:', error);
+      await signIn(email, password);
+      toast({
+        title: "Success",
+        description: "Successfully signed in!",
+      });
+      navigate('/');
+    } catch (error: any) {
+      console.error('Login error:', error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred",
+        description: error.message || "An unexpected error occurred",
         variant: "destructive",
       });
     } finally {
@@ -62,31 +52,12 @@ const Login = () => {
   };
 
   const handleGoogleSignIn = async () => {
-    setGoogleLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/`
-        }
-      });
-      
-      if (error) {
-        toast({
-          title: "Error",
-          description: error.message,
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to sign in with Google",
-        variant: "destructive",
-      });
-    } finally {
-      setGoogleLoading(false);
-    }
+    // Google sign-in not available with backend auth
+    toast({
+      title: "Not Available",
+      description: "Google sign-in is not available with the current backend setup.",
+      variant: "destructive",
+    });
   };
 
   return (

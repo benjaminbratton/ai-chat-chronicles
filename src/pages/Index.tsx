@@ -7,6 +7,7 @@ import { BrowserWindow } from "@/components/BrowserWindow";
 import { FeaturedConversation } from "@/components/FeaturedConversation";
 import { ConversationCard } from "@/components/ConversationCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
+import { useConversations, useFeaturedConversations } from "@/hooks/useConversationsSimple";
 
 const mockConversations = [
   {
@@ -740,11 +741,23 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [displayCount, setDisplayCount] = useState(9);
   
-  const featuredConversation = {
-    ...mockConversations.find(conv => conv.featured),
-    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800&h=400&fit=crop"
-  };
-  const regularConversations = mockConversations.filter(conv => !conv.featured);
+  // Fetch conversations from backend
+  const { data: conversationsData, isLoading: conversationsLoading } = useConversations(selectedCategory === "All" ? undefined : selectedCategory, 50);
+  const { data: featuredData, isLoading: featuredLoading } = useFeaturedConversations();
+  
+  // Get conversations from the first page
+  const allConversations = conversationsData?.pages?.[0]?.conversations || [];
+  const featuredConversations = featuredData?.pages?.[0]?.conversations || [];
+  
+  // Use featured conversation from backend or fallback to mock
+  const featuredConversation = featuredConversations.length > 0 
+    ? { ...featuredConversations[0], image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800&h=400&fit=crop" }
+    : { ...mockConversations.find(conv => conv.featured), image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800&h=400&fit=crop" };
+  
+  // Use backend conversations or fallback to mock data
+  const regularConversations = allConversations.length > 0 
+    ? allConversations.filter(conv => !conv.featured)
+    : mockConversations.filter(conv => !conv.featured);
   
   // Updated filtering logic
   const getFilteredConversations = () => {
@@ -834,13 +847,25 @@ const Index = () => {
 
         {/* Conversations Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {displayedConversations.map((conversation, index) => (
-            <ConversationCard 
-              key={conversation.id} 
-              conversation={conversation} 
-              bgColor={index % 2 === 0 ? "bg-green-50" : "bg-blue-50"}
-            />
-          ))}
+          {conversationsLoading ? (
+            // Loading skeleton
+            Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-md p-6 animate-pulse">
+                <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                <div className="h-6 bg-gray-200 rounded mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              </div>
+            ))
+          ) : (
+            displayedConversations.map((conversation, index) => (
+              <ConversationCard 
+                key={conversation.id} 
+                conversation={conversation} 
+                bgColor={index % 2 === 0 ? "bg-green-50" : "bg-blue-50"}
+              />
+            ))
+          )}
         </div>
 
         {/* Load More / See More */}

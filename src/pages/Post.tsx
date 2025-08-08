@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useConversations } from "@/hooks/useConversationsSimple";
 
 const Post = () => {
   const { id } = useParams();
@@ -17,8 +18,29 @@ const Post = () => {
   const [currentUpvotes, setCurrentUpvotes] = useState(312);
   const [newComment, setNewComment] = useState({ author: "", content: "" });
 
-  // Mock post data - in a real app, this would be fetched based on the ID
-  const post = {
+  // Fetch post data from backend
+  const { data: conversationsData, isLoading } = useConversations();
+  const allConversations = conversationsData?.pages?.[0]?.conversations || [];
+  
+  // Find the specific post by ID
+  const backendPost = allConversations.find(conv => conv.id === id);
+  
+  // Use backend post data or fallback to mock data
+  const post = backendPost ? {
+    id: backendPost.id,
+    title: backendPost.title,
+    content: backendPost.content,
+    author: backendPost.profiles?.full_name || "Anonymous",
+    authorAvatar: backendPost.profiles?.avatar_url || "https://images.unsplash.com/photo-1507101105822-6e012b5bce0e?w=40&h=40&fit=crop&crop=face",
+    category: backendPost.category,
+    aiModel: "AI Assistant",
+    upvotes: backendPost.likes_count || 0,
+    comments: backendPost.comments_count || 0,
+    timestamp: "Just now",
+    readTime: backendPost.read_time || 5,
+    fullContent: backendPost.content,
+    dialogue: [] // We'll need to add dialogue support later
+  } : {
     id: 8,
     title: "GPT-4 solved a mathematical proof I've been stuck on for weeks",
     content: "Working on my dissertation and hit a wall with a complex topology proof. AI guided me through the solution step by step.",
@@ -156,6 +178,45 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
     if (!newComment.author.trim() || !newComment.content.trim()) return;
     setNewComment({ author: "", content: "" });
   };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-100">
+        <BrowserWindow />
+        <Header />
+        <main className="max-w-7xl mx-auto px-4 py-6">
+          <div className="bg-white rounded-lg shadow-md p-8 animate-pulse">
+            <div className="h-8 bg-gray-200 rounded mb-4"></div>
+            <div className="h-6 bg-gray-200 rounded mb-2"></div>
+            <div className="h-4 bg-gray-200 rounded w-3/4 mb-8"></div>
+            <div className="h-4 bg-gray-200 rounded mb-2"></div>
+            <div className="h-4 bg-gray-200 rounded mb-2"></div>
+            <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Show error state if post not found
+  if (!backendPost && id) {
+    return (
+      <div className="min-h-screen bg-gray-100">
+        <BrowserWindow />
+        <Header />
+        <main className="max-w-7xl mx-auto px-4 py-6">
+          <div className="bg-white rounded-lg shadow-md p-8 text-center">
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">Post Not Found</h1>
+            <p className="text-gray-600 mb-6">The post you're looking for doesn't exist or has been removed.</p>
+            <Link to="/" className="text-blue-600 hover:text-blue-800 hover:underline">
+              ← Back to Home
+            </Link>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">

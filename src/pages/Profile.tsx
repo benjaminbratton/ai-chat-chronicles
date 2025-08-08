@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { ConversationCard } from '@/components/ConversationCard';
 import { Clock, Heart, MessageSquare, MapPin, Calendar, BookOpen } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { useConversations } from '@/hooks/useConversations';
+import { useAuth } from '@/hooks/useAuthSimple';
+import { useConversations } from '@/hooks/useConversationsSimple';
 import { supabase } from '@/lib/supabase';
 import { useQuery } from '@tanstack/react-query';
 

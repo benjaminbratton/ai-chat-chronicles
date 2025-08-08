@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/hooks/useAuth";
+import { AuthProvider } from "@/hooks/useAuthSimple";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Footer } from "@/components/Footer";
 import Index from "./pages/Index";
@@ -20,6 +20,8 @@ import AIConsciousnessPost from "./pages/AIConsciousnessPost";
 import NotFound from "./pages/NotFound";
 import MaxTegmark from "./pages/MaxTegmark";
 import Model from "./pages/Model";
+import TestAuth from "./pages/TestAuth";
+import SimpleTest from "./pages/SimpleTest";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +44,8 @@ const App = () => (
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/max-tegmark" element={<MaxTegmark />} />
                 <Route path="/model" element={<Model />} />
+                <Route path="/test-auth" element={<TestAuth />} />
+                <Route path="/simple-test" element={<SimpleTest />} />
                 <Route path="/post/:id" element={<Post />} />
                 <Route path="/ai-consciousness" element={<AIConsciousnessPost />} />
                 

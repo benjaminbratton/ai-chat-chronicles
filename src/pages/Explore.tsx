@@ -7,8 +7,8 @@ import { PostCard } from "@/components/PostCard";
 import { PostCardSkeleton } from "@/components/PostCardSkeleton";
 import { SortOptions } from "@/components/SortOptions";
 import { Search, Loader2 } from "lucide-react";
-import { useConversations } from "@/hooks/useConversations";
-import { useAuth } from "@/hooks/useAuth";
+import { useConversations } from "@/hooks/useConversationsSimple";
+import { useAuth } from "@/hooks/useAuthSimple";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
