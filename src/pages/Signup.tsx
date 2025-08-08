@@ -78,20 +78,22 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       <Header />
-      <div className="max-w-md mx-auto px-6 py-12">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl text-center">Sign Up</CardTitle>
-          </CardHeader>
-          <CardContent>
+      <main className="container">
+        <div className="max-w-md mx-auto">
+          <div className="card">
+            <div className="text-center mb-8">
+              <h1 className="text-2xl font-bold mb-2">Sign Up</h1>
+              <p className="text-text-1">Join the Polylogos community</p>
+            </div>
+            
             <div className="space-y-4">
               <Button 
                 onClick={handleGoogleSignUp}
                 disabled={googleLoading}
                 variant="outline"
-                className="w-full flex items-center justify-center space-x-2 border-gray-300 hover:bg-gray-50"
+                className="w-full flex items-center justify-center space-x-2 btn"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -104,17 +106,17 @@ const Signup = () => {
               
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-gray-300" />
+                  <span className="w-full border-t border-border" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white px-2 text-gray-500">Or continue with</span>
+                  <span className="bg-bg-0 px-2 text-text-dim">Or continue with</span>
                 </div>
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4 mt-4">
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="fullName" className="block text-sm font-medium mb-1">
                   Full Name
                 </label>
                 <Input
@@ -123,11 +125,12 @@ const Signup = () => {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   required
-                  className="w-full"
+                  placeholder="Enter your full name"
                 />
               </div>
+              
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium mb-1">
                   Email
                 </label>
                 <Input
@@ -136,11 +139,12 @@ const Signup = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full"
+                  placeholder="Enter your email"
                 />
               </div>
+              
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="password" className="block text-sm font-medium mb-1">
                   Password
                 </label>
                 <Input
@@ -149,25 +153,30 @@ const Signup = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full"
-                  minLength={6}
+                  placeholder="Enter your password"
                 />
               </div>
-              <Button type="submit" disabled={loading} className="w-full bg-black text-white hover:bg-gray-800">
-                {loading ? 'Creating Account...' : 'Sign Up'}
+              
+              <Button 
+                type="submit" 
+                disabled={loading}
+                className="w-full btn primary"
+              >
+                {loading ? 'Creating account...' : 'Sign Up'}
               </Button>
             </form>
-            <div className="mt-4 text-center">
-              <p className="text-sm text-gray-600">
+            
+            <div className="mt-6 text-center">
+              <p className="text-text-1">
                 Already have an account?{' '}
-                <Link to="/login" className="text-purple-600 hover:text-purple-800 font-medium">
+                <Link to="/login" className="text-accent hover:text-accent-2">
                   Sign in
                 </Link>
               </p>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

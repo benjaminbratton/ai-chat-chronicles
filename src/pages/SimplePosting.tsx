@@ -141,61 +141,61 @@ const SimplePosting = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200">
+    <div>
       <BrowserWindow />
       <Header />
       
-      <main className="max-w-4xl mx-auto px-6 py-12">
-        <div className="bg-white rounded-lg shadow-lg p-8" style={{ backgroundColor: '#F8FFF8' }}>
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">Share Your Conversation</h1>
+      <main className="container">
+        <div className="card">
+          <h1 className="text-3xl font-bold mb-8">Share Your Conversation</h1>
           
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Conversation Title */}
             <div>
-              <Label htmlFor="title" className="text-lg font-semibold text-gray-900">Conversation Title</Label>
+              <Label htmlFor="title" className="text-lg font-semibold">Conversation Title</Label>
               <Input
                 id="title"
                 value={formData.title}
                 onChange={(e) => handleChange("title", e.target.value)}
                 placeholder="Enter your conversation title..."
                 required
-                className="mt-2 text-lg border-gray-300 focus:border-green-500 focus:ring-green-500"
+                className="mt-2 text-lg"
               />
             </div>
 
             {/* Author Name and Date */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="authorName" className="text-lg font-semibold text-gray-900">Your Name</Label>
+                <Label htmlFor="authorName" className="text-lg font-semibold">Your Name</Label>
                 <Input
                   id="authorName"
                   value={formData.authorName}
                   onChange={(e) => handleChange("authorName", e.target.value)}
                   placeholder="Enter your name..."
                   required
-                  className="mt-2 border-gray-300 focus:border-green-500 focus:ring-green-500"
+                  className="mt-2"
                 />
               </div>
               <div>
-                <Label htmlFor="date" className="text-lg font-semibold text-gray-900">Date</Label>
+                <Label htmlFor="date" className="text-lg font-semibold">Date</Label>
                 <Input
                   id="date"
                   type="text"
                   value={formData.date}
                   onChange={(e) => handleChange("date", e.target.value)}
-                  className="mt-2 border-gray-300 focus:border-green-500 focus:ring-green-500"
+                  className="mt-2"
                 />
               </div>
             </div>
 
             {/* AI Model */}
             <div>
-              <Label htmlFor="aiModel" className="text-lg font-semibold text-gray-900">AI Model Used</Label>
+              <Label htmlFor="aiModel" className="text-lg font-semibold">AI Model Used</Label>
               <select
                 id="aiModel"
                 value={formData.aiModel}
                 onChange={(e) => handleChange("aiModel", e.target.value)}
-                className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                className="mt-2 block w-full rounded-md shadow-sm"
               >
                 <option value="">Select AI model...</option>
                 {aiModels.map(model => (
@@ -206,7 +206,7 @@ const SimplePosting = () => {
 
             {/* Category Selection */}
             <div>
-              <Label className="text-lg font-semibold text-gray-900">Category</Label>
+              <Label className="text-lg font-semibold">Category</Label>
               <div className="mt-3 flex flex-wrap gap-2">
                 {categories.map(category => (
                   <button
@@ -225,7 +225,7 @@ const SimplePosting = () => {
 
             {/* Brief Summary */}
             <div>
-              <Label htmlFor="summary" className="text-lg font-semibold text-gray-900">Brief Summary</Label>
+              <Label htmlFor="summary" className="text-lg font-semibold">Brief Summary</Label>
               <Textarea
                 id="summary"
                 value={formData.summary}
@@ -233,14 +233,14 @@ const SimplePosting = () => {
                 placeholder="Write a brief summary of your conversation..."
                 rows={4}
                 required
-                className="mt-2 border-gray-300 focus:border-green-500 focus:ring-green-500"
+                className="mt-2"
               />
             </div>
 
             {/* Image Upload */}
             <div>
-              <Label className="text-lg font-semibold text-gray-900">Upload Images</Label>
-              <div className="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-400 transition-colors">
+              <Label className="text-lg font-semibold">Upload Images</Label>
+              <div className="mt-2 border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-accent transition-colors">
                 <input
                   type="file"
                   multiple
@@ -251,8 +251,8 @@ const SimplePosting = () => {
                 />
                 <label htmlFor="image-upload" className="cursor-pointer">
                   <div className="text-4xl mb-2">📤</div>
-                  <p className="text-gray-700">Click to upload images</p>
-                  <p className="text-sm text-gray-500 mt-1">PNG, JPG, GIF up to 10MB each</p>
+                  <p className="text-text-1">Click to upload images</p>
+                  <p className="text-sm text-text-dim mt-1">PNG, JPG, GIF up to 10MB each</p>
                 </label>
               </div>
               {formData.images.length > 0 && (
@@ -267,7 +267,7 @@ const SimplePosting = () => {
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600"
+                        className="absolute -top-2 -right-2 bg-error text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600"
                       >
                         ×
                       </button>
@@ -279,7 +279,7 @@ const SimplePosting = () => {
 
             {/* Full Conversation */}
             <div>
-              <Label htmlFor="fullConversation" className="text-lg font-semibold text-gray-900">Full Conversation</Label>
+              <Label htmlFor="fullConversation" className="text-lg font-semibold">Full Conversation</Label>
               <Textarea
                 id="fullConversation"
                 value={formData.fullConversation}
@@ -287,7 +287,7 @@ const SimplePosting = () => {
                 placeholder="Paste your full conversation here..."
                 rows={12}
                 required
-                className="mt-2 border-gray-300 focus:border-green-500 focus:ring-green-500"
+                className="mt-2"
               />
             </div>
 
@@ -297,14 +297,14 @@ const SimplePosting = () => {
                 type="button"
                 variant="outline"
                 onClick={() => navigate('/')}
-                className="px-6 py-2 border-gray-300 text-gray-700 hover:bg-gray-50"
+                className="btn"
               >
                 Save Draft
               </Button>
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-green-600 hover:bg-green-700 px-6 py-2 text-white"
+                className="btn primary"
               >
                 {isSubmitting ? "Publishing..." : "Preview & Share"}
               </Button>

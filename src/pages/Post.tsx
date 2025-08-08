@@ -225,329 +225,183 @@ I decided to try GPT-4 as a last resort before reaching out to my advisor. What 
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <BrowserWindow />
+    <div>
       <Header />
+      <BrowserWindow />
       
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Main Content Column */}
-          <div className="lg:col-span-3">
-            {/* Back Button */}
-            <Link 
-              to="/explore" 
-              className="inline-flex items-center text-sm text-gray-600 hover:text-black mb-6 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4 mr-1" />
-              Back to Explore
-            </Link>
+      <main className="container">
+        {/* Back Navigation */}
+        <div className="mb-6">
+          <Link to="/" className="inline-flex items-center text-accent hover:text-accent-2 transition-colors">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Conversations
+          </Link>
+        </div>
 
+        {isLoading ? (
+          <div className="card animate-pulse">
+            <div className="h-8 bg-white/20 rounded mb-4"></div>
+            <div className="h-6 bg-white/20 rounded mb-2"></div>
+            <div className="h-4 bg-white/20 rounded w-3/4 mb-8"></div>
+            <div className="space-y-4">
+              <div className="h-4 bg-white/20 rounded"></div>
+              <div className="h-4 bg-white/20 rounded"></div>
+              <div className="h-4 bg-white/20 rounded w-5/6"></div>
+            </div>
+          </div>
+        ) : (
+          <>
             {/* Post Header */}
-            <div className="bg-white rounded-lg border border-gray-200 mb-6">
-              <div className="flex">
-                {/* Vote Section */}
-                <div className="flex flex-col items-center p-4 bg-gray-50 rounded-l-lg">
-                  <button
-                    onClick={() => handleVote('up')}
-                    className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-                      upvoted ? 'text-orange-500' : 'text-gray-400'
-                    }`}
-                  >
-                    <ArrowUp className="w-6 h-6" />
-                  </button>
-                  <span className={`text-lg font-bold ${upvoted ? 'text-orange-500' : downvoted ? 'text-blue-500' : 'text-gray-600'}`}>
-                    {currentUpvotes}
-                  </span>
-                  <button
-                    onClick={() => handleVote('down')}
-                    className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-                      downvoted ? 'text-blue-500' : 'text-gray-400'
-                    }`}
-                  >
-                    <ArrowDown className="w-6 h-6" />
-                  </button>
+            <div className="card mb-8">
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex-1">
+                  <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
+                  <div className="flex items-center space-x-4 text-text-1 mb-4">
+                    <div className="flex items-center">
+                      <User className="w-4 h-4 mr-2" />
+                      <span>{post.author}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Clock className="w-4 h-4 mr-2" />
+                      <span>{post.timestamp}</span>
+                    </div>
+                    <span className="tag accent">{post.category}</span>
+                    <span className="tag">{post.aiModel}</span>
+                  </div>
+                  <p className="text-text-1 leading-relaxed">{post.content}</p>
                 </div>
-
-                {/* Content Section */}
-                <div className="flex-1 p-6">
-                  {/* Post Meta */}
-                  <div className="flex items-center space-x-2 mb-4 text-sm text-gray-500">
-                    <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">
-                      r/{post.category}
-                    </span>
-                    <span>•</span>
-                    <div className="flex items-center space-x-2">
-                      <img
-                        src={post.authorAvatar}
-                        alt={post.author}
-                        className="w-6 h-6 rounded-full"
-                      />
-                      <span>u/{post.author}</span>
-                    </div>
-                    <span>•</span>
-                    <span>{post.timestamp}</span>
-                    <span>•</span>
-                    <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">
-                      {post.aiModel}
-                    </span>
-                  </div>
-
-                  {/* Post Title */}
-                  <h1 className="text-2xl font-bold text-gray-900 mb-4">{post.title}</h1>
-
-                  {/* Post Content */}
-                  <div className="prose max-w-none mb-6">
-                    <p className="text-gray-700 leading-relaxed mb-4">{post.fullContent}</p>
-                    
-                    {/* Whiteboard Image */}
-                    <div className="my-6">
-                      <img
-                        src="/lovable-uploads/19072d55-9403-4faa-a62a-31d65d88d230.png"
-                        alt="Mathematical equations on classroom whiteboard"
-                        className="w-full rounded-lg border border-gray-200"
-                      />
-                      <p className="text-sm text-gray-600 mt-2 italic text-center">
-                        The whiteboard after my breakthrough session with GPT-4
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Post Actions */}
-                  <div className="flex items-center space-x-4 text-sm text-gray-500 border-t pt-4">
-                    <div className="flex items-center space-x-1">
-                      <MessageSquare className="w-4 h-4" />
-                      <span>{post.comments} comments</span>
-                    </div>
-                    <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                
+                {/* Vote and Action Buttons */}
+                <div className="flex flex-col items-center space-y-2 ml-6">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleVote('up')}
+                    className={`p-2 ${upvoted ? 'text-accent' : 'text-text-1'}`}
+                  >
+                    <ArrowUp className="w-5 h-5" />
+                  </Button>
+                  <span className="text-sm font-medium">{currentUpvotes}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleVote('down')}
+                    className={`p-2 ${downvoted ? 'text-accent' : 'text-text-1'}`}
+                  >
+                    <ArrowDown className="w-5 h-5" />
+                  </Button>
+                  
+                  <div className="flex flex-col space-y-2 mt-4">
+                    <Button variant="ghost" size="sm" className="p-2 text-text-1">
                       <Share2 className="w-4 h-4" />
-                      <span>Share</span>
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setBookmarked(!bookmarked)}
-                      className={`flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors ${
-                        bookmarked ? 'text-blue-600' : ''
-                      }`}
+                      className={`p-2 ${bookmarked ? 'text-accent' : 'text-text-1'}`}
                     >
                       <Bookmark className="w-4 h-4" />
-                      <span>Save</span>
-                    </button>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-3 h-3" />
-                      <span>{post.readTime} min read</span>
-                    </div>
+                    </Button>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* AI Dialogue Section */}
-            <div className="bg-white rounded-lg border border-gray-200 mb-6">
-              <div className="p-6 border-b border-gray-200">
-                <h2 className="text-xl font-semibold text-gray-900">AI Conversation</h2>
-                <p className="text-sm text-gray-600 mt-1">Full dialogue with {post.aiModel}</p>
+            {/* Full Content */}
+            <div className="card mb-8">
+              <h2 className="text-xl font-semibold mb-4">Full Conversation</h2>
+              <div className="prose">
+                <p className="text-text-1 leading-relaxed whitespace-pre-wrap">{post.fullContent}</p>
               </div>
-              <div className="p-6">
-                <div className="space-y-6">
+            </div>
+
+            {/* Dialogue Section */}
+            {post.dialogue && post.dialogue.length > 0 && (
+              <div className="card mb-8">
+                <h2 className="text-xl font-semibold mb-6">Dialogue</h2>
+                <div className="space-y-4">
                   {post.dialogue.map((message, index) => (
-                    <div key={index} className={`flex space-x-4 ${message.role === 'assistant' ? 'bg-gray-50 -mx-6 px-6 py-4' : ''}`}>
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                        message.role === 'user' ? 'bg-blue-500' : 'bg-green-500'
-                      }`}>
-                        {message.role === 'user' ? (
-                          <User className="w-4 h-4 text-white" />
-                        ) : (
-                          <span className="text-white text-xs font-bold">AI</span>
-                        )}
+                    <div key={index} className={`p-4 rounded-lg ${
+                      message.role === 'user' 
+                        ? 'bg-bg-2 border border-border' 
+                        : 'bubble'
+                    }`}>
+                      <div className="font-medium mb-2 text-sm uppercase tracking-wide">
+                        {message.role === 'user' ? 'You' : 'AI Assistant'}
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <span className="font-medium text-sm">
-                            {message.role === 'user' ? post.author : post.aiModel}
-                          </span>
-                        </div>
-                        <div className="prose prose-sm max-w-none">
-                          <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                            {message.content}
-                          </p>
-                        </div>
+                      <div className="text-text-1 leading-relaxed whitespace-pre-wrap">
+                        {message.content}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
-
-            {/* Analysis Section */}
-            <div className="bg-white rounded-lg border border-gray-200 mb-6">
-              <div className="p-6 border-b border-gray-200">
-                <h2 className="text-xl font-semibold text-gray-900">Author's Analysis</h2>
-                <p className="text-sm text-gray-600 mt-1">Reflection on the AI interaction by {post.author}</p>
-              </div>
-              <div className="p-6">
-                <div className="flex space-x-4">
-                  <div className="w-8 h-8 rounded-full">
-                    <img
-                      src={post.authorAvatar}
-                      alt={post.author}
-                      className="w-8 h-8 rounded-full"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-4">
-                      <span className="font-medium text-sm">{post.author}</span>
-                      <span className="text-xs text-gray-500">Posted 1 day ago</span>
-                    </div>
-                    <div className="prose max-w-none">
-                      <p className="text-gray-700 leading-relaxed mb-4">
-                        Looking back at this conversation, I'm struck by how effectively GPT-4 guided me through what felt like an insurmountable mathematical obstacle. The key breakthrough came when it helped me visualize <span className="text-blue-600 underline cursor-pointer">the long exact sequence of homotopy groups</span> as more than just abstract symbols on a page.
-                      </p>
-                      <p className="text-gray-700 leading-relaxed mb-4">
-                        What impressed me most was the AI's pedagogical approach. Rather than simply providing the answer, it walked me through each conceptual step, ensuring I understood the underlying topology before moving forward. The explanation of <span className="text-blue-600 underline cursor-pointer">the covering homotopy property</span> was particularly illuminating – I'd read about it countless times in textbooks, but the way GPT-4 connected it to the injectivity proof finally made everything click.
-                      </p>
-                      <p className="text-gray-700 leading-relaxed">
-                        This experience has fundamentally changed how I approach mathematical problem-solving. While I was initially skeptical about using AI for rigorous mathematical work, this conversation demonstrated that these tools can serve as sophisticated thinking partners. The AI didn't just solve the problem; it helped me develop a deeper intuition for <span className="text-blue-600 underline cursor-pointer">fiber bundles and their relationship to fundamental groups</span>.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            )}
 
             {/* Comments Section */}
-            <div className="bg-white rounded-lg border border-gray-200">
-              <div className="p-6 border-b border-gray-200">
-                <h3 className="text-xl font-semibold text-gray-900">
-                  Comments ({comments.length})
-                </h3>
+            <div className="card">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold">Comments ({post.comments})</h2>
               </div>
               
-              {/* New Comment Form */}
-              <form onSubmit={handleSubmitComment} className="p-6 border-b border-gray-200 bg-gray-50">
-                <div className="space-y-4">
+              {/* Add Comment Form */}
+              <div className="mb-8 p-4 border border-border rounded-lg">
+                <h3 className="font-medium mb-4">Add a Comment</h3>
+                <form onSubmit={handleSubmitComment} className="space-y-4">
                   <div>
-                    <Label htmlFor="commentAuthor">Name</Label>
+                    <Label htmlFor="author">Name</Label>
                     <Input
-                      id="commentAuthor"
+                      id="author"
                       value={newComment.author}
-                      onChange={(e) => setNewComment(prev => ({ ...prev, author: e.target.value }))}
-                      placeholder="Enter your name..."
-                      className="border-gray-300 focus:border-black focus:ring-black"
+                      onChange={(e) => setNewComment({...newComment, author: e.target.value})}
+                      placeholder="Your name"
                       required
                     />
                   </div>
                   <div>
-                    <Label htmlFor="commentContent">Comment</Label>
+                    <Label htmlFor="content">Comment</Label>
                     <Textarea
-                      id="commentContent"
+                      id="content"
                       value={newComment.content}
-                      onChange={(e) => setNewComment(prev => ({ ...prev, content: e.target.value }))}
+                      onChange={(e) => setNewComment({...newComment, content: e.target.value})}
                       placeholder="Share your thoughts..."
-                      rows={3}
-                      className="border-gray-300 focus:border-black focus:ring-black resize-none"
+                      rows={4}
                       required
                     />
                   </div>
-                  <Button
-                    type="submit"
-                    className="bg-black text-white hover:bg-gray-800"
-                  >
+                  <Button type="submit" className="btn primary">
                     Post Comment
                   </Button>
-                </div>
-              </form>
-              
+                </form>
+              </div>
+
               {/* Comments List */}
-              <div className="divide-y divide-gray-200">
+              <div className="space-y-6">
                 {comments.map((comment) => (
-                  <div key={comment.id} className="p-6">
-                    <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                        <span className="text-xs font-medium text-gray-600">{comment.author[0]}</span>
+                  <div key={comment.id} className="border-b border-border pb-6 last:border-b-0">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-center space-x-2">
+                        <span className="font-medium">{comment.author}</span>
+                        <span className="text-text-dim text-sm">{comment.timestamp}</span>
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <span className="font-medium text-sm text-black">{comment.author}</span>
-                          <span className="text-xs text-gray-500">{comment.timestamp}</span>
-                        </div>
-                        <p className="text-gray-700 text-sm mb-3 leading-relaxed" dangerouslySetInnerHTML={{ __html: comment.content }} />
-                        <div className="flex items-center space-x-4 text-xs text-gray-500">
-                          <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                            <ArrowUp className="w-3 h-3" />
-                            <span>{comment.upvotes}</span>
-                          </button>
-                          <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                            <ArrowDown className="w-3 h-3" />
-                          </button>
-                          <button className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-colors">
-                            <MessageSquare className="w-3 h-3" />
-                            <span>Reply ({comment.replies})</span>
-                          </button>
-                        </div>
+                      <div className="flex items-center space-x-2 text-text-dim">
+                        <button className="flex items-center space-x-1 hover:text-accent transition-colors">
+                          <ArrowUp className="w-4 h-4" />
+                          <span className="text-sm">{comment.upvotes}</span>
+                        </button>
                       </div>
                     </div>
+                    <div 
+                      className="text-text-1 leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: comment.content }}
+                    />
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-
-          {/* Similar Chats Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-6">
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Similar Conversations</h3>
-                <div className="space-y-4">
-                  {similarChats.map((chat) => (
-                    <div key={chat.id} className="group cursor-pointer">
-                      <div className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 hover:shadow-sm transition-all">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-medium">
-                            {chat.aiModel}
-                          </span>
-                          <span className="text-xs text-gray-500">{chat.timestamp}</span>
-                        </div>
-                        
-                        <h4 className="font-medium text-sm text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                          {chat.title}
-                        </h4>
-                        
-                        <p className="text-xs text-gray-600 mb-3 line-clamp-2">
-                          {chat.excerpt}
-                        </p>
-                        
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2">
-                            <img
-                              src={chat.authorAvatar}
-                              alt={chat.author}
-                              className="w-5 h-5 rounded-full"
-                            />
-                            <span className="text-xs text-gray-500">{chat.author}</span>
-                          </div>
-                          
-                          <div className="flex items-center space-x-3 text-xs text-gray-500">
-                            <div className="flex items-center space-x-1">
-                              <ArrowUp className="w-3 h-3" />
-                              <span>{chat.upvotes}</span>
-                            </div>
-                            <div className="flex items-center space-x-1">
-                              <MessageSquare className="w-3 h-3" />
-                              <span>{chat.comments}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <button className="w-full mt-4 text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">
-                  View More Similar Chats
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </main>
     </div>
   );

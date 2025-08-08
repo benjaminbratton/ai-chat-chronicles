@@ -81,148 +81,128 @@ const Model = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white">
+    <div className="flex flex-col h-screen">
       <Header />
       
       {/* Main Chat Interface */}
-      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full">
+      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full container">
         {/* Top Controls Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <div className="flex items-center space-x-4">
-            <AIModelSelect 
-              value={selectedModel} 
-              onValueChange={setSelectedModel} 
-            />
+        <div className="card mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <AIModelSelect 
+                value={selectedModel} 
+                onValueChange={setSelectedModel} 
+              />
+            </div>
+            <Button 
+              onClick={clearChat} 
+              variant="ghost" 
+              size="sm"
+              className="btn"
+            >
+              <RotateCcw className="w-4 h-4 mr-2" />
+              Clear Chat
+            </Button>
           </div>
-          <Button 
-            onClick={clearChat} 
-            variant="ghost" 
-            size="sm"
-            className="text-gray-600 hover:text-gray-900"
-          >
-            <RotateCcw className="w-4 h-4 mr-2" />
-            New chat
-          </Button>
         </div>
 
         {/* Messages Container */}
-        <div className="flex-1 overflow-y-auto">
-          {messages.length === 0 ? (
-            <div className="flex items-center justify-center h-full">
-              <div className="text-center max-w-lg">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4 whitespace-nowrap">
-                  Research polylogos collective intelligence
-                </h2>
-                <p className="text-gray-600">
-                  Explore patterns and insights
+        <div className="flex-1 overflow-y-auto mb-6">
+          <div className="space-y-4">
+            {messages.length === 0 ? (
+              <div className="card text-center py-12">
+                <div className="text-6xl mb-4">🤖</div>
+                <h3 className="text-xl font-semibold mb-2">Start a conversation</h3>
+                <p className="text-text-1 mb-6">
+                  Choose an AI model and begin chatting. Your conversation will appear here.
                 </p>
               </div>
-            </div>
-          ) : (
-            <div className="py-4">
-              {messages.map((message) => (
-                <div key={message.id} className="mb-8">
-                  <div className="max-w-3xl mx-auto px-6">
-                    <div className="flex items-start space-x-4">
-                      {/* Avatar */}
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium ${
-                        message.role === 'user' ? 'bg-blue-500' : 'bg-green-500'
-                      }`}>
-                        {message.role === 'user' ? 'U' : 'AI'}
-                      </div>
-                      
-                      {/* Message Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-gray-900">
-                            {message.role === 'user' ? 'You' : selectedModel}
-                          </span>
-                          {message.role === 'assistant' && (
-                            <div className="flex items-center space-x-1">
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => copyMessage(message.content)}
-                                className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600"
-                              >
-                                <Copy className="w-3 h-3" />
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600"
-                              >
-                                <ThumbsUp className="w-3 h-3" />
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                className="h-6 w-6 p-0 text-gray-400 hover:text-gray-600"
-                              >
-                                <ThumbsDown className="w-3 h-3" />
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                        <div className="prose prose-sm max-w-none">
-                          <p className="text-gray-800 whitespace-pre-wrap leading-relaxed">
-                            {message.content}
-                          </p>
-                        </div>
-                      </div>
+            ) : (
+              messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`card ${
+                    message.role === 'assistant' ? 'bubble' : 'bg-bg-2 border border-border'
+                  }`}
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="font-medium text-sm uppercase tracking-wide">
+                      {message.role === 'user' ? 'You' : selectedModel}
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => copyMessage(message.content)}
+                        className="p-1 text-text-dim hover:text-accent"
+                      >
+                        <Copy className="w-3 h-3" />
+                      </Button>
+                      {message.role === 'assistant' && (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="p-1 text-text-dim hover:text-success"
+                          >
+                            <ThumbsUp className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="p-1 text-text-dim hover:text-error"
+                          >
+                            <ThumbsDown className="w-3 h-3" />
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </div>
-                </div>
-              ))}
-              
-              {isLoading && (
-                <div className="mb-8">
-                  <div className="max-w-3xl mx-auto px-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-sm font-medium">
-                        AI
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-gray-900 mb-1">{selectedModel}</div>
-                        <div className="flex items-center space-x-2 text-gray-500">
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-400"></div>
-                          <span>Thinking...</span>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="text-text-1 leading-relaxed whitespace-pre-wrap">
+                    {message.content}
+                  </div>
+                  <div className="text-text-dim text-xs mt-2">
+                    {message.timestamp.toLocaleTimeString()}
                   </div>
                 </div>
-              )}
-              
-              <div ref={messagesEndRef} />
-            </div>
-          )}
+              ))
+            )}
+            
+            {isLoading && (
+              <div className="card bubble">
+                <div className="font-medium text-sm uppercase tracking-wide mb-2">
+                  {selectedModel}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-accent"></div>
+                  <span className="text-text-1">Thinking...</span>
+                </div>
+              </div>
+            )}
+            
+            <div ref={messagesEndRef} />
+          </div>
         </div>
 
-        {/* Input Section */}
-        <div className="border-t border-gray-100 bg-white">
-          <div className="max-w-3xl mx-auto px-6 py-4">
-            <div className="relative">
-              <Textarea
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Message ChatGPT..."
-                className="min-h-[60px] pr-12 resize-none border-gray-200 focus:border-gray-300 focus:ring-0 shadow-sm"
-                disabled={isLoading}
-              />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!inputMessage.trim() || isLoading}
-                size="sm"
-                className="absolute bottom-2 right-2 h-8 w-8 p-0 bg-black hover:bg-gray-800 disabled:bg-gray-300"
-              >
-                <Send className="w-4 h-4" />
-              </Button>
-            </div>
-            <div className="mt-2 text-xs text-gray-500 text-center">
-              {selectedModel} can make mistakes. Consider checking important information.
-            </div>
+        {/* Input Area */}
+        <div className="card">
+          <div className="flex space-x-4">
+            <Textarea
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Type your message here..."
+              className="flex-1 resize-none"
+              rows={3}
+            />
+            <Button
+              onClick={handleSendMessage}
+              disabled={!inputMessage.trim() || isLoading}
+              className="btn primary self-end"
+            >
+              <Send className="w-4 h-4" />
+            </Button>
           </div>
         </div>
       </div>

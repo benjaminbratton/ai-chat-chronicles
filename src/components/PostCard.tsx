@@ -90,25 +90,27 @@ export const PostCard = ({ post }: PostCardProps) => {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-md transform hover:scale-[1.01] transition-all duration-200 ease-in-out">
+    <div className="w-full">
       <div className="flex">
         {/* Vote Section */}
-        <div className="flex flex-col items-center p-4 bg-gray-50 rounded-l-lg">
+        <div className="flex flex-col items-center p-4 bg-bg-2 rounded-l-lg border-r border-border">
           <button
             onClick={handleUpvote}
-            className={`p-1 rounded hover:bg-gray-200 transition-all duration-150 hover:scale-110 ${
-              upvoted ? 'text-orange-500' : 'text-gray-400'
+            className={`p-1 rounded hover:bg-bg-1 transition-all duration-150 hover:scale-110 ${
+              upvoted ? 'text-accent' : 'text-text-1'
             }`}
           >
             <ArrowUp className="w-5 h-5" />
           </button>
-          <span className={`text-sm font-medium transition-colors duration-150 ${upvoted ? 'text-orange-500' : downvoted ? 'text-blue-500' : 'text-gray-600'}`}>
+          <span className={`text-lg font-bold my-1 ${
+            upvoted ? 'text-accent' : downvoted ? 'text-accent-2' : 'text-text-0'
+          }`}>
             {currentUpvotes}
           </span>
           <button
             onClick={handleDownvote}
-            className={`p-1 rounded hover:bg-gray-200 transition-all duration-150 hover:scale-110 ${
-              downvoted ? 'text-blue-500' : 'text-gray-400'
+            className={`p-1 rounded hover:bg-bg-1 transition-all duration-150 hover:scale-110 ${
+              downvoted ? 'text-accent-2' : 'text-text-1'
             }`}
           >
             <ArrowDown className="w-5 h-5" />
@@ -117,85 +119,80 @@ export const PostCard = ({ post }: PostCardProps) => {
 
         {/* Content Section */}
         <div className="flex-1 p-4">
-          {/* Post Header */}
-          <div className="flex items-center space-x-2 mb-2 text-xs text-gray-500">
-            <span className={`${categoryColor} ${categoryTextColor} px-2 py-1 rounded-full font-medium transition-transform duration-150 hover:scale-105`}>
-              r/{post.category}
+          {/* Post Meta */}
+          <div className="flex items-center space-x-2 mb-3 text-sm text-text-dim">
+            <span className={`tag ${categoryColor} ${categoryTextColor}`}>
+              {post.category}
             </span>
             <span>•</span>
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-2">
               <img
                 src={post.authorAvatar}
                 alt={post.author}
-                className="w-4 h-4 rounded-full hover:scale-110 transition-transform duration-150"
+                className="w-5 h-5 rounded-full"
               />
-              <span className="hover:text-blue-600 transition-colors duration-150 cursor-pointer">u/{post.author}</span>
+              <span className="text-text-1">{post.author}</span>
             </div>
             <span>•</span>
             <span>{post.timestamp}</span>
             <span>•</span>
-            <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs hover:bg-blue-200 transition-colors duration-150">
-              {post.aiModel}
-            </span>
+            <span className="tag">{post.aiModel}</span>
           </div>
 
-          <div className="flex gap-4">
-            {/* Main Content */}
-            <div className="flex-1">
-              {/* Post Title */}
-              <Link to={`/post/${post.id}`}>
-                <h3 className="text-lg font-medium text-gray-900 mb-2 hover:text-blue-600 cursor-pointer line-clamp-2 transition-colors duration-200">
-                  {post.title}
-                </h3>
-              </Link>
+          {/* Post Title */}
+          <Link to={`/post/${post.id}`} className="block">
+            <h3 className="text-lg font-semibold text-text-0 mb-2 hover:text-accent transition-colors">
+              {post.title}
+            </h3>
+          </Link>
 
-              {/* Post Content Preview */}
-              <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                {post.content}
-              </p>
+          {/* Post Content */}
+          <p className="text-text-1 text-sm mb-4 line-clamp-3">
+            {post.content}
+          </p>
 
-              {/* Post Actions */}
-              <div className="flex items-center space-x-4 text-xs text-gray-500">
-                <Link 
-                  to={`/post/${post.id}`}
-                  className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-all duration-150 hover:scale-105"
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>{post.comments} comments</span>
-                </Link>
-                <button 
-                  onClick={handleShare}
-                  className="flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-all duration-150 hover:scale-105"
-                >
-                  <Share2 className="w-4 h-4" />
-                  <span>Share</span>
-                </button>
-                <button
-                  onClick={() => setBookmarked(!bookmarked)}
-                  className={`flex items-center space-x-1 hover:bg-gray-100 px-2 py-1 rounded transition-all duration-150 hover:scale-105 ${
-                    bookmarked ? 'text-blue-600' : ''
-                  }`}
-                >
-                  <Bookmark className="w-4 h-4" />
-                  <span>Save</span>
-                </button>
-                <div className="flex items-center space-x-1">
-                  <Clock className="w-3 h-3" />
-                  <span>{post.readTime} min read</span>
-                </div>
+          {/* Post Image (if exists) */}
+          {post.image && (
+            <div className="mb-4">
+              <img
+                src={post.image}
+                alt="Post"
+                className="w-full h-32 object-cover rounded-lg"
+              />
+            </div>
+          )}
+
+          {/* Post Actions */}
+          <div className="flex items-center justify-between text-sm text-text-dim">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-1">
+                <MessageSquare className="w-4 h-4" />
+                <span>{post.comments} comments</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Clock className="w-3 h-3" />
+                <span>{post.readTime} min read</span>
               </div>
             </div>
-
-            {/* Post Image */}
-            {post.image && (
-              <div className="flex-shrink-0">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-20 h-20 object-cover rounded-lg hover:scale-105 transition-transform duration-200"
-                />
-              </div>
-            )}
+            
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={handleShare}
+                className="flex items-center space-x-1 hover:text-accent transition-colors p-1 rounded hover:bg-bg-1"
+              >
+                <Share2 className="w-4 h-4" />
+                <span>Share</span>
+              </button>
+              <button
+                onClick={() => setBookmarked(!bookmarked)}
+                className={`flex items-center space-x-1 transition-colors p-1 rounded hover:bg-bg-1 ${
+                  bookmarked ? 'text-accent' : 'hover:text-accent'
+                }`}
+              >
+                <Bookmark className="w-4 h-4" />
+                <span>Save</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

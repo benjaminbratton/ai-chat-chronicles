@@ -825,15 +825,15 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#0a0a1a' }}>
+    <div>
       <BrowserWindow />
       <Header />
       
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main className="container">
         {/* Main Site Explanation */}
-        <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg p-8 mb-16 border border-white/20">
+        <div className="card mb-16">
           <div className="text-center">
-            <p className="text-lg text-white/90 leading-relaxed max-w-4xl mx-auto font-light">
+            <p className="text-lg leading-relaxed max-w-4xl mx-auto">
               Polylogos is a forum for the socialization and analysis of human-machine communication, 
               and thereby a way for collective intelligence crossing the boundary between the two 
               to understand itself as it emerges.
@@ -842,19 +842,19 @@ const Index = () => {
         </div>
 
         {/* Hero Section - Full Width Layout */}
-        <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg p-8 mb-16 border border-white/20">
+        <div className="card mb-16">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
               Dialogues with AI
             </h1>
-            <p className="text-lg text-white/80 leading-relaxed font-light max-w-none">
+            <p className="text-lg leading-relaxed max-w-none">
               Discover and share fascinating conversations with artificial intelligence that push the boundaries of human understanding. 
               Join our vibrant community of AI enthusiasts, researchers, philosophers, and curious minds exploring the intricate future of human-machine dialogue. 
               From deep philosophical inquiries about consciousness and free will to practical explorations of creativity and problem-solving, 
               our platform serves as a bridge between human curiosity and artificial intelligence capabilities. 
               Experience meaningful exchanges that challenge assumptions, spark innovation, and illuminate the evolving relationship between biological and artificial minds. 
               Whether you're a seasoned researcher or simply fascinated by the potential of AI conversation, you'll find thought-provoking discussions that expand perspectives and foster collaborative learning.{" "}
-              <Link to="/explore" className="text-cyan-400 hover:text-cyan-300 hover:underline inline-flex items-center gap-1">
+              <Link to="/explore" className="hover:underline inline-flex items-center gap-1">
                 Explore <ArrowRight className="w-4 h-4" />
               </Link>
             </p>
@@ -866,10 +866,10 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-8 items-stretch">
             {/* Left - Featured Dialogue */}
             <div className="flex flex-col">
-              <h3 className="text-sm font-semibold text-white/60 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
+              <h3 className="text-sm font-semibold mb-4 uppercase tracking-wider">Featured Dialogue</h3>
               <div className="flex-1">
                 {featuredConversation && (
-                  <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg border border-white/20">
+                  <div className="card">
                     <FeaturedConversation conversation={featuredConversation} bgColor="bg-transparent" />
                   </div>
                 )}
@@ -878,9 +878,9 @@ const Index = () => {
             
             {/* Right - Featured Deep Research */}
             <div className="flex flex-col">
-              <h3 className="text-sm font-semibold text-white/60 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
+              <h3 className="text-sm font-semibold mb-4 uppercase tracking-wider">Featured Dialogue</h3>
               <div className="flex-1">
-                <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg border border-white/20">
+                <div className="card">
                   <FeaturedConversation conversation={featuredResearch} bgColor="bg-transparent" />
                 </div>
               </div>
@@ -889,7 +889,7 @@ const Index = () => {
         </div>
 
         {/* Category Filter and Test Button */}
-        <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg p-6 mb-8 border border-white/20">
+        <div className="card mb-8">
           <div className="flex justify-between items-center">
             <CategoryFilter 
               selectedCategory={selectedCategory}
@@ -900,7 +900,7 @@ const Index = () => {
             />
             <button
               onClick={testApiCall}
-              className="bg-red-500/80 backdrop-blur-md text-white px-4 py-2 rounded-lg hover:bg-red-400/80 transition-colors border border-red-400/30"
+              className="btn"
             >
               Test API Call
             </button>
@@ -908,11 +908,11 @@ const Index = () => {
         </div>
 
         {/* Conversations Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="card-grid mb-16">
           {conversationsLoading ? (
             // Loading skeleton
             Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg p-6 animate-pulse border border-white/20">
+              <div key={index} className="card animate-pulse">
                 <div className="h-4 bg-white/20 rounded mb-2"></div>
                 <div className="h-6 bg-white/20 rounded mb-4"></div>
                 <div className="h-4 bg-white/20 rounded mb-2"></div>
@@ -921,7 +921,7 @@ const Index = () => {
             ))
           ) : (
             displayedConversations.map((conversation, index) => (
-              <div key={conversation.id} className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg border border-white/20">
+              <div key={conversation.id} className="card">
                 <ConversationCard 
                   conversation={conversation} 
                   bgColor="bg-transparent"
@@ -936,7 +936,7 @@ const Index = () => {
           <div className="text-center">
             <button 
               onClick={handleLoadMore}
-              className="bg-cyan-600/80 backdrop-blur-md hover:bg-cyan-500/80 text-white px-8 py-3 font-thin text-sm tracking-wide uppercase transition-colors border border-cyan-400/30"
+              className="btn primary"
             >
               See More
             </button>

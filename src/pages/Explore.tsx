@@ -275,48 +275,48 @@ const Explore = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleSearch = () => {
+    // This function is no longer needed as search is handled by debouncedSearchQuery
+    // Keeping it for now, but it can be removed if not used elsewhere.
+  };
+
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-100">
+      <div>
         <BrowserWindow />
         <Header 
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
         />
-        <main className="max-w-5xl mx-auto px-4 py-6">
-          {/* Header */}
-          <div className="mb-6">
-            <h1 className="text-3xl font-thin text-black mb-2">Explore AI Conversations</h1>
-            <p className="text-gray-600">
-              Discover the latest conversations and insights from our community
+        <main className="container">
+          {/* Page Header */}
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold mb-4">Explore Conversations</h1>
+            <p className="text-lg text-text-1">
+              Discover fascinating AI conversations across all categories and topics
             </p>
           </div>
 
           {/* Search and Filters Skeleton */}
-          <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
-            <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search posts, authors, topics..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-black focus:border-black text-sm"
-                  disabled
-                />
+          <div className="card mb-8">
+            <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
+              <div className="flex flex-col sm:flex-row gap-4 flex-1">
+                <div className="h-10 bg-white/20 rounded animate-pulse"></div>
+                <div className="h-10 bg-white/20 rounded animate-pulse"></div>
               </div>
-              <SortOptions selectedSort={sortBy} onSortChange={setSortBy} />
+              <div className="h-10 bg-white/20 rounded animate-pulse"></div>
             </div>
           </div>
 
-          <CategoryFilter 
-            selectedCategory={selectedCategory}
-            onCategoryChange={handleCategoryChange}
-          />
-
           {/* Loading Skeletons */}
-          <div className="space-y-4">
+          <div className="card-grid">
             {Array.from({ length: 6 }).map((_, index) => (
-              <PostCardSkeleton key={index} />
+              <div key={index} className="card animate-pulse">
+                <div className="h-4 bg-white/20 rounded mb-2"></div>
+                <div className="h-6 bg-white/20 rounded mb-4"></div>
+                <div className="h-4 bg-white/20 rounded mb-2"></div>
+                <div className="h-4 bg-white/20 rounded w-3/4"></div>
+              </div>
             ))}
           </div>
         </main>
@@ -326,18 +326,20 @@ const Explore = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-100">
+      <div>
         <BrowserWindow />
         <Header 
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
         />
-        <main className="max-w-5xl mx-auto px-4 py-6">
-          <div className="text-center py-8">
-            <p className="text-red-600">Error loading conversations: {error.message}</p>
+        <main className="container">
+          <div className="card text-center py-12">
+            <div className="text-6xl mb-4">⚠️</div>
+            <h3 className="text-xl font-semibold mb-2">Error loading conversations</h3>
+            <p className="text-text-1 mb-6">{error.message}</p>
             <button 
               onClick={() => refetch()}
-              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
+              className="btn primary"
             >
               Retry
             </button>
@@ -348,98 +350,118 @@ const Explore = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div>
       <BrowserWindow />
-      <Header 
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
+      <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} onSearchSubmit={handleSearch} />
       
-      <main className="max-w-5xl mx-auto px-4 py-6">
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-thin text-black mb-2">Explore AI Conversations</h1>
-          <p className="text-gray-600">
-            Discover the latest conversations and insights from our community ({totalCount} total conversations)
+      <main className="container">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Explore Conversations</h1>
+          <p className="text-lg leading-relaxed max-w-none">
+            Discover fascinating AI conversations across all categories and topics. 
+            Browse through our curated collection of meaningful dialogues, research insights, 
+            and thought-provoking exchanges that showcase the potential of human-AI collaboration.
           </p>
         </div>
 
-        {/* Search and Filters */}
-        <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
-          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-            {/* Search */}
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Search posts, authors, topics..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-black focus:border-black text-sm transition-all duration-200"
+        {/* Filters and Search */}
+        <div className="card mb-8">
+          <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
+            <div className="flex flex-col sm:flex-row gap-4 flex-1">
+              <CategoryFilter 
+                selectedCategory={selectedCategory}
+                onCategoryChange={handleCategoryChange}
               />
-              {searchQuery !== debouncedSearchQuery && (
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
-                </div>
-              )}
+              <TopicFilter 
+                selectedFilter={selectedFilter}
+                onFilterChange={handleFilterChange}
+              />
             </div>
-
-            {/* Sort Options */}
-            <SortOptions selectedSort={sortBy} onSortChange={setSortBy} />
+            <SortOptions 
+              selectedSort={sortBy}
+              onSortChange={setSortBy}
+            />
           </div>
         </div>
 
-        {/* Category Filter */}
-        <CategoryFilter 
-          selectedCategory={selectedCategory}
-          onCategoryChange={handleCategoryChange}
-        />
-
-        {/* Topic Filter */}
-        <div className="mb-6">
-          <TopicFilter 
-            selectedFilter={selectedFilter}
-            onFilterChange={handleFilterChange}
-          />
-        </div>
-
-        {/* Posts Feed */}
-        <div className="space-y-4">
-          {sortedPosts.length > 0 ? (
-            <>
-              {sortedPosts.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
-              
-              {/* Infinite Scroll Trigger */}
-              <div ref={loadMoreRef} className="py-8">
-                {isFetchingNextPage && (
-                  <div className="space-y-4">
-                    {Array.from({ length: 3 }).map((_, index) => (
-                      <PostCardSkeleton key={`loading-${index}`} />
-                    ))}
-                  </div>
-                )}
-                
-                {!hasNextPage && sortedPosts.length > 0 && (
-                  <div className="text-center">
-                    <p className="text-gray-600">You've reached the end!</p>
-                    <p className="text-sm text-gray-500 mt-2">
-                      {sortedPosts.length} conversations loaded
-                    </p>
-                  </div>
-                )}
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-gray-600">No conversations found matching your criteria.</p>
-              <p className="text-sm text-gray-500 mt-2">
-                Try adjusting your filters or search terms.
+        {/* Search Results Info */}
+        {searchQuery && (
+          <div className="card mb-6">
+            <div className="flex items-center justify-between">
+              <p className="text-text-1">
+                Search results for "<span className="font-semibold text-text-0">{searchQuery}</span>"
               </p>
+              <button 
+                onClick={() => setSearchQuery("")}
+                className="text-accent hover:text-accent-2 transition-colors"
+              >
+                Clear search
+              </button>
             </div>
+          </div>
+        )}
+
+        {/* Posts Grid */}
+        <div className="card-grid">
+          {isLoading ? (
+            // Loading skeletons
+            Array.from({ length: POSTS_PER_PAGE }).map((_, index) => (
+              <div key={index} className="card animate-pulse">
+                <div className="h-4 bg-white/20 rounded mb-2"></div>
+                <div className="h-6 bg-white/20 rounded mb-4"></div>
+                <div className="h-4 bg-white/20 rounded mb-2"></div>
+                <div className="h-4 bg-white/20 rounded w-3/4"></div>
+              </div>
+            ))
+          ) : hasNextPage ? (
+            // Posts with infinite scroll
+            sortedPosts.map((post, index) => (
+              <div key={post.id} className="card" ref={index === sortedPosts.length - 1 ? loadMoreRef : null}>
+                <PostCard post={post} />
+              </div>
+            ))
+          ) : (
+            // All posts loaded
+            sortedPosts.map((post) => (
+              <div key={post.id} className="card">
+                <PostCard post={post} />
+              </div>
+            ))
           )}
         </div>
+
+        {/* Loading More Indicator */}
+        {isFetchingNextPage && (
+          <div className="flex justify-center mt-8">
+            <div className="flex items-center space-x-2 text-text-1">
+              <Loader2 className="w-5 h-5 animate-spin" />
+              <span>Loading more conversations...</span>
+            </div>
+          </div>
+        )}
+
+        {/* No Results */}
+        {!isLoading && sortedPosts.length === 0 && (
+          <div className="card text-center py-12">
+            <div className="text-6xl mb-4">🔍</div>
+            <h3 className="text-xl font-semibold mb-2">No conversations found</h3>
+            <p className="text-text-1 mb-6">
+              {searchQuery 
+                ? `No conversations match your search for "${searchQuery}"`
+                : "Try adjusting your filters or search terms"
+              }
+            </p>
+            {searchQuery && (
+              <button 
+                onClick={() => setSearchQuery("")}
+                className="btn primary"
+              >
+                Clear search
+              </button>
+            )}
+          </div>
+        )}
       </main>
     </div>
   );
