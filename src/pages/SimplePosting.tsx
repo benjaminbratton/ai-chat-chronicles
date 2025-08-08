@@ -39,16 +39,16 @@ const SimplePosting = () => {
 
   // Exact colors from the image
   const categories = [
-    { name: "Philosophy", color: "bg-purple-500", textColor: "text-white" },
-    { name: "Creative Writing", color: "bg-pink-400", textColor: "text-white" },
-    { name: "Programming", color: "bg-blue-500", textColor: "text-white" },
-    { name: "Technology", color: "bg-cyan-400", textColor: "text-white" },
-    { name: "Science", color: "bg-green-400", textColor: "text-white" },
-    { name: "Education", color: "bg-yellow-500", textColor: "text-black" },
-    { name: "Business", color: "bg-orange-400", textColor: "text-white" },
-    { name: "Personal", color: "bg-indigo-500", textColor: "text-white" },
-    { name: "Research", color: "bg-teal-500", textColor: "text-white" },
-    { name: "Healthcare", color: "bg-red-400", textColor: "text-white" }
+    { name: "Philosophy", color: "backdrop-blur-md bg-gradient-to-r from-purple-600/30 to-purple-700/30 border border-purple-500/30", textColor: "text-white" },
+    { name: "Creative Writing", color: "backdrop-blur-md bg-gradient-to-r from-pink-600/30 to-pink-700/30 border border-pink-500/30", textColor: "text-white" },
+    { name: "Programming", color: "backdrop-blur-md bg-gradient-to-r from-blue-600/30 to-blue-700/30 border border-blue-500/30", textColor: "text-white" },
+    { name: "Technology", color: "backdrop-blur-md bg-gradient-to-r from-cyan-600/30 to-cyan-700/30 border border-cyan-500/30", textColor: "text-white" },
+    { name: "Science", color: "backdrop-blur-md bg-gradient-to-r from-green-600/30 to-green-700/30 border border-green-500/30", textColor: "text-white" },
+    { name: "Education", color: "backdrop-blur-md bg-gradient-to-r from-yellow-600/30 to-yellow-700/30 border border-yellow-500/30", textColor: "text-black" },
+    { name: "Business", color: "backdrop-blur-md bg-gradient-to-r from-orange-600/30 to-orange-700/30 border border-orange-500/30", textColor: "text-white" },
+    { name: "Personal", color: "backdrop-blur-md bg-gradient-to-r from-indigo-600/30 to-indigo-700/30 border border-indigo-500/30", textColor: "text-white" },
+    { name: "Research", color: "backdrop-blur-md bg-gradient-to-r from-teal-600/30 to-teal-700/30 border border-teal-500/30", textColor: "text-white" },
+    { name: "Healthcare", color: "backdrop-blur-md bg-gradient-to-r from-red-600/30 to-red-700/30 border border-red-500/30", textColor: "text-white" }
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {

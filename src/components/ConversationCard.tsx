@@ -27,7 +27,7 @@ export const ConversationCard = ({ conversation, bgColor = "bg-white" }: Convers
   const categoryTextColor = categoryData?.textColor || "text-white";
 
   return (
-    <div className={`${bgColor} rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 h-full flex flex-col`}>
+    <div className={`${bgColor} rounded-lg shadow-sm border border-white/20 overflow-hidden hover:shadow-md transition-shadow duration-300 h-full flex flex-col`}>
       <div className="p-6 flex-1 flex flex-col">
         <div className="flex items-center space-x-2 mb-3">
           <span className={`${categoryColor} ${categoryTextColor} text-xs font-medium px-2 py-1 rounded-full`}>
@@ -35,11 +35,11 @@ export const ConversationCard = ({ conversation, bgColor = "bg-white" }: Convers
           </span>
         </div>
         
-        <h3 className="text-xl font-serif font-thin text-gray-900 mb-3 leading-tight flex-1">
+        <h3 className="text-xl font-serif font-medium text-white mb-3 leading-tight flex-1">
           {conversation.title}
         </h3>
         
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+        <p className="text-white/80 text-sm mb-4 line-clamp-3 leading-relaxed">
           {conversation.excerpt}
         </p>
 
@@ -54,9 +54,9 @@ export const ConversationCard = ({ conversation, bgColor = "bg-white" }: Convers
             </Link>
             <div>
               <Link to="/profile">
-                <p className="text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors cursor-pointer">{conversation.author}</p>
+                <p className="text-sm font-medium text-white hover:text-cyan-400 transition-colors cursor-pointer">{conversation.author}</p>
               </Link>
-              <div className="flex items-center space-x-3 text-xs text-gray-500">
+              <div className="flex items-center space-x-3 text-xs text-white/60">
                 <span>{new Date(conversation.publishDate).toLocaleDateString()}</span>
                 <div className="flex items-center space-x-1">
                   <Clock className="w-3 h-3" />
@@ -67,17 +67,17 @@ export const ConversationCard = ({ conversation, bgColor = "bg-white" }: Convers
           </div>
 
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-1 text-gray-500">
+            <div className="flex items-center space-x-1 text-white/60">
               <Heart className="w-3 h-3" />
               <span className="text-xs">{conversation.likes}</span>
             </div>
-            <div className="flex items-center space-x-1 text-gray-500">
+            <div className="flex items-center space-x-1 text-white/60">
               <MessageSquare className="w-3 h-3" />
               <span className="text-xs">{conversation.comments}</span>
             </div>
             <Link 
               to="/ai-consciousness"
-              className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-xs"
+              className="flex items-center space-x-1 text-cyan-400 hover:text-cyan-300 text-xs"
             >
               <span>Read</span>
               <ArrowRight className="w-3 h-3" />

@@ -34,12 +34,12 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
           <span className={`${categoryColor} ${categoryTextColor} text-xs font-medium px-3 py-1 rounded-full`}>
             {conversation.category}
           </span>
-          <span className="bg-orange-100 text-orange-800 text-xs font-medium px-3 py-1 rounded-full">
+          <span className="bg-orange-500/80 text-white text-xs font-medium px-3 py-1 rounded-full">
             Featured
           </span>
         </div>
         
-        <h2 className="text-3xl md:text-4xl font-serif font-thin text-gray-900 mb-6 leading-tight">
+        <h2 className="text-3xl md:text-4xl font-serif font-medium text-white mb-6 leading-tight">
           {conversation.title}
         </h2>
 
@@ -53,7 +53,7 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
           </div>
         )}
         
-        <p className="text-lg text-gray-600 mb-6 leading-relaxed flex-1">
+        <p className="text-lg text-white/80 mb-6 leading-relaxed flex-1">
           {conversation.excerpt}
         </p>
 
@@ -68,9 +68,9 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
             </Link>
             <div>
               <Link to="/profile">
-                <p className="font-medium text-gray-900 hover:text-blue-600 transition-colors cursor-pointer">{conversation.author}</p>
+                <p className="font-medium text-white hover:text-cyan-400 transition-colors cursor-pointer">{conversation.author}</p>
               </Link>
-              <div className="flex items-center space-x-4 text-sm text-gray-500">
+              <div className="flex items-center space-x-4 text-sm text-white/60">
                 <span>{new Date(conversation.publishDate).toLocaleDateString()}</span>
                 <div className="flex items-center space-x-1">
                   <Clock className="w-3 h-3" />
@@ -81,17 +81,17 @@ export const FeaturedConversation = ({ conversation, bgColor = "bg-white" }: Fea
           </div>
 
           <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2 text-gray-500">
+            <div className="flex items-center space-x-2 text-white/60">
               <Heart className="w-4 h-4" />
               <span className="text-sm">{conversation.likes}</span>
             </div>
-            <div className="flex items-center space-x-2 text-gray-500">
+            <div className="flex items-center space-x-2 text-white/60">
               <MessageSquare className="w-4 h-4" />
               <span className="text-sm">{conversation.comments}</span>
             </div>
             <Link 
               to="/ai-consciousness"
-              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium"
+              className="flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 font-medium"
             >
               <span>Read more</span>
               <ArrowRight className="w-4 h-4" />

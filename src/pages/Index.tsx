@@ -825,36 +825,40 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200">
+    <div className="min-h-screen" style={{ backgroundColor: '#0a0a1a' }}>
       <BrowserWindow />
       <Header />
       
       <main className="max-w-6xl mx-auto px-6 py-12">
         {/* Main Site Explanation */}
-        <div className="mb-16 text-center">
-          <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto font-light">
-            Polylogos is a forum for the socialization and analysis of human-machine communication, 
-            and thereby a way for collective intelligence crossing the boundary between the two 
-            to understand itself as it emerges.
-          </p>
+        <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg p-8 mb-16 border border-white/20">
+          <div className="text-center">
+            <p className="text-lg text-white/90 leading-relaxed max-w-4xl mx-auto font-light">
+              Polylogos is a forum for the socialization and analysis of human-machine communication, 
+              and thereby a way for collective intelligence crossing the boundary between the two 
+              to understand itself as it emerges.
+            </p>
+          </div>
         </div>
 
         {/* Hero Section - Full Width Layout */}
-        <div className="mb-16 text-center">
-          <h1 className="text-4xl md:text-6xl font-thin text-green-800 mb-6 tracking-tight">
-            Dialogues with AI
-          </h1>
-          <p className="text-lg text-gray-600 leading-relaxed font-thin max-w-none">
-            Discover and share fascinating conversations with artificial intelligence that push the boundaries of human understanding. 
-            Join our vibrant community of AI enthusiasts, researchers, philosophers, and curious minds exploring the intricate future of human-machine dialogue. 
-            From deep philosophical inquiries about consciousness and free will to practical explorations of creativity and problem-solving, 
-            our platform serves as a bridge between human curiosity and artificial intelligence capabilities. 
-            Experience meaningful exchanges that challenge assumptions, spark innovation, and illuminate the evolving relationship between biological and artificial minds. 
-            Whether you're a seasoned researcher or simply fascinated by the potential of AI conversation, you'll find thought-provoking discussions that expand perspectives and foster collaborative learning.{" "}
-            <Link to="/explore" className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1">
-              Explore <ArrowRight className="w-4 h-4" />
-            </Link>
-          </p>
+        <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg p-8 mb-16 border border-white/20">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+              Dialogues with AI
+            </h1>
+            <p className="text-lg text-white/80 leading-relaxed font-light max-w-none">
+              Discover and share fascinating conversations with artificial intelligence that push the boundaries of human understanding. 
+              Join our vibrant community of AI enthusiasts, researchers, philosophers, and curious minds exploring the intricate future of human-machine dialogue. 
+              From deep philosophical inquiries about consciousness and free will to practical explorations of creativity and problem-solving, 
+              our platform serves as a bridge between human curiosity and artificial intelligence capabilities. 
+              Experience meaningful exchanges that challenge assumptions, spark innovation, and illuminate the evolving relationship between biological and artificial minds. 
+              Whether you're a seasoned researcher or simply fascinated by the potential of AI conversation, you'll find thought-provoking discussions that expand perspectives and foster collaborative learning.{" "}
+              <Link to="/explore" className="text-cyan-400 hover:text-cyan-300 hover:underline inline-flex items-center gap-1">
+                Explore <ArrowRight className="w-4 h-4" />
+              </Link>
+            </p>
+          </div>
         </div>
 
         {/* Featured Section - Two Column Layout with Equal Heights */}
@@ -862,39 +866,45 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-8 items-stretch">
             {/* Left - Featured Dialogue */}
             <div className="flex flex-col">
-              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
+              <h3 className="text-sm font-semibold text-white/60 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
               <div className="flex-1">
                 {featuredConversation && (
-                  <FeaturedConversation conversation={featuredConversation} bgColor="bg-green-50" />
+                  <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg border border-white/20">
+                    <FeaturedConversation conversation={featuredConversation} bgColor="bg-transparent" />
+                  </div>
                 )}
               </div>
             </div>
             
             {/* Right - Featured Deep Research */}
             <div className="flex flex-col">
-              <h3 className="text-sm font-thin text-gray-600 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
+              <h3 className="text-sm font-semibold text-white/60 mb-4 uppercase tracking-wider">Featured Dialogue</h3>
               <div className="flex-1">
-                <FeaturedConversation conversation={featuredResearch} bgColor="bg-blue-50" />
+                <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg border border-white/20">
+                  <FeaturedConversation conversation={featuredResearch} bgColor="bg-transparent" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Category Filter and Test Button */}
-        <div className="flex justify-between items-center mb-8">
-          <CategoryFilter 
-            selectedCategory={selectedCategory}
-            onCategoryChange={(category) => {
-              setSelectedCategory(category);
-              setDisplayCount(9); // Reset display count when changing categories
-            }}
-          />
-          <button
-            onClick={testApiCall}
-            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-          >
-            Test API Call
-          </button>
+        <div className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg p-6 mb-8 border border-white/20">
+          <div className="flex justify-between items-center">
+            <CategoryFilter 
+              selectedCategory={selectedCategory}
+              onCategoryChange={(category) => {
+                setSelectedCategory(category);
+                setDisplayCount(9); // Reset display count when changing categories
+              }}
+            />
+            <button
+              onClick={testApiCall}
+              className="bg-red-500/80 backdrop-blur-md text-white px-4 py-2 rounded-lg hover:bg-red-400/80 transition-colors border border-red-400/30"
+            >
+              Test API Call
+            </button>
+          </div>
         </div>
 
         {/* Conversations Grid */}
@@ -902,20 +912,21 @@ const Index = () => {
           {conversationsLoading ? (
             // Loading skeleton
             Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-6 animate-pulse">
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-6 bg-gray-200 rounded mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div key={index} className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg p-6 animate-pulse border border-white/20">
+                <div className="h-4 bg-white/20 rounded mb-2"></div>
+                <div className="h-6 bg-white/20 rounded mb-4"></div>
+                <div className="h-4 bg-white/20 rounded mb-2"></div>
+                <div className="h-4 bg-white/20 rounded w-3/4"></div>
               </div>
             ))
           ) : (
             displayedConversations.map((conversation, index) => (
-              <ConversationCard 
-                key={conversation.id} 
-                conversation={conversation} 
-                bgColor={index % 2 === 0 ? "bg-green-50" : "bg-blue-50"}
-              />
+              <div key={conversation.id} className="backdrop-blur-md bg-white/10 rounded-lg shadow-lg border border-white/20">
+                <ConversationCard 
+                  conversation={conversation} 
+                  bgColor="bg-transparent"
+                />
+              </div>
             ))
           )}
         </div>
@@ -925,7 +936,7 @@ const Index = () => {
           <div className="text-center">
             <button 
               onClick={handleLoadMore}
-              className="bg-black text-white px-8 py-3 font-thin text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors"
+              className="bg-cyan-600/80 backdrop-blur-md hover:bg-cyan-500/80 text-white px-8 py-3 font-thin text-sm tracking-wide uppercase transition-colors border border-cyan-400/30"
             >
               See More
             </button>
