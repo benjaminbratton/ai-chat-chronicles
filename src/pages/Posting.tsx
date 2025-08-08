@@ -20,7 +20,12 @@ const Posting = () => {
   const createConversationMutation = useCreateConversation();
 
   const handlePostSubmit = async (data: any) => {
+    console.log('=== POSTING FORM SUBMITTED ===');
+    console.log('User:', user);
+    console.log('Form data:', data);
+    
     if (!user) {
+      console.log('No user found, showing auth error');
       toast({
         title: "Authentication Required",
         description: "Please log in to create a post.",
@@ -35,12 +40,12 @@ const Posting = () => {
       // Save to database
       const conversationData = {
         title: data.title,
-        content: data.content,
+        content: data.excerpt || data.content || "No content provided",
         category: data.category || (postType === "research" ? "Research" : "Philosophy"),
-        read_time: Math.ceil(data.content.length / 1000) * 2, // Rough estimate
+        read_time: Math.ceil((data.excerpt || data.content || "").length / 1000) * 2, // Rough estimate
         published: true,
         featured: false,
-        excerpt: data.content.substring(0, 200) + (data.content.length > 200 ? "..." : "")
+        excerpt: data.excerpt || data.content || "No content provided"
       };
 
       console.log('Conversation data prepared:', conversationData);
@@ -56,10 +61,25 @@ const Posting = () => {
       // Navigate to the specific post page
       setTimeout(() => {
         console.log('Delayed navigation to post page...');
-        const postId = result?.id || result?.data?.id;
+        console.log('Full result object:', result);
+        
+        // Try different ways to get the post ID
+        let postId = null;
+        if (result?.data?.id) {
+          postId = result.data.id;
+        } else if (result?.id) {
+          postId = result.id;
+        }
+        
+        console.log('Post ID for navigation:', postId);
+        
         if (postId) {
-          window.location.href = `/post/${postId}`;
+          // Handle different ID formats
+          const cleanId = postId.toString().replace('conv-', '');
+          console.log('Clean ID for navigation:', cleanId);
+          window.location.href = `/post/${cleanId}`;
         } else {
+          console.log('No post ID found, redirecting to home');
           // Fallback to main page if we can't get the post ID
           window.location.href = '/';
         }

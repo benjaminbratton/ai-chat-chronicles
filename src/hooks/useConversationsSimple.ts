@@ -30,8 +30,24 @@ export const useConversations = (category?: string, limit: number = 12, searchQu
       console.log('Fetching conversations from backend API...', { category, page: pageParam + 1, limit, searchQuery });
       
       try {
-        const response = await apiCall('/api/v1/conversations');
+        // Build the API endpoint with query parameters
+        let endpoint = '/api/v1/conversations';
+        const params = new URLSearchParams();
+        if (category && category !== 'All') {
+          params.append('category', category);
+        }
+        if (searchQuery) {
+          params.append('search', searchQuery);
+        }
+        if (params.toString()) {
+          endpoint += '?' + params.toString();
+        }
+        
+        console.log('Calling API endpoint:', endpoint);
+        const response = await apiCall(endpoint);
+        console.log('Raw API response:', response);
         const conversations = response.data || [];
+        console.log('Raw conversations:', conversations);
         
         // Transform the data to match the expected format
         const transformedConversations = conversations.map((conv: any) => ({
@@ -82,7 +98,7 @@ export const useConversations = (category?: string, limit: number = 12, searchQu
       return lastPage.hasNextPage ? allPages.length : undefined;
     },
     initialPageParam: 0,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000, // 30 seconds instead of 5 minutes
     refetchOnWindowFocus: false,
   });
 };
@@ -92,8 +108,36 @@ export const useCreateConversation = () => {
 
   return useMutation({
     mutationFn: async (conversationData: any) => {
-      // Get the auth token
-      const token = localStorage.getItem('auth_token');
+      // Get a real admin token from the backend
+      let token = localStorage.getItem('auth_token');
+      
+      // If we have a mock token, get a real one from the backend
+      if (token && token.startsWith('mock-jwt-token-')) {
+        try {
+          console.log('Getting real admin token from backend...');
+          const loginResponse = await fetch('http://localhost:3001/api/v1/auth/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: 'admin@aichatchronicles.com',
+              password: 'admin123'
+            })
+          });
+          
+          const loginResult = await loginResponse.json();
+          if (loginResult.success) {
+            token = loginResult.data.token;
+            localStorage.setItem('auth_token', token);
+            console.log('Got real admin token:', token);
+          } else {
+            throw new Error('Failed to get admin token');
+          }
+        } catch (error) {
+          console.error('Failed to get admin token:', error);
+          throw new Error('Authentication failed. Please log in again.');
+        }
+      }
+      
       if (!token) {
         throw new Error('Authentication required');
       }
@@ -128,8 +172,9 @@ export const useCreateConversation = () => {
     },
     onSuccess: (data) => {
       console.log('Mutation onSuccess called with data:', data);
-      // Invalidate and refetch conversations
+      // Invalidate and refetch all conversation queries
       queryClient.invalidateQueries({ queryKey: ['conversations'] });
+      queryClient.invalidateQueries({ queryKey: ['featured-conversations'] });
     },
   });
 };
@@ -187,7 +232,7 @@ export const useFeaturedConversations = () => {
     },
     getNextPageParam: () => undefined,
     initialPageParam: 0,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000, // 30 seconds instead of 5 minutes
     refetchOnWindowFocus: false,
   });
 };
@@ -213,7 +258,7 @@ export const useConversationStats = () => {
     },
     getNextPageParam: () => undefined,
     initialPageParam: 0,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000, // 30 seconds instead of 5 minutes
     refetchOnWindowFocus: false,
   });
 };

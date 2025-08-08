@@ -742,22 +742,61 @@ const Index = () => {
   const [displayCount, setDisplayCount] = useState(9);
   
   // Fetch conversations from backend
-  const { data: conversationsData, isLoading: conversationsLoading } = useConversations(selectedCategory === "All" ? undefined : selectedCategory, 50);
-  const { data: featuredData, isLoading: featuredLoading } = useFeaturedConversations();
+  const { data: conversationsData, isLoading: conversationsLoading, refetch: refetchConversations } = useConversations(selectedCategory === "All" ? undefined : selectedCategory, 50);
+  const { data: featuredData, isLoading: featuredLoading, refetch: refetchFeatured } = useFeaturedConversations();
   
   // Get conversations from the first page
   const allConversations = conversationsData?.pages?.[0]?.conversations || [];
   const featuredConversations = featuredData?.pages?.[0]?.conversations || [];
   
+  // Debug logging
+  console.log('Backend conversations data:', allConversations);
+  console.log('Backend featured data:', featuredConversations);
+  console.log('Is loading conversations:', conversationsLoading);
+  console.log('Is loading featured:', featuredLoading);
+  
+  // Test API call function
+  const testApiCall = async () => {
+    try {
+      console.log('Testing API call...');
+      const response = await fetch('http://localhost:3001/api/v1/conversations');
+      console.log('API response status:', response.status);
+      const data = await response.json();
+      console.log('API response data:', data);
+    } catch (error) {
+      console.error('API test failed:', error);
+    }
+  };
+  
+  // Transform backend data to match frontend component expectations
+  const transformBackendToFrontend = (backendConv: any) => ({
+    id: backendConv.id,
+    title: backendConv.title,
+    excerpt: backendConv.excerpt || backendConv.content?.substring(0, 200) + "...",
+    author: backendConv.profiles?.full_name || backendConv.profiles?.username || "Anonymous",
+    authorImage: backendConv.profiles?.avatar_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    readTime: backendConv.read_time || 5,
+    publishDate: backendConv.created_at ? new Date(backendConv.created_at).toLocaleDateString() : "Just now",
+    category: backendConv.category || "General",
+    likes: backendConv.likes_count || 0,
+    comments: backendConv.comments_count || 0,
+    featured: backendConv.featured || false,
+    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800&h=400&fit=crop"
+  });
+
   // Use featured conversation from backend or fallback to mock
   const featuredConversation = featuredConversations.length > 0 
-    ? { ...featuredConversations[0], image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800&h=400&fit=crop" }
+    ? transformBackendToFrontend(featuredConversations[0])
     : { ...mockConversations.find(conv => conv.featured), image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800&h=400&fit=crop" };
   
   // Use backend conversations or fallback to mock data
   const regularConversations = allConversations.length > 0 
-    ? allConversations.filter(conv => !conv.featured)
+    ? allConversations.filter(conv => !conv.featured).map(transformBackendToFrontend)
     : mockConversations.filter(conv => !conv.featured);
+  
+  // Debug logging after transformation
+  console.log('Regular conversations after transformation:', regularConversations);
+  console.log('Featured conversation after transformation:', featuredConversation);
   
   // Updated filtering logic
   const getFilteredConversations = () => {
@@ -775,6 +814,11 @@ const Index = () => {
   const filteredConversations = getFilteredConversations();
   const displayedConversations = filteredConversations.slice(0, displayCount);
   const hasMore = filteredConversations.length > displayCount;
+  
+  // Debug logging for display
+  console.log('Filtered conversations:', filteredConversations);
+  console.log('Displayed conversations:', displayedConversations);
+  console.log('Selected category:', selectedCategory);
 
   const handleLoadMore = () => {
     setDisplayCount(prev => Math.min(prev + 9, filteredConversations.length));
@@ -836,14 +880,22 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Category Filter */}
-        <CategoryFilter 
-          selectedCategory={selectedCategory}
-          onCategoryChange={(category) => {
-            setSelectedCategory(category);
-            setDisplayCount(9); // Reset display count when changing categories
-          }}
-        />
+        {/* Category Filter and Test Button */}
+        <div className="flex justify-between items-center mb-8">
+          <CategoryFilter 
+            selectedCategory={selectedCategory}
+            onCategoryChange={(category) => {
+              setSelectedCategory(category);
+              setDisplayCount(9); // Reset display count when changing categories
+            }}
+          />
+          <button
+            onClick={testApiCall}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Test API Call
+          </button>
+        </div>
 
         {/* Conversations Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">

@@ -9,6 +9,7 @@ import { Footer } from "@/components/Footer";
 import Index from "./pages/Index";
 import Explore from "./pages/Explore";
 import Posting from "./pages/Posting";
+import SimplePosting from "./pages/SimplePosting";
 import Visualize from "./pages/Visualize";
 import Seminars from "./pages/Seminars";
 import Profile from "./pages/Profile";
@@ -50,11 +51,8 @@ const App = () => (
                 <Route path="/ai-consciousness" element={<AIConsciousnessPost />} />
                 
                 {/* Protected Routes */}
-                <Route path="/posting" element={
-                  <ProtectedRoute>
-                    <Posting />
-                  </ProtectedRoute>
-                } />
+                <Route path="/posting" element={<Posting />} />
+                <Route path="/simple-posting" element={<SimplePosting />} />
                 <Route path="/profile" element={
                   <ProtectedRoute>
                     <Profile />

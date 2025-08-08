@@ -22,8 +22,14 @@ const Post = () => {
   const { data: conversationsData, isLoading } = useConversations();
   const allConversations = conversationsData?.pages?.[0]?.conversations || [];
   
-  // Find the specific post by ID
-  const backendPost = allConversations.find(conv => conv.id === id);
+  // Find the specific post by ID (handle both string and numeric IDs)
+  const backendPost = allConversations.find(conv => {
+    // Handle different ID formats
+    if (conv.id === id) return true;
+    if (conv.id === `conv-${id}`) return true;
+    if (conv.id.replace('conv-', '') === id) return true;
+    return false;
+  });
   
   // Use backend post data or fallback to mock data
   const post = backendPost ? {

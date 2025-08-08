@@ -207,8 +207,11 @@ const Explore = () => {
 
   // Flatten all pages of data
   const allConversations = useMemo(() => {
-    return data?.pages.flatMap(page => page.conversations) || [];
-  }, [data]);
+    const conversations = data?.pages.flatMap(page => page.conversations) || [];
+    console.log('Explore page - all conversations:', conversations);
+    console.log('Explore page - effective category:', effectiveCategory);
+    return conversations;
+  }, [data, effectiveCategory]);
 
   const totalCount = data?.pages[0]?.total || 0;
 
@@ -227,20 +230,22 @@ const Explore = () => {
       : conversation.profiles;
     
     return {
-      id: parseInt(conversation.id),
+      id: typeof conversation.id === 'string' ? parseInt(conversation.id.replace(/\D/g, '')) || index : conversation.id,
       title: conversation.title,
       content: conversation.content,
       author: profile?.username || profile?.full_name || 'Anonymous',
       authorAvatar: profile?.avatar_url || `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face`,
       category: conversation.category,
       aiModel: "GPT-4", 
-      upvotes: Math.floor(Math.random() * 50) + 10,
-      comments: Math.floor(Math.random() * 20) + 2,
+      upvotes: conversation.likes_count || Math.floor(Math.random() * 50) + 10,
+      comments: conversation.comments_count || Math.floor(Math.random() * 20) + 2,
       timestamp: new Date(conversation.created_at).toLocaleDateString(),
       readTime: conversation.read_time || 5,
       image: getUniqueImage(conversation, index)
     };
   });
+  
+  console.log('Explore page - transformed posts:', transformedPosts);
 
   // Sort posts (search filtering is now done server-side)
   const sortedPosts = [...transformedPosts].sort((a, b) => {

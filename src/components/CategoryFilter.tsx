@@ -10,11 +10,13 @@ export const categories = [
   { name: "Philosophy", color: "bg-purple-500", textColor: "text-white" }, 
   { name: "Creative Writing", color: "bg-pink-500", textColor: "text-white" },
   { name: "Programming", color: "bg-blue-500", textColor: "text-white" },
+  { name: "Technology", color: "bg-cyan-500", textColor: "text-white" },
   { name: "Science", color: "bg-green-500", textColor: "text-white" },
   { name: "Education", color: "bg-yellow-500", textColor: "text-black" },
   { name: "Business", color: "bg-orange-500", textColor: "text-white" },
   { name: "Personal", color: "bg-indigo-500", textColor: "text-white" },
-  { name: "Research", color: "bg-teal-500", textColor: "text-white" }
+  { name: "Research", color: "bg-teal-500", textColor: "text-white" },
+  { name: "Healthcare", color: "bg-red-500", textColor: "text-white" }
 ];
 
 export const CategoryFilter = ({ selectedCategory, onCategoryChange, excludeAll = false }: CategoryFilterProps) => {

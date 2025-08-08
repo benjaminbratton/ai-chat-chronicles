@@ -1,7 +1,6 @@
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
 
 interface TopicFilterProps {
   selectedFilter: string;
@@ -12,16 +11,21 @@ export const TopicFilter = ({ selectedFilter, onFilterChange }: TopicFilterProps
   const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('conversations')
-        .select('category')
-        .eq('published', true);
+      try {
+        const response = await fetch('http://localhost:3001/api/v1/conversations');
+        const result = await response.json();
+        
+        if (!result.success) {
+          throw new Error('Failed to fetch categories');
+        }
 
-      if (error) throw error;
-
-      // Get unique categories
-      const uniqueCategories = [...new Set(data.map(item => item.category))];
-      return uniqueCategories.sort();
+        // Get unique categories from the conversations
+        const uniqueCategories = [...new Set(result.data.map((item: any) => item.category))];
+        return uniqueCategories.sort();
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+        return ['Philosophy', 'Technology', 'Science', 'Creative Writing', 'Programming', 'Education', 'Business', 'Personal', 'Research', 'Healthcare'];
+      }
     },
   });
 

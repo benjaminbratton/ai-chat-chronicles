@@ -146,9 +146,9 @@ export const Header = ({ searchQuery = "", onSearchChange, onSearchSubmit }: Hea
               Explore
             </Link>
             <Link 
-              to="/posting" 
+              to="/simple-posting" 
               className={`text-sm tracking-wide uppercase transition-all duration-500 transform ${
-                location.pathname === '/posting' 
+                location.pathname === '/simple-posting' 
                   ? 'text-black font-bold scale-110 bg-gradient-to-r from-purple-100 to-blue-100 px-4 py-2 rounded-full shadow-lg border-2 border-purple-200' 
                   : 'text-gray-600 hover:text-black hover:font-semibold hover:scale-110 hover:bg-gradient-to-r hover:from-gray-100 hover:to-purple-50 hover:px-4 hover:py-2 hover:rounded-full hover:shadow-lg hover:border-2 hover:border-gray-200 px-2 py-1'
               }`}

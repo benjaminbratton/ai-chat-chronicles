@@ -29,6 +29,9 @@ export const PostForm = ({ onSubmit, postType }: PostFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('=== POSTFORM SUBMIT ===');
+    console.log('Form data:', formData);
+    console.log('Post type:', postType);
     onSubmit({ ...formData, images: uploadedImages, postType });
   };
 
